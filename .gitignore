@@ -68,3 +68,5 @@ yarn-debug.log*
 !/storage/.keep
 /public/uploads
 config/database.yml
+/app/assets/builds/*
+!/app/assets/builds/.keep
