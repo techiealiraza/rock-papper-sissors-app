@@ -9,6 +9,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       backgroundImage: {
         'background-image': "url('background1.jpeg')"
       },
@@ -19,6 +20,10 @@ module.exports = {
         "gold": "#d97706",
         "gold_shade2": "#b45309",
       }
+
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
     },
   },
   plugins: [
