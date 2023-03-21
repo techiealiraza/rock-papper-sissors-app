@@ -5,9 +5,10 @@
 
 
 @layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+  .btn-brown {
+    @apply text-black bg-gold rounded-lg hover:bg-gold_shade2;
+  };
 }
+
 
 
