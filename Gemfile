@@ -67,3 +67,7 @@ gem "tailwindcss-rails", "~> 2.0"
 
 gem "devise-two-factor", "~> 4.0"
 
+
+gem "stimulus-rails"
+
+gem "redis", "~> 5.0"
