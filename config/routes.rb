@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tournaments
   get 'rockpaperscissor/home'
   devise_for :users
   root 'rockpaperscissor#home'

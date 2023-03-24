@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  start_date: 2023-03-22 18:21:26
+  end_date: 2023-03-22 18:21:26
+  tournament_winner_id: 1
+
+two:
+  name: MyString
+  description: MyString
+  start_date: 2023-03-22 18:21:26
+  end_date: 2023-03-22 18:21:26
+  tournament_winner_id: 1

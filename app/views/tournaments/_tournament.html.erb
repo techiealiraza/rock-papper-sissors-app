@@ -1,0 +1,32 @@
+<div id="<%= dom_id tournament %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= tournament.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= tournament.description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Start date:</strong>
+    <%= tournament.start_date %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">End date:</strong>
+    <%= tournament.end_date %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Tournament winner:</strong>
+    <%= tournament.tournament_winner_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this tournament", tournament, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this tournament', edit_tournament_path(tournament), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
