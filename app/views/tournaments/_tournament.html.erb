@@ -1,32 +1,36 @@
-<div id="<%= dom_id tournament %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
+<div class = "w-fill">
+  <p class="pt-5 w-0.8">
+    <strong class="block font-medium text-white">Name</strong>
+    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2   bg-white text-black">
     <%= tournament.name %>
+    </div>
+  </p>
+  <p class="pt-10">
+    <strong class="block font-medium pt-5 text-white">Description</strong>
+    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+    <%= tournament.description%>
+  </div>
   </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= tournament.description %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Start date:</strong>
+  <p class="py-5">
+    <strong class="block font-medium text-white">Start date</strong>
+    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= tournament.start_date %>
+  </div>
   </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">End date:</strong>
+  <p class="pb-5">
+    <strong class="block font-medium text-white">End date</strong>
+    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= tournament.end_date %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Tournament winner:</strong>
-    <%= tournament.tournament_winner_id %>
+  </div>
   </p>
 
   <% if action_name != "show" %>
-    <%= link_to "Show this tournament", tournament, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this tournament', edit_tournament_path(tournament), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+  <div class = " my-5">
+    <%= link_to "Show this tournament", tournament, class: "actions mb-4 px-10 py-3 btn-brown " %>
+    <%= link_to 'Edit this tournament', edit_tournament_path(tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
+  </div>
     <hr class="mt-6">
   <% end %>
 </div>

@@ -1,15 +1,26 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
+<div class="bg-background-image min-h-screen flex flex-wrap items-center justify-center">
+  <div class="container flex-1 flex flex-col items-center justify-center px-6">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
+      <h1 class="mb-8 text-3xl text-center text-white">Tournament</h1>
+
+
+
+<div class="flex text-white">
+  <div class="">
     <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+      <p class="py-2 px-3 bg-white mb-5 text-black font-medium rounded-lg  flex flex-wrap items-center justify-center " id="notice"><%= notice %></p>
     <% end %>
 
     <%= render @tournament %>
-
-    <%= link_to 'Edit this tournament', edit_tournament_path(@tournament), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="flex flex-row items-center justify-center py-3">
+    <%= link_to 'Edit this tournament', edit_tournament_path(@tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
     <div class="inline-block ml-2">
-      <%= button_to 'Destroy this tournament', tournament_path(@tournament), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%= button_to 'Destroy this tournament', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" %>
     </div>
-    <%= link_to 'Back to tournaments', tournaments_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
+    <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->
+  </div>
+</div>
+</div>
+</div>
 </div>
