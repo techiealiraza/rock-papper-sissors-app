@@ -11,7 +11,11 @@ module.exports = {
     extend: {
 
       backgroundImage: {
-        'background-image': "url('background1.jpeg')"
+
+        'background-image': "url('background1.jpeg')",
+        'user': "url('user.png')",
+        'camera': "url('camera.png')"
+
       },
       colors: {
         "gold": "#d97706",

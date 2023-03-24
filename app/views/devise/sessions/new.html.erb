@@ -1,5 +1,5 @@
-<h2>Log in</h2>
-
+<!-- <h2>Log in</h2>
+<%= javascript_tag "displayClock()" %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %><br />
@@ -23,4 +23,78 @@
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= render "devise/shared/links" %> -->
+<div class="bg-background-image min-h-screen flex flex-col">
+  <div
+    class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 "
+  >
+    <div
+      class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 text-black w-full"
+    >
+      <h1 class="mb-8 text-3xl text-center text-white">Sign in</h1>
+
+      <input
+        type="text"
+        class="block border border-grey-light w-full pt-3 rounded mb-4 border-gold"
+        name="email"
+        placeholder="Email"
+      />
+
+      <div
+      class="py-2  flex flex-row space-x-20 items-center justify-center border border-gold rounded bg-gray-200"
+      x-data="app"
+    >
+      <div>
+        <input type="radio" name="option" id="1" class="peer hidden"  data-action="click-> toggle#toggle"/>
+        <label
+          for="1"
+          class="px-7 block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-gold peer-checked:text-black"
+          >Password</label
+        >
+      </div>
+  
+      <div>
+        <input type="radio" name="option" id="2" class="peer hidden" checked />
+        <label
+          for="2"
+          class=" text-black px-7 block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-gold peer-checked:text-black"
+          >
+          OTP
+          </label
+        >
+      </div>
+    </div>
+
+    <input
+    type="text"
+    class="mt-3 block border border-grey-light w-full p-3 rounded mb-4 "
+    
+    name="password"
+    id="field"
+    placeholder= "Password"
+  />
+
+  <%= content_tag(:div, "okay", data:{
+    controller: "counter",
+  })%>
+
+
+
+
+
+
+
+
+
+
+
+      
+  <div class="flex flex-row items-center justify-center">
+      <a class="mb-4 px-10 py-3 btn-brown" href="/users/sign_in/"> Sign In </a>
+
+    </div>
+    
+    
+  </div>
+</div>
+
