@@ -1,3 +1,7 @@
+<div class="bg-background-image min-h-screen flex flex-col">
+<div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-6">
+  <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full ">
+    <h1 class="mb-8 text-3xl text-center text-white">Tournament</h1>
 <%= form_with(model: tournament, class: "contents") do |form| %>
   <% if tournament.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
@@ -12,31 +16,46 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :name %>
+    <%= form.label :name, class: "text-white"%>
     <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :description %>
+    <%= form.label :description, class: "text-white" %>
     <%= form.text_field :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :start_date %>
-    <%= form.datetime_select :start_date, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :start_date, class: "text-white "%>
+    <%= form.datetime_local_field :start_date, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :end_date %>
-    <%= form.datetime_select :end_date, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :end_date, class: "text-white" %>
+    <%= form.datetime_local_field :end_date, class: "block shadow rounded-md border booutline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :tournament_winner_id %>
-    <%= form.number_field :tournament_winner_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="flex flex-row items-center justify-center ">
+    <div class="actions mb-4 px-10 py-3 btn-brown">
+    <%= form.submit "Add Tournament" %>
   </div>
+</div>
 
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <% end %>
+  </div>
+</div>
+</div>
