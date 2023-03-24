@@ -4,5 +4,5 @@
 
 import { application } from "./application"
 
-import CounterController from "./counter_controller"
-application.register("counter", CounterController)
+import OkayController from "./okay_controller"
+application.register("okay", OkayController)

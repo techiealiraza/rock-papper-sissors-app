@@ -2,60 +2,73 @@
   <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-6">
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full ">
       <h1 class="mb-8 text-3xl text-center text-white">Sign up</h1>
-
-
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= render "devise/shared/error_messages" , resource: resource %>
 
-        <div class="field">
-          <%= f.label :name, class: "text-white" %>
-            <%= f.text_field :name, autofocus: true,
-              class: "border border-gold w-full rounded" %>
-        </div>
+
+          <div class="flex flex-row items-center justify-center">
+            <div class="personal-image">
+              <label class="label">
+                <input type="file" />
+                <figure class="personal-figure">
+                  <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar"
+                    alt="avatar">
+                  <figcaption class="personal-figcaption">
+                    <img
+                      src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                  </figcaption>
+                </figure>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= f.label :name, class: "text-white" %>
+              <%= f.text_field :name, autofocus: true, class: "border border-gold w-full rounded" %>
+          </div>
 
           <div class="field block pt-3">
             <%= f.label :email, class: "text-white" %>
-              <%= f.email_field :email, autocomplete: "email" ,
-                class: "border border-gold w-full rounded" %>
+              <%= f.email_field :email, autocomplete: "email" , class: "border border-gold w-full rounded" %>
           </div>
 
           <div class="field block pt-3">
             <%= f.label :phone_number, class: "text-white" %>
-              <%= f.text_field :phone_number,
-                class: "border border-gold w-full rounded" %>
+              <%= f.text_field :phone_number, class: "border border-gold w-full rounded" %>
           </div>
 
-          <div class="field rounded pt-3">
-            <%= f.label :password, class: "text-white" %>
-              <%= f.password_field :password, class: "border border-gold w-full rounded "%>
-          </div>
 
-          <div class="field pt-3">
-            <%= f.label :password_confirmation, class: "text-white" %>
-              <%= f.password_field :password_confirmation, class: "border border-gold w-full rounded" %>
-          </div>
-          <div class="one text-white font-medium  py-3 rounded-lg">
-            By signing up, you agree to the
-            <a class="no-underline border-b border-grey-dark text-white" href="#">
-              Terms of Service
-            </a>
-            and
-            <a class="no-underline border-b border-grey-dark text-white" href="#">
-              Privacy Policy
-            </a>
-          </div>
-          <div class="flex flex-row items-center justify-center ">
-            <div class="actions mb-4 px-10 py-3 btn-brown">
-              <%= f.submit "Sign up" %>
+            <div class="field rounded pt-3">
+              <%= f.label :password, class: "text-white" %>
+                <%= f.password_field :password, class: "border border-gold w-full rounded " %>
             </div>
-          </div>
-          <div class="text-white mt-3 px-3">
-            Already have an account?
-            <a class="text-gold font-black hover:text-gold_shade2 " href="/users/sign_in/"> Login </a>
-          </div>
+
+            <div class="field pt-3">
+              <%= f.label :password_confirmation, class: "text-white" %>
+                <%= f.password_field :password_confirmation, class: "border border-gold w-full rounded" %>
+            </div>
+            <div class="one text-white font-medium  py-3 rounded-lg">
+              By signing up, you agree to the
+              <a class="no-underline border-b border-grey-dark text-white" href="#">
+                Terms of Service
+              </a>
+              and
+              <a class="no-underline border-b border-grey-dark text-white" href="#">
+                Privacy Policy
+              </a>
+            </div>
+            <div class="flex flex-row items-center justify-center ">
+              <div class="actions mb-4 px-10 py-3 btn-brown">
+                <%= f.submit "Sign up" %>
+              </div>
+            </div>
+            <div class="text-white mt-3 px-3">
+              Already have an account?
+              <a class="text-gold font-black hover:text-gold_shade2 " href="/users/sign_in/"> Login </a>
+            </div>
     </div>
     <% end %>
-    
+
 
   </div>
 </div>
