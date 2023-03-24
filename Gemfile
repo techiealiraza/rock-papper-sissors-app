@@ -68,6 +68,11 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "devise-two-factor", "~> 4.0"
 
 
+gem 'dotenv-rails'
+gem 'rqrcode', '~> 2.1'
+
+
 gem "stimulus-rails"
 
 gem "hotwire-rails", "~> 0.1.3"
+
