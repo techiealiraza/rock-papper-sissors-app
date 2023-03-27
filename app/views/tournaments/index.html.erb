@@ -1,20 +1,27 @@
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-white mb-5 text-black font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+    <p class="py-2 px-3 bg-white mb-5 text-black font-medium rounded-lg inline-block" id="notice">
+      <%= notice %>
+    </p>
+    <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-3xl">Tournaments</h1>
-    <%= link_to 'New tournament', new_tournament_path, class: "actions mb-4 px-10 py-3 btn-brown" %>
-  </div>
+      <div class="flex justify-between items-center">
+        <h1 class="font-bold text-3xl">Tournaments</h1>
+        <%= link_to 'New tournament' , new_tournament_path, class: "actions mb-4 px-10 py-3 btn-brown" %>
+      </div>
 
-  <div id="tournaments" class="min-w-full">
-    <div class="bg-background-image min-h-screen flex flex-wrap items-center justify-center">
-      <div class="container flex-1 flex flex-col items-center justify-center px-6">
-        <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
-    <%= render @tournaments %>
-  </div>
-  </div>
-  </div>
-  </div>
+      <div id="tournaments" class="">
+        <div class="bg-background-image min-h-screen">
+          <div class="container-fluid flex flex-wrap items-center justify-center  py-6">
+            
+            <%= @tournaments.each do |tournament| %>
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-5 mx-5 my-10 py-8 w-80 ">
+              <%= render tournament%>
+            </div>
+            <% end %>
+            
+          
+          </div>
+        </div>
+      </div>
 </div>
