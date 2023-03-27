@@ -4,8 +4,8 @@
     <h1 class="mb-8 text-3xl text-center text-white">Tournament</h1>
 <%= form_with(model: tournament, class: "contents") do |form| %>
   <% if tournament.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2>
+    <div id="error_explanation" class="bg-black-400 text-gold px-3 py-2 font-medium rounded-lg mt-3">
+      <!-- <h2><%= pluralize(tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2> -->
 
       <ul>
         <% tournament.errors.each do |error| %>

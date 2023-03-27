@@ -1,25 +1,22 @@
-<div class = "w-fill">
-  <p class="pt-5 w-0.8">
+<!-- <div class = "w-fill"> -->
+  <p class="pt-5">
     <strong class="block font-medium text-white">Name</strong>
     <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2   bg-white text-black">
     <%= tournament.name %>
     </div>
   </p>
-  <p class="pt-10">
-    <strong class="block font-medium pt-5 text-white">Description</strong>
-    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
-    <%= tournament.description%>
-  </div>
-  </p>
+  <% if action_name != "index" %>
+  <%= render 'description', tournament: tournament %>
+  <% end %>
 
-  <p class="py-5">
+  <p class="pt-5">
     <strong class="block font-medium text-white">Start date</strong>
     <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= tournament.start_date %>
   </div>
   </p>
 
-  <p class="pb-5">
+  <p class="pt-5">
     <strong class="block font-medium text-white">End date</strong>
     <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= tournament.end_date %>
@@ -34,10 +31,10 @@
   </div>
 
   <% if action_name != "show" %>
-  <div class = " my-5">
-    <%= link_to "Show this tournament", tournament, class: "actions mb-4 px-10 py-3 btn-brown " %>
-    <%= link_to 'Edit this tournament', edit_tournament_path(tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
+  <div class = " my-5 flex flex-row items-center justify-center px-3">
+    <%= link_to "Show", tournament, class: "actions mb-4 mr-3  px-10 py-3 btn-brown " %>
+    <%= link_to 'Edit', edit_tournament_path(tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
   </div>
-    <hr class="mt-6">
+    <!-- <hr class="mt-6"> -->
   <% end %>
-</div>
+<!-- </div> -->
