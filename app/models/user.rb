@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :tournaments_users
+  has_many :messages
   has_many :tournaments, through: :tournaments_users
   has_many :users_matches
   has_many :matches, through: :users_matches

@@ -1,15 +1,39 @@
 class TournamentsController < ApplicationController
+
+  before_action :authenticate_user!
   before_action :set_tournament, only: %i[show edit update destroy]
-  before_action :validate_date, only: %i[save]
+
 
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all
   end
 
+
+  def show; end
+
   # GET /tournaments/new
   def new
     @tournament = Tournament.new
+  end
+
+
+
+  # GET /tournaments/1/edit
+  def edit; end
+
+  def registration
+    @tournament = Tournament.find(params[:tournament_id])
+    @user = User.find(params[:user_id])
+    # @tournaments_user = @tournament.tournaments_user.build(user_id: current_user.id)
+    @tournaments_user = TournamentsUser.new(user: @user, tournament: @tournament)
+    if @tournaments_user.save
+      flash[:success] = 'You have registered for the tournament!'
+      redirect_to tournament_url(@tournament)
+    else
+      flash[:error] = 'Registration failed.'
+      redirect_to tournament_url(@tournament)
+    end
   end
 
   # POST /tournaments or /tournaments.json
@@ -19,6 +43,7 @@ class TournamentsController < ApplicationController
     respond_to do |format|
       if @tournament.save
         format.html { redirect_to tournament_url(@tournament), notice: 'Tournament was successfully created.' }
+
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -55,11 +80,5 @@ class TournamentsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def tournament_params
     params.require(:tournament).permit(:name, :description, :start_date, :end_date, :tournament_winner_id)
-  end
-
-  def validate_date
-    return unless @tournament.start_date < Time.now
-
-    errors.add(:start_date, 'Please Select Valid Start Date')
   end
 end
