@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :matches
-  resources :tournaments
+  resources :tournaments do
+    member do
+      post 'registration'
+    end
+  end
   get 'rockpaperscissor/home'
   devise_for :users
   devise_scope :user do
