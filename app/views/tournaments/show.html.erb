@@ -5,17 +5,19 @@
 
 
 
-<div class="flex text-white">
+<div class=" text-white">
   <div class="">
+    <div class = "flex items-center justify-center">
     <% if notice.present? %>
-      <p class="py-2 px-3 bg-white mb-5 text-black font-medium rounded-lg  flex flex-wrap items-center justify-center " id="notice"><%= notice %></p>
+      <p class="py-2 px-3  bg-gold mb-5 text-black font-medium rounded-lg  flex flex-wrap items-center justify-center " id="notice"><%= notice %></p>
     <% end %>
+  </div>
 
     <%= render @tournament %>
     <div class="flex flex-row items-center justify-center py-3">
-    <%= link_to 'Edit this tournament', edit_tournament_path(@tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
+    <%= link_to 'Edit', edit_tournament_path(@tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
     <div class="inline-block ml-2">
-      <%= button_to 'Destroy this tournament', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" %>
+      <%= button_to 'Delete', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" %>
     </div>
   </div>
     <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->

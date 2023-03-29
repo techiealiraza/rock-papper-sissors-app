@@ -12,26 +12,26 @@
   <p class="pt-5">
     <strong class="block font-medium text-white">Start date</strong>
     <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
-    <%= tournament.start_date %>
+    <%= tournament.start_date.strftime("%B %d, %Y %I:%M %p") %>
   </div>
   </p>
 
   <p class="pt-5">
     <strong class="block font-medium text-white">End date</strong>
     <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
-    <%= tournament.end_date %>
+    <%= tournament.end_date.strftime("%B %d, %Y %I:%M %p") %>
   </div>
   </p>
-  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+  <div class="flex flex-row items-center justify-center pt-4">
     <%= form_with url: registration_tournament_path(tournament.id), method: :post do |form| %>
       <%= form.hidden_field :user_id, value: current_user.id %>
       <%= form.hidden_field :tournament_id, value: tournament.id %>
-      <%= form.submit "Register for Tournament", class: "actions mb-4 px-10 py-3 btn-brown" %>
+      <%= form.submit "Register", class: "actions mb-4 px-10 py-3 btn-brown" %>
     <% end %>
   </div>
 
   <% if action_name != "show" %>
-  <div class = " my-5 flex flex-row items-center justify-center px-3">
+  <div class = " mb-5 flex flex-row items-center justify-center px-3">
     <%= link_to "Show", tournament, class: "actions mb-4 mr-3  px-10 py-3 btn-brown " %>
     <%= link_to 'Edit', edit_tournament_path(tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
   </div>

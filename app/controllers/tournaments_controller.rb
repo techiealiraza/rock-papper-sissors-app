@@ -1,14 +1,11 @@
 class TournamentsController < ApplicationController
-
   before_action :authenticate_user!
   before_action :set_tournament, only: %i[show edit update destroy]
-
 
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all
   end
-
 
   def show; end
 
@@ -16,8 +13,6 @@ class TournamentsController < ApplicationController
   def new
     @tournament = Tournament.new
   end
-
-
 
   # GET /tournaments/1/edit
   def edit; end
@@ -28,11 +23,9 @@ class TournamentsController < ApplicationController
     # @tournaments_user = @tournament.tournaments_user.build(user_id: current_user.id)
     @tournaments_user = TournamentsUser.new(user: @user, tournament: @tournament)
     if @tournaments_user.save
-      flash[:success] = 'You have registered for the tournament!'
-      redirect_to tournament_url(@tournament)
+      redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!'
     else
-      flash[:error] = 'Registration failed.'
-      redirect_to tournament_url(@tournament)
+      redirect_to tournament_url(@tournament), notice: 'Registration failed'
     end
   end
 
