@@ -9,8 +9,9 @@
           <div class="flex flex-row items-center justify-center">
             <div class="personal-image">
               <label class="label">
-                <input type="file" />
+                <!-- <input type="file" /> -->
                 <figure class="personal-figure">
+                  <%= f.file_field :avatar %>
                   <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar"
                     alt="avatar">
                   <figcaption class="personal-figcaption">
@@ -20,7 +21,22 @@
                 </figure>
               </label>
             </div>
-          </div>
+          </div> 
+          
+          <!-- <input accept="image/*" type='file' id="imgInp" />
+  <img id="image_preview#load" src="#" alt="your image" class = "w-50 h-50" /> -->
+
+  <input type="file" accept="image/*" onchange="loadFile(event)">
+<img id="output"/>
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
 
           <div class="field">
             <%= f.label :name, class: "text-white" %>
