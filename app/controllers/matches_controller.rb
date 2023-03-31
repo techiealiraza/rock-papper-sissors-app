@@ -17,6 +17,12 @@ class MatchesController < ApplicationController
   # GET /matches/1/edit
   def edit; end
 
+  def generate_matches
+    tournaments = Tournament.all
+    tournaments.each do |tournament|
+    end
+  end
+
   # POST /matches or /matches.json
   def create
     # tournament = Tournament.find(tournament_id)
@@ -33,37 +39,38 @@ class MatchesController < ApplicationController
 
     matches = []
 
-    registered_users.each_slice(2) do |pair|
+    registered_users.each_slice(2) do |user1, user2|
       match = Match.new(tournament_id: tournament.id)
-      match.users << pair
+      match.users << user1
+      match.users << user2
       matches << match
     end
 
-    registered_users.each_slice(3) do |trio|
-      match = Match.new(tournament_id: tournament.id)
-      match.users << trio
-      matches << match
-    end
+    # registered_users.each_slice(3) do |trio|
+    #   match = Match.new(tournament_id: tournament.id)
+    #   match.users << trio
+    #   matches << match
+    # end
 
-    registered_users.each_slice(4) do |quad|
-      match = Match.new(tournament_id: tournament.id)
-      match.users << quad
-      matches << match
-    end
+    # registered_users.each_slice(4) do |quad|
+    #   match = Match.new(tournament_id: tournament.id)
+    #   match.users << quad
+    #   matches << match
+    # end
 
     Match.transaction do
       matches.each(&:save!)
     end
 
-    respond_to do |format|
-      if @match.save
-        format.html { redirect_to match_url(@match), notice: 'Match was successfully created.' }
-        format.json { render :show, status: :created, location: @match }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @match.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @match.save
+    #     format.html { redirect_to match_url(@match), notice: 'Match was successfully created.' }
+    #     format.json { render :show, status: :created, location: @match }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @match.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /matches/1 or /matches/1.json
