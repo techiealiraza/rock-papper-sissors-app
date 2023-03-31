@@ -13,8 +13,7 @@ module.exports = {
       backgroundImage: {
 
         'background-image': "url('background1.jpeg')",
-        'user': "url('user.png')",
-        'camera': "url('camera.png')"
+        'default_avatar': "url('default_avatar.png')",
 
       },
       colors: {

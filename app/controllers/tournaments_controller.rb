@@ -29,7 +29,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-  # POST /tournaments or /tournaments.json
   def create
     @tournament = Tournament.new(tournament_params)
 
