@@ -14,6 +14,8 @@ module.exports = {
 
         'background-image': "url('background1.jpeg')",
         'default_avatar': "url('default_avatar.png')",
+        'default_image': "url('image_icon.png')",
+        'camera_icon': "url('camera.png')",
 
       },
       colors: {

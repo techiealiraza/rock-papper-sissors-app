@@ -2,6 +2,7 @@ class Tournament < ApplicationRecord
   has_many :tournaments_users
   has_many :users, through: :tournaments_users
   has_many :matches, dependent: :destroy
+  has_one_attached :image
   validate :end_date_is_after_start_date
   validate :start_date_is_after_end_date
   validate :start_date_validation
