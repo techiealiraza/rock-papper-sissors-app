@@ -11,9 +11,9 @@
               <label class="label">
                 <!-- <input type="file" /> -->
                 <figure class="personal-figure">
-                  <%= f.file_field :avatar %>
+                  <%= f.file_field :avatar, onchange: "loadFile(event)"%>
                   <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar"
-                    alt="avatar">
+                    alt="avatar", id="output">
                   <figcaption class="personal-figcaption">
                     <img
                       src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -23,11 +23,6 @@
             </div>
           </div> 
           
-          <!-- <input accept="image/*" type='file' id="imgInp" />
-  <img id="image_preview#load" src="#" alt="your image" class = "w-50 h-50" /> -->
-
-  <input type="file" accept="image/*" onchange="loadFile(event)">
-<img id="output"/>
 <script>
   var loadFile = function(event) {
     var output = document.getElementById('output');
