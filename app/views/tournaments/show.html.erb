@@ -15,10 +15,14 @@
 
     <%= render @tournament %>
     <div class="flex flex-row items-center justify-center py-3">
-    <%= link_to 'Edit', edit_tournament_path(@tournament), class: "actions mb-4 px-10 py-3 btn-brown " %>
+      <% if @tournament.start_date.after?(Time.now.utc + (5*3600))%>
+    <%= link_to 'Edit', edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown " %>
+    <% end %>
+    <% if @tournament.start_date.after?(Time.now.utc + (5*3600))%>
     <div class="inline-block ml-2">
       <%= button_to 'Delete', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" %>
     </div>
+    <%end%>
   </div>
     <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->
   </div>

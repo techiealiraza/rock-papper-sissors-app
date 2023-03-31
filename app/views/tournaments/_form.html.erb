@@ -20,6 +20,14 @@
     <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
+  <%= form.label :image, class: "text-white"%>
+  <div class="personal-image">
+    <label class="label ml-0">
+        <%= form.file_field :image, onchange: "loadFile(event)"%>
+        <%= image_tag('image_icon.png', class: "h-40 w-full rounded-lg", id: "output")%>
+    </label>
+  </div>
+
   <div class="my-5">
     <%= form.label :description, class: "text-white" %>
     <%= form.text_field :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
