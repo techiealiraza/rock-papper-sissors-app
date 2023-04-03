@@ -15,6 +15,15 @@
   <%= render 'description', tournament: tournament %>
   <% end %>
 
+  <%= render 'registration_deadline', tournament: tournament %>
+
+  <p class="pt-5">
+    <strong class="block font-medium text-white">Registration deadline</strong>
+    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+    <%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %>
+  </div>
+  </p>
+
   <p class="pt-5">
     <strong class="block font-medium text-white">Start date</strong>
     <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
@@ -28,7 +37,7 @@
     <%= tournament.end_date.strftime("%B %d, %Y %I:%M %p") %>
   </div>
   </p>
-  <% if tournament.start_date.after?(Time.now.utc + (5*3600))%>
+  <% if tournament.registration_deadline.after?(Time.now.utc + (5*3600))%>
   <div class="flex flex-row items-center justify-center pt-4">
     <%= form_with url: registration_tournament_path(tournament.id), method: :post do |form| %>
       <%= form.hidden_field :user_id, value: current_user.id %>
