@@ -1,8 +1,10 @@
 <% if tournament.registration_deadline.before?(Time.now.utc + (5*3600))%>
-  <div class=" mt-5 h-40 bg-gold rounded-xl w-full justify-center ">
-    <h2 class= "text-centered">
-      Registration Closed
-    </h2>
+  <div class="container mt-5 h-40 bg-gold rounded-xl flex flex-col items-center justify-center">
+    <div class= "flex flex-row items-center">
+      <h1>
+        Registration Closed
+      </h1>
+    </div>
   </div>
   <% else %>
   <div class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= tournament.id %>, data-countdown-time=<%= tournament.registration_deadline.to_json.html_safe %>>
