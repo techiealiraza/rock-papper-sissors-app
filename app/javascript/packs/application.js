@@ -11,7 +11,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 // import "change"
 import '../css/application.scss'
-// import '../controllers/counter_controller'
+import '../controllers/countdown_controller'
 
 
 

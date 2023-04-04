@@ -6,6 +6,13 @@ class Tournament < ApplicationRecord
   validate :end_date_is_after_start_date
   validate :start_date_is_after_end_date
   validate :start_date_validation
+  validate :deadline_before_start_date
+
+  def deadline_before_start_date
+    return unless registration_deadline > start_date || registration_deadline < Time.now.getlocal
+
+    errors.add(:registration_deadline, ':Please Check Registration Deadline')
+  end
 
   def end_date_is_after_start_date
     return unless end_date < start_date
