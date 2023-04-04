@@ -8,7 +8,7 @@
 
   <div class = "mt-5" >
     <% if tournament.image.attached? %>
-    <%= image_tag tournament.image, class: "h-23  rounded-xl" %>
+    <%= image_tag(tournament.image, class: "rounded-xl h-72 w-full") %>
     <% end %>
   </div>
   <% if action_name != "index" %>
