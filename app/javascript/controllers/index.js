@@ -4,8 +4,15 @@
 
 // import { application } from "./application"
 
-import ImagePreviewController from "./image_preview_controller"
-application.register("image-preview", ImagePreviewController)
+import { Application } from "stimulus"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
+// import { application } from "./application"
+
+const application = Application.start()
+const context = require.context("controllers", true, /_controller\.js$/)
+application.load(definitionsFromContext(context))
+// import CountdownController from "./countdown_controller"
+// application.register("countdown", CountdownController)
 
 import PassController from "./pass_controller"
 application.register("pass", PassController)

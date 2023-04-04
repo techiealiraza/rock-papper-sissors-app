@@ -19,7 +19,31 @@ class MatchesController < ApplicationController
 
   def generate_matches
     tournaments = Tournament.all
+    matches = []
     tournaments.each do |tournament|
+      tournament.registration_deadline < Time.now.getlocal
+      tournament = Tournament.find(tournament_id)
+      registered_users = tournament.users.shuffle
+
+      if registered_users.length.even?
+
+        registered_users.each_slice(2) do |user1, user2|
+          match = Match.new(tournament_id: tournament.id)
+          match.users << user1
+          match.users << user2
+          matches << match
+        end
+      else
+      matches << registered_users.take(3)
+      registered_users.drop(3).each_slice(2) do |user1, user2|
+        match = Match.new(tournament_id: tournament.id)
+        match.users << user1
+        match.users << user2
+        matches << match
+      end
+    end
+    Match.transaction do
+      matches.each(&:save!)
     end
   end
 
@@ -34,18 +58,6 @@ class MatchesController < ApplicationController
     # match.save
     # end
 
-    tournament = Tournament.find(tournament_id)
-    registered_users = tournament.users.shuffle
-
-    matches = []
-
-    registered_users.each_slice(2) do |user1, user2|
-      match = Match.new(tournament_id: tournament.id)
-      match.users << user1
-      match.users << user2
-      matches << match
-    end
-
     # registered_users.each_slice(3) do |trio|
     #   match = Match.new(tournament_id: tournament.id)
     #   match.users << trio
@@ -58,11 +70,6 @@ class MatchesController < ApplicationController
     #   matches << match
     # end
 
-    Match.transaction do
-      matches.each(&:save!)
-    end
-
-
     respond_to do |format|
       if @match.save
         format.html { redirect_to match_url(@match), notice: 'Match was successfully created.' }
@@ -70,7 +77,6 @@ class MatchesController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
       end
     end
-
   end
 
   # PATCH/PUT /matches/1 or /matches/1.json
