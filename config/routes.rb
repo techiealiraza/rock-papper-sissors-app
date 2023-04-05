@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
   get 'rockpaperscissor/home'
+  post 'matches/create_matches', to: 'matches#create_matches', as: 'create_matches'
+  get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
