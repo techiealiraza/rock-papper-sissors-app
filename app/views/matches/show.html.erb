@@ -1,15 +1,26 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
+<div class="bg-background-image min-h-screen flex flex-wrap items-center justify-center">
+  <div class="container flex-1 flex flex-col items-center justify-center px-6">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
+      <h1 class="mb-8 text-6xl text-center text-white">Match</h1>
+
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-    <%= render @match %>
-
-    <%= link_to 'Edit this match', edit_match_path(@match), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this match', match_path(@match), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-    <%= link_to 'Back to matches', matches_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+<div class="flex flex-row justify-center">
+  <div class= "text-4xl text-white mr-5">
+    <%= @usermatches[0].name.capitalize%>
   </div>
+  <div class= "text-4xl text-gold mr-5">
+    vs
+  </div>
+  <div class= "text-4xl text-white">
+    <%= @usermatches[1].name.capitalize%>
+  </div> 
 </div>
+<%= render 'match_timer', match: @match %>
+</div>
+</div>
+</div>
+
+

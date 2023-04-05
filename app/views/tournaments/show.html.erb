@@ -19,11 +19,19 @@
     <%= link_to 'Edit', edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown " %>
     <% end %>
     <% if @tournament.start_date.after?(Time.now.utc + (5*3600))%>
-    <div class="inline-block ml-2">
+    <div class="inline-block mx-2">
       <%= button_to 'Delete', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" %>
     </div>
     <%end%>
+    <% if @tournament.registration_deadline.before?(Time.now.utc + (5*3600))%>
+      <% if @tournament.matches.size == 0 %>
+        <%= link_to 'Generate Matches', create_matches_path(tournament_id: @tournament.id), method: :post, class: "mb-4 px-10 py-3 btn-brown " %>
+      <% else %>
+        <%= link_to 'View Matches', matches_path(tournament_id: @tournament.id), method: :get, class: "mb-4 px-10 py-3 btn-brown " %>
+      <% end %>
+    <% end %>
   </div>
+  
     <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->
   </div>
 </div>
