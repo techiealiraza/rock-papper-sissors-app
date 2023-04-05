@@ -19,6 +19,7 @@ class MatchesController < ApplicationController
   # GET /matches/1/edit
   def edit; end
 
+
   # def generate_matches
   #   tournaments = Tournament.all
   #   matches = []
@@ -133,10 +134,36 @@ class MatchesController < ApplicationController
         match.users << user1
         match.users << user2
         matches << match
+
+  def generate_matches
+    tournaments = Tournament.all
+    matches = []
+    tournaments.each do |tournament|
+      tournament.registration_deadline < Time.now.getlocal
+      tournament = Tournament.find(tournament_id)
+      registered_users = tournament.users.shuffle
+
+      if registered_users.length.even?
+
+        registered_users.each_slice(2) do |user1, user2|
+          match = Match.new(tournament_id: tournament.id)
+          match.users << user1
+          match.users << user2
+          matches << match
+        end
+      else
+        matches << registered_users.take(3)
+        registered_users.drop(3).each_slice(2) do |user1, user2|
+          match = Match.new(tournament_id: tournament.id)
+          match.users << user1
+          match.users << user2
+          matches << match
+        end
       end
-    end
-    Match.transaction do
-      matches.each(&:save!)
+      Match.transaction do
+        matches.each(&:save!)
+
+      end
     end
 
     # tournament = Tournament.find(tournament_id)
@@ -174,10 +201,8 @@ class MatchesController < ApplicationController
     respond_to do |format|
       if @match.update(match_params)
         format.html { redirect_to match_url(@match), notice: 'Match was successfully updated.' }
-        format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @match.errors, status: :unprocessable_entity }
       end
     end
   end

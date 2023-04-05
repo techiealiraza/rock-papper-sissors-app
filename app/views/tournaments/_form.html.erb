@@ -24,7 +24,11 @@
   <div class="personal-image">
     <label class="label ml-0">
         <%= form.file_field :image, onchange: "loadFile(event)"%>
-        <%= image_tag('image_icon.png', class: "h-40 w-full rounded-lg", id: "output")%>
+        <% if @tournament.image.attached? %>
+          <%= image_tag(@tournament.image, class: "h-40 w-full rounded-lg", id: "output")%>
+        <% else %>
+          <%= image_tag('image_icon.png', class: "h-40 w-full rounded-lg", id: "output")%>
+        <% end %>
     </label>
   </div>
 

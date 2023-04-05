@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :matches
+  resources :messages
   resources :tournaments do
     member do
       post 'registration'
