@@ -6,7 +6,8 @@ class MatchesController < ApplicationController
   # GET /matches or /matches.json
   def index
     tournament = Tournament.find(params[:tournament_id])
-    @matches = tournament.matches
+    @matches = []
+    @matches = tournament.matches.page(params[:page])
   end
 
   def matches_index

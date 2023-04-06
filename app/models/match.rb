@@ -1,4 +1,5 @@
 class Match < ApplicationRecord
+  paginates_per 3
   belongs_to :tournament
   has_many :messages
   has_many :users_matches
