@@ -7,18 +7,40 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-<div class="flex flex-row justify-center">
+<div class="flex flex-row items-center justify-center">
   <div class= "text-4xl text-white mr-5">
-    <%= @usermatches[0].name.capitalize%>
+    <% if !@usermatches[0].name.nil? %>
+      <%= @usermatches[0].name.capitalize%>
+    <% else %>
+      <%= "Unknown" %>
+    <% end %>
   </div>
   <div class= "text-4xl text-gold mr-5">
     vs
   </div>
   <div class= "text-4xl text-white">
-    <%= @usermatches[1].name.capitalize%>
+    <% if !@usermatches[1].name.nil? %>
+      <%= @usermatches[1].name.capitalize%>
+    <% else %>
+      <%= "Unknown" %>
+    <% end %>
   </div> 
 </div>
 <%= render 'match_timer', match: @match %>
+<p class="pt-5">
+  <strong class="block font-medium text-white">Registration deadline</strong>
+  <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+    <%= @match.match_time.strftime("%B %d, %Y %I:%M %p") %>
+  </div>
+</p>
+
+<% if (Time.now.utc + (5*3600)) > @match.match_time && (Time.now.utc + (5*3600))<@match.match_time+5.minutes %>
+  <div class = " my-5 flex flex-row items-center justify-center px-3">
+    <!-- replace root_path with the match view -->
+    <%= link_to "Start", root_path, class: "actions mb-4 mr-3  px-10 py-3 btn-brown " %>
+  </div>
+<% end %>
+
 </div>
 </div>
 </div>

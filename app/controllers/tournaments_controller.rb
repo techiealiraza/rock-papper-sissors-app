@@ -5,6 +5,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all
+    # @tournaments = Tournament.page params[:page]
   end
 
   def show; end

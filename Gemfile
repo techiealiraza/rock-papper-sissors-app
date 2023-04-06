@@ -81,3 +81,4 @@ gem "hotwire-rails", "~> 0.1.3"
 # gem "autoprefixer"
 
 gem "whenever", "~> 1.0"
+gem 'kaminari'

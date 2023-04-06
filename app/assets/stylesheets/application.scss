@@ -119,4 +119,24 @@
       height: 100px;
     }
   }
+  // .pagination{
+  //   // background-color: black;
+  //   // color: white;
+  //   margin: 5px;
+  //   padding: 5px;
+  // }
+  // .pagination a.active {
+  //   background-color: black;
+  //   color: white;
+  //   margin: 5px;
+  //   padding: 5px;
+  // }
   
+  .pagination a:hover:not(.active) {
+    background-color: #b45309;
+    border-radius: 10px;
+    // margin: 5px;
+    // padding: 5px;
+    // padding-left: 3px;
+    // padding-right: 3px;
+  }
