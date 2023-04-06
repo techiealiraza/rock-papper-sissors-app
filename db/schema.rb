@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2023_04_06_094927) do
     t.bigint "tournament_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "round", default: 1
+    t.integer "round", default: 0
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
 
