@@ -1,14 +1,43 @@
-<div class="w-full">
+<div class="bg-background-image min-h-screen flex flex-col justify-between">
+<div class="py-20 flex flex-row items-center justify-evenly ">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Matches</h1>
-    <%= link_to 'New match', new_match_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
+    <table class="w-full text-sm text-left text-black mx-5">
+      <thead class="text-lg bg-gold_shade2 items-center">
+        <tr>
+          <th>Match No</th>
+          <th>Date</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody class="bg-gold text-lg">
+        <% adjusted_index = @matches.current_page * 3 - 2 %>
+        <% @matches.each_with_index do |match, index| %>
+          <tr>
+            <td class = "px-6 py-3" ><%= adjusted_index%></td>
+            <td><%= match.match_time.strftime("%B %d, %Y %I:%M %p")%></td>
+            <td>
+              <%= link_to "Show", match, class: "mb-4 px-3 py-2 btn-brown" %>
+            </td>
+          </tr>
+          <% adjusted_index = adjusted_index + 1%>
+        <% end %>
+      </tbody>
+    </table>
+    
   </div>
-
-  <div id="matches" class="min-w-full">
-    <%= render @matches %>
+  <div class = "pb-20 flex flex-row items-center justify-center">
+    <div class=" bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
+      <div class="btn-group">
+        <%= paginate @matches, window: 1,outer_window: 2 %>
+      </div>
+    </div>
   </div>
 </div>
+
+
+
+

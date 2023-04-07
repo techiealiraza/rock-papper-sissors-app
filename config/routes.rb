@@ -6,7 +6,15 @@ Rails.application.routes.draw do
       post 'registration'
     end
   end
+  resources :tournaments do
+    get '/page/:page', action: :index, on: :collection
+  end
+  resources :matches do
+    get '/page/:page', action: :index, on: :collection
+  end
   get 'rockpaperscissor/home'
+  post 'matches/create_matches', to: 'matches#create_matches', as: 'create_matches'
+  get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }

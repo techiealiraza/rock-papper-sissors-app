@@ -1,4 +1,5 @@
 class Tournament < ApplicationRecord
+  paginates_per 3
   has_many :tournaments_users
   has_many :users, through: :tournaments_users
   has_many :matches, dependent: :destroy
