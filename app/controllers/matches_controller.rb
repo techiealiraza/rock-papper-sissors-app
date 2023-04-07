@@ -74,6 +74,53 @@ class MatchesController < ApplicationController
     end
   end
 
+  # Define the winning combinations as a hash
+  # winning_combinations = {
+  #   'rock' => 'scissors',
+  #   'paper' => 'rock',
+  #   'scissors' => 'paper'
+  # }
+
+  # # Determine the number of players and matches per player
+  # num_players = players.size
+  # matches_per_player = num_players == 2 ? 1 : num_players - 1
+
+  # # Determine the winner(s) of the game
+  # if num_players == 2
+  #   # Two-player game
+  #   if players['player1'] == players['player2']
+  #     winner = 'draw'
+  #   elsif winning_combinations[players['player1']] == players['player2']
+  #     winner = 'player1'
+  #   else
+  #     winner = 'player2'
+  #   end
+  # else
+  #   # Three-player game
+  #   player_wins = Hash.new(0)
+  #   players.each do |player, selection|
+  #     players.each do |opponent, opponent_selection|
+  #       next if player == opponent
+  #       if winning_combinations[selection] == opponent_selection
+  #         player_wins[player] += 1
+  #       end
+  #     end
+  #   end
+  #   if player_wins.empty?
+  #     winner = 'draw'
+  #   else
+  #     max_wins = player_wins.values.max
+  #     winner = player_wins.select { |player, wins| wins == max_wins }.keys
+  #   end
+  # end
+
+  # # Return the winner(s)
+  # return winner
+  # end
+
+  # end
+
+
   # POST /matches or /matches.json
   def create_matches
     tournament_id = params[:tournament_id]
