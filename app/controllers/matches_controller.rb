@@ -158,6 +158,7 @@ class MatchesController < ApplicationController
 
   def group_by_two(registered_users, tournament)
     matches = []
+    tournament_start_time = tournament.start_date
     registered_users.each_slice(2) do |user1, user2|
       match_start_time = tournament_start_time + 3.minutes
       match = Match.create(tournament_id: tournament.id, match_time: match_start_time)
@@ -170,6 +171,7 @@ class MatchesController < ApplicationController
 
   def group_by_three(registered_users, tournament)
     matches = []
+    tournament_start_time = tournament.start_date
     match_start_time = tournament_start_time + 3.minutes
     registered_users.each_slice(3) do |user1, user2, user3|
       match = Match.create(tournament_id: tournament.id, match_time: match_start_time)

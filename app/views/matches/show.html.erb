@@ -9,22 +9,11 @@
 
 <div class="flex flex-row items-center justify-center">
   <div class= "text-4xl text-white mr-5">
-    <% if !@usermatches[0].name.nil? %>
-      <%= @usermatches[0].name.capitalize%>
-    <% else %>
-      <%= "Unknown" %>
+    <% @usermatches.each do |player| %>
+      <%= player.name.capitalize %>
+
     <% end %>
   </div>
-  <div class= "text-4xl text-gold mr-5">
-    vs
-  </div>
-  <div class= "text-4xl text-white">
-    <% if !@usermatches[1].name.nil? %>
-      <%= @usermatches[1].name.capitalize%>
-    <% else %>
-      <%= "Unknown" %>
-    <% end %>
-  </div> 
 </div>
 <%= render 'match_timer', match: @match %>
 <p class="pt-5">
