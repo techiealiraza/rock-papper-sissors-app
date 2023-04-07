@@ -4,7 +4,7 @@
 // that code so it'll be compiled.
 
 // import 'bootstrap/dist/js/bootstrap'
-console.log('Hello World from Webpacker')
+// console.log('Hello World from Webpacker')
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
