@@ -1,8 +1,8 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show edit update destroy]
-  ROCK = "rock"
-  PAPER = "paper"
-  SCISSOR = "scissor"
+  ROCK = 'rock'
+  PAPER = 'paper'
+  SCISSOR = 'scissor'
   # GET /matches or /matches.json
   def index
     @matches = Match.all
@@ -50,22 +50,17 @@ class MatchesController < ApplicationController
   # end
 
   def playmatch
-
-
-
-  player1 = players[0]
-  player2 = players[1]
-
-  if player1["selection"] == player2["selection"]
-    puts "It is a tie"
-  elsif (player1["selection"] == ROCK && player2["selection"] == SCISSOR) ||
-        (player1["selection"] == SCISSOR && player2["selection"] == PAPER) ||
-        (player1["selection"] == PAPER && player2["selection"] == ROCK)
-    puts "#{player1["played"]} wins!"
-  else
-    puts "#{player2["played"]} wins!"
-  end
-
+    player1 = players[0]
+    player2 = players[1]
+    if player1['selection'] == player2['selection']
+      puts 'It is a tie'
+    elsif (player1['selection'] == ROCK && player2['selection'] == SCISSOR) ||
+          (player1['selection'] == SCISSOR && player2['selection'] == PAPER) ||
+          (player1['selection'] == PAPER && player2['selection'] == ROCK)
+      puts "#{player1['played']} wins!"
+    else
+      puts "#{player2['played']} wins!"
+    end
   end
   # Define the winning combinations as a hash
   # winning_combinations = {
@@ -73,11 +68,11 @@ class MatchesController < ApplicationController
   #   'paper' => 'rock',
   #   'scissors' => 'paper'
   # }
-  
+
   # # Determine the number of players and matches per player
   # num_players = players.size
   # matches_per_player = num_players == 2 ? 1 : num_players - 1
-  
+
   # # Determine the winner(s) of the game
   # if num_players == 2
   #   # Two-player game
@@ -106,12 +101,12 @@ class MatchesController < ApplicationController
   #     winner = player_wins.select { |player, wins| wins == max_wins }.keys
   #   end
   # end
-  
+
   # # Return the winner(s)
   # return winner
-# end
+  # end
 
-  end
+  # end
 
   # POST /matches or /matches.json
   def create
