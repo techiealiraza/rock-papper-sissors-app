@@ -16,6 +16,9 @@ module.exports = {
         'default_avatar': "url('default_avatar.png')",
         'default_image': "url('image_icon.png')",
         'camera_icon': "url('camera.png')",
+        'rock_icon': "url('rock.png')",
+        'scissor_icon': "url('scissor.png')",
+        'paper_icon': "url('paper.png')",
 
       },
       colors: {

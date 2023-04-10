@@ -21,7 +21,7 @@ export default class extends Controller {
       //   console.log("VVVVVVVVVVVVVVVVVVVVVVVVVV")
       //   console.log(className[index]);
       // }
-      const tournamenElement = d.getElementById(tournament_id)
+      // const tournamenElement = d.getElementById(tournament_id)
       const daysElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .days`);
       const hoursElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .hours`);
       const minutesElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .minutes`);

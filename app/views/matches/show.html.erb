@@ -1,4 +1,4 @@
-<div class="bg-background-image min-h-screen flex flex-wrap items-center justify-center">
+<div class="bg-background-image min-h-screen flex flex-col justify-between">
   <div class="container flex-1 flex flex-col items-center justify-center px-6">
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
       <h1 class="mb-8 text-6xl text-center text-white">Match</h1>
@@ -7,28 +7,39 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-<div class="flex flex-row items-center justify-center">
-  <div class= "text-4xl text-white mr-5">
-    <% @usermatches.each do |player| %>
-      <%= player.name.capitalize %>
-
+<div class="text-4xl text-white mr-5 flex flex-row items-center justify-center">
+  <% length = @usermatches.length-1 %>
+    <% @usermatches.each_with_index do |player, i| %>
+      <div class="ml-3 text-gold">
+        <%= player.name.capitalize %>
+      </div>
+      <% if i != length %>
+        <div class = "ml-3 text-white">
+          vs
+        </div>
+      <% end %>
     <% end %>
-  </div>
 </div>
+
 <%= render 'match_timer', match: @match %>
 <p class="pt-5">
-  <strong class="block font-medium text-white">Registration deadline</strong>
+  <strong class="block font-medium text-white">Match Time</strong>
   <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= @match.match_time.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
-
-<% if (Time.now.utc + (5*3600)) > @match.match_time && (Time.now.utc + (5*3600))<@match.match_time+5.minutes %>
   <div class = " my-5 flex flex-row items-center justify-center px-3">
-    <!-- replace root_path with the match view -->
-    <%= link_to "Start", root_path, class: "actions mb-4 mr-3  px-10 py-3 btn-brown " %>
+    <%= link_to "Start", match_playmatch_path(match_id: @match.id), class: "px-7 py-2 btn-brown " %>
   </div>
-<% end %>
+
+
+<!-- <% if (Time.now.utc + (5*3600)) > @match.match_time && (Time.now.utc + (5*3600))<@match.match_time+5.minutes %> -->
+  <!-- <div class = " my-5 flex flex-row items-center justify-center px-3"> -->
+    <!-- replace root_path with the match view -->
+    <!-- <%= link_to "Start", root_path, class: "actions mb-4 mr-3 btn-brown " %> -->
+  <!-- </div> -->
+<!-- <% end %> -->
+<!-- <div class= "btn-brown">Hi</div> -->
 
 </div>
 </div>
