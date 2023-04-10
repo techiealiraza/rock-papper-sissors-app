@@ -39,6 +39,22 @@
     </p> 
 
     <%= yield %>
+    <!-- <script>
+      let btn = document.querySelector("button");
+
+btn.addEventListener("click", isSend);
+
+function isSend() {
+    btn.innerHTML = "Sent 🎉";
+    btnReset();
+};
+
+function btnReset() {
+    setTimeout(function() {
+       btn.innerHTML = "Send";
+   }, 2000);
+}
+    </script> -->
     <script>
       var loadFile = function(event) {
         var output = document.getElementById('output');
