@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create({channel: "RoomChannel", match_id:1 }, {
+consumer.subscriptions.create("RoomChannel", {
   connected() {
     console.log("Connected ...!")
     // Called when the subscription is ready for use on the server
@@ -12,6 +12,6 @@ consumer.subscriptions.create({channel: "RoomChannel", match_id:1 }, {
   },
 
   received(data) {
-    // Called when there's incoming data on the websocket for this channel
+  Message.create(message: data['message'], user_id: current_user.id, match_id: params[:match_id])
   }
 });
