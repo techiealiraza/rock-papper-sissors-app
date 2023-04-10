@@ -14,14 +14,15 @@ class MessagesController < ApplicationController
   def edit; end
 
   def create
-    @message = message.new(message_params)
+    def create
+      @message = current_user.messages.build(message_params)
+      @message.match_id = params[:match_id]
 
-    respond_to do |format|
       if @message.save
-        format.html { redirect_to message_url(@message), notice: 'message was successfully saved.' }
-
+        ActionCable.server.broadcast "match_chat_#{params[:match_id]}", message: render_message(@message)
+        head :ok
       else
-        format.html { render :new, status: :unprocessable_entity }
+        render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
       end
     end
   end
@@ -47,6 +48,10 @@ class MessagesController < ApplicationController
   # end
 
   private
+
+  def render_message(message)
+    ApplicationController.render(partial: 'messages/message', locals: { message: })
+  end
 
   # Use callbacks to share common setup or constraints between actions.
 

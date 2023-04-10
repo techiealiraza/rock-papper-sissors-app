@@ -76,10 +76,12 @@ ActiveRecord::Schema.define(version: 2023_04_06_094927) do
   end
 
   create_table "tournaments_users", force: :cascade do |t|
-    t.integer "tournament_id"
-    t.integer "user_id"
+    t.bigint "user_id", null: false
+    t.bigint "tournament_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["tournament_id"], name: "index_tournaments_users_on_tournament_id"
+    t.index ["user_id"], name: "index_tournaments_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -119,6 +121,8 @@ ActiveRecord::Schema.define(version: 2023_04_06_094927) do
   add_foreign_key "matches", "tournaments"
   add_foreign_key "messages", "matches"
   add_foreign_key "messages", "users"
+  add_foreign_key "tournaments_users", "tournaments"
+  add_foreign_key "tournaments_users", "users"
   add_foreign_key "users_matches", "matches"
   add_foreign_key "users_matches", "users"
 end
