@@ -11,10 +11,11 @@ Rails.application.routes.draw do
   end
   resources :matches do
     get '/page/:page', action: :index, on: :collection
+    get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
   end
   get 'rockpaperscissor/home'
   post 'matches/create_matches', to: 'matches#create_matches', as: 'create_matches'
-  get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
+  # get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }

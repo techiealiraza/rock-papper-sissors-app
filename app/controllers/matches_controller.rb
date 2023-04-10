@@ -60,11 +60,13 @@ class MatchesController < ApplicationController
   # end
 
   def playmatch
+    @match = Match.find(params[:match_id])
+    players = @match.users
     player1 = players[0]
     player2 = players[1]
 
     if player1['selection'] == player2['selection']
-      puts 'It is a tie'
+      # format.html { render match_playmatch_path(match), notice: 'tie' }
     elsif (player1['selection'] == ROCK && player2['selection'] == SCISSOR) ||
           (player1['selection'] == SCISSOR && player2['selection'] == PAPER) ||
           (player1['selection'] == PAPER && player2['selection'] == ROCK)
