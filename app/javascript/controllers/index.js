@@ -20,3 +20,6 @@ application.register("pass", PassController)
 
 import ChoiceController from "./choice_controller"
 application.register("choice", ChoiceController)
+
+import RandomimageController from "./randomimage_controller"
+application.register("random", RandomimageController)

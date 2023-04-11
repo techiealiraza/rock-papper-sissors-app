@@ -1,4 +1,4 @@
-<div class="bg-background-image min-h-screen">
+<div class="bg-background-image flex flex-col min-h-screen">
 
     <div class="py-10 flex flex-row items-center justify-evenly">
         <% if notice.present? %>
@@ -7,7 +7,11 @@
             </p>
         <% end %>
     </div>
+    <div class = "flex flex-row justify-center">
+    <%= render 'random_images',match_id: 1 %>
     <%= render 'choice_timer', match: @match %>
+    <%= render 'random_images', match_id: 2 %>
+</div>
     <footer class = "mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5">
         <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
         <div class = "flex flex-row justify-center">
@@ -28,7 +32,7 @@
 
 </div>
 
-<script>
+<!-- <script>
 	App.match_chat = App.cable.subscriptions.create(
 		{ channel: "RoomChannel", match_id: match.id },
 		{
@@ -37,5 +41,5 @@
 			},
 		}
 	);
-</script>
+</script> -->
 

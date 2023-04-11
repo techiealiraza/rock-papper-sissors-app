@@ -1,22 +1,6 @@
-
-  <div class="container-fluid  mt-5 flex row justify-center", data-controller="choice", data-choice-id = <%= match.id %>, data-choice-time=<%= (Time.now.utc + 5.hours + 20.minutes).to_json.html_safe %>>
-    <div id = "days" class="days-container">
-      <div class="days", data-countdown-id = <%= match.id %>></div>
-      <div class="days-label">d</div>
-    </div>
-  
-    <div id = "hours" class="hours-container ml-2">
-      <div class="hours", data-choice-id = <%= match.id %>></div>
-      <div class="hours-label">h</div>
-    </div>
-  
-    <div id = "minute" class="minutes-container ml-2">
-      <div class="minutes", data-choice-id = <%= match.id %>></div>
-      <div class="minutes-label">m</div>
-    </div>
-  
-    <div id = "second" class="seconds-container ml-2">
-      <div class="seconds", data-choice-id = <%= match.id %>></div>
+<div class="container-fluid  mt-5 flex row justify-center">
+    <div id = "second" class="seconds-container text-6xl ml-2">
+      <div class="seconds",  data-controller="choice"></div>
       <div class="seconds-label">s</div>
     </div>
-  </div>
+</div>t
