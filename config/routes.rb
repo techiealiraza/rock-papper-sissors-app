@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :matches do
     get '/page/:page', action: :index, on: :collection
     get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
+    resources :messages
   end
   get 'rockpaperscissor/home'
   post 'matches/create_matches', to: 'matches#create_matches', as: 'create_matches'

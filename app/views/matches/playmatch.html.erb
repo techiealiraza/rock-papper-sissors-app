@@ -1,4 +1,5 @@
 <div class="bg-background-image min-h-screen">
+
     <div class="py-10 flex flex-row items-center justify-evenly">
         <% if notice.present? %>
             <p class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice">
@@ -26,3 +27,15 @@
     </footer>
 
 </div>
+
+<script>
+	App.match_chat = App.cable.subscriptions.create(
+		{ channel: "RoomChannel", match_id: match.id },
+		{
+			received: function (data) {
+				$("#messages").append(data.message);
+			},
+		}
+	);
+</script>
+
