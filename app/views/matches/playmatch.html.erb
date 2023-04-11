@@ -1,62 +1,33 @@
 <div class="bg-background-image min-h-screen">
-	<div class="py-10 flex flex-row items-center justify-evenly">
-		<% if notice.present? %>
-		<p
-			class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block"
-			id="notice"
-		>
-			<%= notice %>
-		</p>
-		<% end %>
-	</div>
-	<%= render 'choice_timer', match: @match %>
-	<footer
-		class="mt-auto bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5"
-	>
-		<div class="text-white text-xl flex flex-row justify-center">
-			Please select
-		</div>
-		<div class="flex flex-row justify-center">
-			<button
-				class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
-				style="
-					background-image: url('/assets/rock.png');
-					background-size: contain;
-					background-repeat: no-repeat;
-					background-position: center;
-				"
-			>
-				<span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
-			</button>
-			<button
-				class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
-				style="
-					background-image: url('/assets/paper.png');
-					background-size: contain;
-					background-repeat: no-repeat;
-					background-position: center;
-				"
-			>
-				<span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
-			</button>
-			<button
-				class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3"
-				style="
-					background-image: url('/assets/scissor.png');
-					background-size: contain;
-					background-repeat: no-repeat;
-					background-position: center;
-				"
-			>
-				<span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
-			</button>
-		</div>
-	</footer>
-	<%= content_tag :div, id: 'messages' do %> <%= render @match.messages %> <%
-	end %> <%= form_with url: match_messages_path(@match), method: :post do |form|
-	%> <%= form.text_field :message %> <%= form.hidden_field :user_id, value:
-	current_user.id %> <%= form.submit %> <% end %>
+
+    <div class="py-10 flex flex-row items-center justify-evenly">
+        <% if notice.present? %>
+            <p class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice">
+                <%= notice %>
+            </p>
+        <% end %>
+    </div>
+    <%= render 'choice_timer', match: @match %>
+    <footer class = "mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5">
+        <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
+        <div class = "flex flex-row justify-center">
+            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
+                style="background-image: url('/assets/rock.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
+                <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
+            </button>
+            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
+                style="background-image: url('/assets/paper.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
+                <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
+            </button>
+            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3"
+                style="background-image: url('/assets/scissor.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
+                <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
+            </button>
+        </div> 
+    </footer>
+
 </div>
+
 <script>
 	App.match_chat = App.cable.subscriptions.create(
 		{ channel: "RoomChannel", match_id: match.id },
@@ -67,3 +38,4 @@
 		}
 	);
 </script>
+
