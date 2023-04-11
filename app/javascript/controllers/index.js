@@ -17,3 +17,6 @@ application.register("countdown", CountdownController)
 
 import PassController from "./pass_controller"
 application.register("pass", PassController)
+
+import ChoiceController from "./choice_controller"
+application.register("choice", ChoiceController)

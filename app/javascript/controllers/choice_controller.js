@@ -5,9 +5,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
     connect = (format = 'seconds') => {
-      // let decodedCookie = decodeURIComponent(document.cookie);
-      // console.log(decodedCookie)
-      // const reg_date = decodedCookie
       const reg_date = this.data.get("time");
       const tournament_id = this.data.get("id");
       // console.log("/////////////////////////")
@@ -25,10 +22,10 @@ export default class extends Controller {
       //   console.log(className[index]);
       // }
       // const tournamenElement = d.getElementById(tournament_id)
-      const daysElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .days`);
-      const hoursElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .hours`);
-      const minutesElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .minutes`);
-      const secondsElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .seconds`);
+      const daysElement = d.querySelector(`[data-choice-id="${tournament_id}"] .days`);
+      const hoursElement = d.querySelector(`[data-choice-id="${tournament_id}"] .hours`);
+      const minutesElement = d.querySelector(`[data-choice-id="${tournament_id}"] .minutes`);
+      const secondsElement = d.querySelector(`[data-choice-id="${tournament_id}"] .seconds`);
       let countdown;
       convertFormat(format);
       function convertFormat(format) {
@@ -52,25 +49,24 @@ export default class extends Controller {
           const secondsLeft = Math.round((then - Date.now()) / 1000);
     
           if(secondsLeft <= 0) {
-            document.getElementById("days").style.display = "none";
-            document.getElementById("hours").style.display = "none";
-            document.getElementById("minutes").style.display = "none";
-            document.getElementById("seconds").style.display = "none";
+            document.getElementById("day").style.display = "none";
+            document.getElementById("hour").style.display = "none";
+            document.getElementById("minute").style.display = "none";
+            document.getElementById("second").style.display = "none";
             clearInterval(countdown);
             return;
           };
-    
+          // console.log(secondsLeft)
           displayTimeLeft(secondsLeft);
     
         },1000);
       }
-    
+    // console.lo
       function displayTimeLeft(seconds) {
         daysElement.textContent = Math.floor(seconds / 86400);
         hoursElement.textContent = Math.floor((seconds % 86400) / 3600);
         minutesElement.textContent = Math.floor((seconds % 86400) % 3600 / 60);
         secondsElement.textContent = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
-      }
+      } 
     }
-
 }
