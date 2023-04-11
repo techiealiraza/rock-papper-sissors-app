@@ -7,22 +7,17 @@ export default class extends Controller {
     "/assets/rock.png",
     "/assets/scissor.png",
     "/assets/paper.png",
-    "/assets/question.png",
+    "/assets/rock.png",
     "/assets/paper.png",
     "/assets/rock.png",
-    "/assets/question.png",
+    "/assets/scissor.png",
 
   ];
 
-  interval = 500;
+  interval = 0;
   currentImageIndex = 0;
 
   connect() {
-//   id = this.element.dataset.id;
-console.log("????????????????????")
-  console.log(this.element.dataset.id)
-console.log("????????????????????")
-
     this.changeImage();
   }
 
@@ -32,8 +27,13 @@ console.log("????????????????????")
     if (imageContainer) {
       imageContainer.src = this.imageUrls[this.currentImageIndex];
       this.currentImageIndex = Math.ceil(Math.random() * 6);
+
     }
+    var timerDivValue = document.getElementById("second").textContent
+    if (timerDivValue != "Stop"){
+
     setTimeout(() => this.changeImage(), this.interval);
+    }
   }
 
 }
