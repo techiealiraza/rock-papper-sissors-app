@@ -76,3 +76,5 @@ gem 'hotwire-rails', '~> 0.1.3'
 
 gem 'kaminari'
 gem 'whenever', '~> 1.0'
+
+gem "cancancan", "~> 3.5"
