@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   post 'matches/create_matches', to: 'matches#create_matches', as: 'create_matches'
   # get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    registrations: 'registrations'
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'

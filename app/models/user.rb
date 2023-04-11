@@ -11,4 +11,14 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
          :recoverable, :rememberable, :validatable
+
+  ROLES = %i[guest legend admin super_admin]
+
+  def admin?
+    role == 'admin'
+  end
+
+  def super_admin?
+    role == 'super_admin'
+  end
 end
