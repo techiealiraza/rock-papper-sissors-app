@@ -14,16 +14,15 @@ class MessagesController < ApplicationController
   def edit; end
 
   def create
-    def create
-      @message = current_user.messages.build(message_params)
-      @message.match_id = params[:match_id]
+    @message = current_user.messages.build(message_params)
+    @message.user_id = params[:user_id]
+    @message.match_id = params[:match_id]
 
-      if @message.save
-        ActionCable.server.broadcast "match_chat_#{params[:match_id]}", message: render_message(@message)
-        head :ok
-      else
-        render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
-      end
+    if @message.save
+      ActionCable.server.broadcast "match_chat_#{params[:match_id]}", message: render_message(@message)
+      head :ok
+    else
+      render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -56,7 +55,7 @@ class MessagesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
 
   # Only allow a list of trusted parameters through.
-  def messgae_params
-    params.require(:message).permit(:message, :user_id, :match_id)
+  def message_params
+    params.require(:message).permit(:match_id)
   end
 end
