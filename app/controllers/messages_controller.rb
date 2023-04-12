@@ -7,16 +7,19 @@ class MessagesController < ApplicationController
 
   # GET /tournaments/new
   def new
-    @message = message.new
+    @message = Message.new
   end
 
   # GET /tournaments/1/edit
   def edit; end
 
   def create
-    @message = current_user.messages.build(message_params)
-    @message.user_id = params[:user_id]
-    @message.match_id = params[:match_id]
+    # @message = current_user.messages.build(message_params)
+    user_id = params[:user_id]
+    match_id = params[:match_id]
+    message = params[:message]
+    byebug
+    @message = Message.new(user_id:, match_id:, message:)
 
     if @message.save
       ActionCable.server.broadcast "match_chat_#{params[:match_id]}", message: render_message(@message)
@@ -49,13 +52,16 @@ class MessagesController < ApplicationController
   private
 
   def render_message(message)
-    ApplicationController.render(partial: 'messages/message', locals: { message: })
+    ApplicationController.render('matches/match_messages', locals: { message: })
   end
 
   # Use callbacks to share common setup or constraints between actions.
 
   # Only allow a list of trusted parameters through.
   def message_params
-    params.require(:message).permit(:match_id)
+    byebug
+    params.require(:message).permit(:user_id, :match_id).tap do |message_params|
+      message_params[:message] = { body: params[:message] }
+    end
   end
 end
