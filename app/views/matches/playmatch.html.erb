@@ -53,9 +53,10 @@
 		</div>
 	</footer>
 	<%= content_tag :div, id: 'messages' do %> <%= render @match.messages %> <%
-	end %> <%= form_with url: match_messages_path(@match), method: :post do |form|
-	%> <%= form.text_field :message %> <%= form.hidden_field :user_id, value:
-	current_user.id %> <%= form.submit %> <% end %>
+	end %> <%= form_with url: match_messages_path(), method: :post do |form| %>
+	<%= form.hidden_field :match_id, value: @match %> <%= form.text_field :message
+	%> <%= form.hidden_field :user_id, value: current_user.id %> <%= form.submit
+	%> <% end %>
 </div>
 <script>
 	App.match_chat = App.cable.subscriptions.create(
