@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :selection
   resources :matches
   resources :messages
   resources :tournaments do

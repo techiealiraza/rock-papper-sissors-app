@@ -7,7 +7,7 @@ export default class extends Controller {
         this.timer = setInterval(() => {
             // let minutes = parseInt(i / 60, 10);
             let seconds = parseInt(i % 60, 10);
-            console.log(seconds)
+            // console.log(seconds)
             const d = document;
             const secondsElement = d.getElementById('second');
             if (seconds>0){
@@ -26,7 +26,7 @@ export default class extends Controller {
     }
 
     connect() {
-        let timeInterval = 10;
+        let timeInterval = 2; //time
         //check if you have the last counter value
         let timeLeft = localStorage.getItem('timeLeft');
         if (isNaN(timeLeft)) {
