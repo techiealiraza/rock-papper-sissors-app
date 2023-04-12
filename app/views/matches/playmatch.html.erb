@@ -7,11 +7,12 @@
             </p>
         <% end %>
     </div>
+    <!-- @match.users.length check if match b/w 3 or 2 players  -->
     <div class = "flex flex-row justify-center">
-    <%= render 'random_images',match_id: 1 %>
-    <%= render 'choice_timer', match: @match %>
-    <%= render 'random_images', match_id: 2 %>
-</div>
+        <%= render 'random_images',image_id: 1 %>
+        <%= render 'choice_timer', match: @match %>
+        <%= render 'random_images', image_id: 2 %>
+    </div>
     <footer class = "mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5">
         <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
         <div class = "flex flex-row justify-center">

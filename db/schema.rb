@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_06_094927) do
+ActiveRecord::Schema.define(version: 2023_04_12_061911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,15 @@ ActiveRecord::Schema.define(version: 2023_04_06_094927) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "selections", force: :cascade do |t|
+    t.bigint "match_id"
+    t.integer "user"
+    t.string "selection"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["match_id"], name: "index_selections_on_match_id"
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -76,12 +85,10 @@ ActiveRecord::Schema.define(version: 2023_04_06_094927) do
   end
 
   create_table "tournaments_users", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "tournament_id", null: false
+    t.integer "tournament_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["tournament_id"], name: "index_tournaments_users_on_tournament_id"
-    t.index ["user_id"], name: "index_tournaments_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -121,8 +128,6 @@ ActiveRecord::Schema.define(version: 2023_04_06_094927) do
   add_foreign_key "matches", "tournaments"
   add_foreign_key "messages", "matches"
   add_foreign_key "messages", "users"
-  add_foreign_key "tournaments_users", "tournaments"
-  add_foreign_key "tournaments_users", "users"
   add_foreign_key "users_matches", "matches"
   add_foreign_key "users_matches", "users"
 end

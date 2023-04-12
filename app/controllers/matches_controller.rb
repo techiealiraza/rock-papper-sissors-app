@@ -61,9 +61,9 @@ class MatchesController < ApplicationController
 
   def playmatch
     @match = Match.find(params[:match_id])
-    players = @match.users
-    player1 = players[0]
-    player2 = players[1]
+    @players = @match.users
+    player1 = @players[0]
+    player2 = @players[1]
 
     if player1['selection'] == player2['selection']
       # format.html { render match_playmatch_path(match), notice: 'tie' }
