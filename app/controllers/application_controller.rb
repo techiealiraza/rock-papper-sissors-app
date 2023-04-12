@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-    resource = controller_name.singularize.to_sym
   # def load_and_authorize_resource
   #   resource = controller_name.singularize.to_sym
   #   model = resource.to_s.camelize.constantize
