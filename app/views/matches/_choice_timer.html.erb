@@ -1,21 +1,6 @@
-  <div class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= match.id %>, data-countdown-time=<%= (Time.now + 10.minutes).to_json.html_safe %>>
-    <div class="days-container">
-      <div class="days", data-countdown-id = <%= match.id %>></div>
-      <div class="days-label">d</div>
-    </div>
-  
-    <div class="hours-container ml-2">
-      <div class="hours", data-countdown-id = <%= match.id %>></div>
-      <div class="hours-label">h</div>
-    </div>
-  
-    <div class="minutes-container ml-2">
-      <div class="minutes", data-countdown-id = <%= match.id %>></div>
-      <div class="minutes-label">m</div>
-    </div>
-  
-    <div class="seconds-container ml-2">
-      <div class="seconds", data-countdown-id = <%= match.id %>></div>
+<div class="container-fluid  mt-5 flex row justify-center">
+    <div id = "second" class="seconds-container text-6xl ml-2">
+      <div class="seconds",  data-controller="choice"></div>
       <div class="seconds-label">s</div>
     </div>
-  </div>
+</div>t

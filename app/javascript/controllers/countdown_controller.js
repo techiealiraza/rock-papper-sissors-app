@@ -5,15 +5,18 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
     connect = (format = 'seconds') => {
+      // let decodedCookie = decodeURIComponent(document.cookie);
+      // console.log(decodedCookie)
+      // const reg_date = decodedCookie
       const reg_date = this.data.get("time");
       const tournament_id = this.data.get("id");
-      console.log("/////////////////////////")
-      console.log(tournament_id);
-      console.log("////////////////////////")
-      console.log(new Date(reg_date));
-      console.log(new Date(reg_date));
+      // console.log("/////////////////////////")
+      // console.log(tournament_id);
+      // console.log("////////////////////////")
+      // console.log(new Date(reg_date));
+      // console.log(new Date(reg_date));
       var total = Date.parse(new Date(reg_date)) - Date.parse(new Date());
-      console.log(total);
+      // console.log(total);
       const number = Math.floor((total / 1000)-18000);
       const d = document;
       // var className = document.getElementsByClassName();
@@ -49,6 +52,10 @@ export default class extends Controller {
           const secondsLeft = Math.round((then - Date.now()) / 1000);
     
           if(secondsLeft <= 0) {
+            document.getElementById("days").style.display = "none";
+            document.getElementById("hours").style.display = "none";
+            document.getElementById("minutes").style.display = "none";
+            document.getElementById("seconds").style.display = "none";
             clearInterval(countdown);
             return;
           };

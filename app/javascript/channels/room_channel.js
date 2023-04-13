@@ -12,6 +12,10 @@ consumer.subscriptions.create("RoomChannel", {
   },
 
   received(data) {
+
+  // Message.create(message: data['message'], user_id: current_user.id, match_id: params[:match_id])
+
     Message.create({ message: data['message'], user_id: current_user.id, match_id: params.match_id })
+
   }
 });
