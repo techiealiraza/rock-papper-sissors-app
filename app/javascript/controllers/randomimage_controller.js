@@ -5,8 +5,8 @@ export default class extends Controller {
   
   imageUrls = [
     "/assets/rock.png",
-    "/assets/scissor.png",
     "/assets/paper.png",
+    "/assets/scissor.png",
     "/assets/rock.png",
     "/assets/paper.png",
     "/assets/rock.png",
@@ -18,13 +18,12 @@ export default class extends Controller {
   currentImageIndex = 0;
 
   connect() {
-    const userId = this.element.dataset.userId;
-    const matchId = this.element.dataset.matchId;;
-    console.log(">>>>>>>>>>>>>>>>>>")
-    console.log(userId)
-    console.log(matchId)
-    console.log(">>>>>>>>>>>>>>>>>>")
-
+    const matchId = this.element.dataset.matchId;
+    // document.getElementById(1).src = "/assets/question.png";
+    // console.log(">>>>>>>>>>>>>>>>>>")
+    // console.log(`User_id:: ${matchId}`)
+    // console.log(">>>>>>>>>>>>>>>>>>")
+  
     this.changeImage();
     // debugger
 
@@ -33,26 +32,62 @@ export default class extends Controller {
 
   changeImage() {
     var id = this.element.dataset.id
-    const imageContainer = document.getElementById(id);
+    const imageContainer = document.getElementById(2);
     if (imageContainer) {
       imageContainer.src = this.imageUrls[this.currentImageIndex];
       this.currentImageIndex = Math.ceil(Math.random() * 6);
       var first_image = this.choiceName(1).split('.')[0]
       var second_image = this.choiceName(2).split('.')[0]
-      console.log(`${first_image} ${second_image}`)
+      // console.log(`${first_image} ${second_image}`)
+      // const userId = this.element.dataset.userId;
+      
+      document.getElementById('rock_button').addEventListener('click', function() {
+          var user_image = document.getElementById(1)
+          user_image.src = "/assets/rock.png";
+        });
+        document.getElementById('paper_button').addEventListener('click', function() {
+          var user_image = document.getElementById(1)
+          user_image.src = "/assets/paper.png";
+        });
+        document.getElementById('scissor_button').addEventListener('click', function() {
+          var user_image = document.getElementById(1)
+          user_image.src = "/assets/scissor.png";
+        });
+          
     }
     var timerDivValue = document.getElementById("second").textContent
     if (timerDivValue != "Stop"){
         setTimeout(() => this.changeImage(), this.interval);
     }
     else{
-        var data = {
+    
+      disable_button("rock_button")
+      disable_button("paper_button")
+      disable_button("scissor_button")
+        let user = this.element.dataset.userId
+        let match_id = this.element.dataset.matchId
+        if (user != 'x') {
+          // console.log(">>>>0>>>>")
+          match_id = parseInt(match_id)
+          user = parseInt(user)
+          if (first_image[0] == 'q'){
+            const imageContainer = document.getElementById(1);
+            this.currentImageIndex = Math.ceil(Math.random() * 6)
+            imageContainer.src = this.imageUrls[this.currentImageIndex];
+            var first_image = this.choiceName(1).split('.')[0]
+          }
+          // console.log(">>>>......>>>>")
+          // console.log(typeof first_image)
+          // console.log(">>>>.......>>>>")
+          var data = {
             selection: {
-                match_id: 22,
-                user: 18,
+                match_id: match_id,
+                user: user,
                 selection: first_image,
             }
         };
+        }
+
           
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/selection", true);
@@ -74,8 +109,15 @@ export default class extends Controller {
               }
             }
         };
+        if (data != undefined && data != "string") {
         // xhr.send(JSON.stringify(data));
+        }
         
+    }
+    function disable_button(id){
+      document.getElementById(id).disabled = true;
+      document.getElementById(id).classList.remove('choice-button')
+      document.getElementById(id).classList.add('choice-button2')
     }
   }
   choiceName(id){
