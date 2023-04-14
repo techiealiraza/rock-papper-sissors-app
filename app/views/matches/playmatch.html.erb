@@ -1,3 +1,4 @@
+<% if @remaining_tries > 0 %>
 <div class="bg-background-image flex flex-col min-h-screen">
 
     <div class="py-10 flex flex-row items-center justify-evenly">
@@ -8,37 +9,64 @@
         <% end %>
     </div>
     <!-- @match.users.length check if match b/w 3 or 2 players  -->
+    <% current_user_index = @players.index(current_user.id) %>
+    <% if current_user_index == 0 %>
+        <% opponent_user_index = 1 %>
+    <% else %>
+        <% opponent_user_index = 0 %>
+    <% end %>
+    
+    <div class = "flex flex-col justify-center">
+        <div class = "bg-gold text-black text-xl mx-20 py-3 rounded-lg flex flex-row justify-center">
+            <%= "Remaining Tries : #{@remaining_tries}" %>
+        </div>
     <div class = "flex flex-row justify-center">
-        <%= render 'random_images',image_id: 1 %>
+        <%= render 'random_images',image_id: 1, user_id: @players[current_user_index]%>
         <%= render 'choice_timer', match: @match %>
-        <%= render 'random_images', image_id: 2 %>
+        <%= render 'random_images', image_id: 2, user_id: 'x'%>
     </div>
+</div>
     <footer class = "mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5">
         <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
         <div class = "flex flex-row justify-center">
-            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
+            <button id = "rock_button" class="choice-button"
                 style="background-image: url('/assets/rock.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
                 <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
             </button>
-            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
+            <button id = "paper_button" class="choice-button"
                 style="background-image: url('/assets/paper.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
                 <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
             </button>
-            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3"
+            <button id = "scissor_button" class="choice-button"
                 style="background-image: url('/assets/scissor.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
                 <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
             </button>
         </div> 
     </footer>
-  <%= content_tag :div, id: 'messages' do %> <%= render @match.messages %>
+  <!-- <%= content_tag :div, id: 'messages' do %> <%= render @match.messages %>
   <%end %> 
   <%= form_with url: match_messages_path(), method: :post do |form| %>
 	<%= form.hidden_field :match_id, value: @match %> <%= form.text_field :message%> 
   <%= form.hidden_field :user_id, value: current_user.id %> 
   <%= form.submit%> 
-  <% end %>
+  <% end %> -->
 
 </div>
+<% else %>
+    <div>
+        Matched Ended
+    </div>
+    
+    
+    <div>
+        <%= @current_user_selections.length %>
+    </div>
+    <div>
+        remaining_tries
+        <%= @remaining_tries %>
+
+    </div>
+<% end %>
 
 <!-- <script>
 	App.match_chat = App.cable.subscriptions.create(
