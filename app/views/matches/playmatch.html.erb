@@ -1,53 +1,67 @@
-<div class="bg-background-image flex flex-col min-h-screen">
-
-    <div class="py-10 flex flex-row items-center justify-evenly">
-        <% if notice.present? %>
-            <p class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice">
-                <%= notice %>
-            </p>
-        <% end %>
-    </div>
-    <!-- @match.users.length check if match b/w 3 or 2 players  -->
-    <div class = "flex flex-row justify-center">
-        <%= render 'random_images',image_id: 1 %>
-        <%= render 'choice_timer', match: @match %>
-        <%= render 'random_images', image_id: 2 %>
-    </div>
-    <footer class = "mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5">
-        <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
-        <div class = "flex flex-row justify-center">
-            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
-                style="background-image: url('/assets/rock.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
-                <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
-            </button>
-            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
-                style="background-image: url('/assets/paper.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
-                <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
-            </button>
-            <button class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3"
-                style="background-image: url('/assets/scissor.png');  background-size: contain; background-repeat: no-repeat; background-position: center;">
-                <span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
-            </button>
-        </div> 
-    </footer>
-  <%= content_tag :div, id: 'messages' do %> <%= render @match.messages %>
-  <%end %> 
-  <%= form_with url: match_messages_path(), method: :post do |form| %>
-	<%= form.hidden_field :match_id, value: @match %> <%= form.text_field :message%> 
-  <%= form.hidden_field :user_id, value: current_user.id %> 
-  <%= form.submit%> 
-  <% end %>
-
+<div class="container-fluid bg-background-image flex min-h-screen">
+<div class = "flex flex-row w-100">
+<div class="container-fluid flex-auto w-64">
+	<div class="py-10 flex flex-row items-center justify-evenly">
+		<% if notice.present? %>
+		<p
+			class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block"
+			id="notice"
+		>
+			<%= notice %>
+		</p>
+		<% end %>
+	</div>
+	<!-- @match.users.length check if match b/w 3 or 2 players  -->
+	<div class="flex flex-row justify-center">
+		<%= render 'random_images',image_id: 1 %> <%= render 'choice_timer', match:
+		@match %> <%= render 'random_images', image_id: 2 %>
+	</div>
+	<footer
+		class="mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5"
+	>
+		<div class="text-white text-xl flex flex-row justify-center">
+			Please select
+		</div>
+		<div class="flex flex-row justify-center">
+			<button
+				class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
+				style="
+					background-image: url('/assets/rock.png');
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				"
+			>
+				<span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
+			</button>
+			<button
+				class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3"
+				style="
+					background-image: url('/assets/paper.png');
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				"
+			>
+				<span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
+			</button>
+			<button
+				class="flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3"
+				style="
+					background-image: url('/assets/scissor.png');
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				"
+			>
+				<span class="h-6 w-6 mr-2" role="img" aria-label="Image"></span>
+			</button>
+		</div>
+	</footer>
 </div>
-
-<!-- <script>
-	App.match_chat = App.cable.subscriptions.create(
-		{ channel: "RoomChannel", match_id: match.id },
-		{
-			received: function (data) {
-				$("#messages").append(data.message);
-			},
-		}
-	);
-</script> -->
-
+<div class="container-fluid flex-auto w-32">
+	<%= render partial: "matches/match_message", locals: { messages: @messages,
+	match: @match } %>
+</div>
+</div>
+</div>

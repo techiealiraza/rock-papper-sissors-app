@@ -1,4 +1,23 @@
-<div class="flex-1 p:2 sm:p-6 flex flex-col h-screen justify-start">
+<h2>Messages</h2>
+<ul id="message-list">
+	<% @match.messages.all.each do |message| %>
+
+	<li class="text-white"><%= User.find(message.user_id).name %> : <%= message.message %></li>
+	<% end %>
+</ul>
+
+<%= form_with(url: match_messages_path(@match), remote: true, data: { turbolinks: false }) do |form| %>
+  <%= form.hidden_field :match_id, value: @match.id %>
+  <%= form.text_field :message %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.submit %>
+<% end %>
+
+<div id="match-channel" data-match-id="<%= @match.id %>">
+
+</div>
+
+<!-- <div class="flex-1 p:2 sm:p-6 flex flex-col h-screen justify-start">
     <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
        <div class="relative flex items-center space-x-4">
           <div class="relative">
@@ -92,4 +111,4 @@
  <script>
      const el = document.getElementById('messages')
      el.scrollTop = el.scrollHeight
- </script>
+ </script> -->

@@ -3,7 +3,10 @@ class MessagesController < ApplicationController
     @messages = Message.all
   end
 
-  def show; end
+  def show
+    @match = Match.find(params[:id])
+    @matchmessage = @match.messages
+  end
 
   # GET /tournaments/new
   def new
@@ -18,12 +21,12 @@ class MessagesController < ApplicationController
     user_id = params[:user_id]
     match_id = params[:match_id]
     message = params[:message]
-    byebug
+
     @message = Message.new(user_id:, match_id:, message:)
 
     if @message.save
-      ActionCable.server.broadcast "match_chat_#{params[:match_id]}", message: render_message(@message)
-      head :ok
+      broadcast_message(@message)
+      redirect_to playmatch_match_path(match_id)
     else
       render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
     end
@@ -51,17 +54,23 @@ class MessagesController < ApplicationController
 
   private
 
-  def render_message(message)
-    ApplicationController.render('matches/match_messages', locals: { message: })
+  def broadcast_message(message)
+    payload = {
+      message: message.message,
+      user_id: message.user_id,
+      created_at: message.created_at.strftime('%H:%M:%S')
+    }
+
+    ActionCable.server.broadcast("match_#{message.match_id}", payload)
   end
 
   # Use callbacks to share common setup or constraints between actions.
 
   # Only allow a list of trusted parameters through.
-  def message_params
-    byebug
-    params.require(:message).permit(:user_id, :match_id).tap do |message_params|
-      message_params[:message] = { body: params[:message] }
-    end
-  end
+  # def message_params
+  #   # byebug
+  #   params.require(:message).permit(:user_id, :match_id).tap do |message_params|
+  #     message_params[:message] = { body: params[:message] }
+  #   end
+  # end
 end

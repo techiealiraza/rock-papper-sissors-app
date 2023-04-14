@@ -12,6 +12,7 @@ import "channels"
 // import "change"
 import '../css/application.scss'
 import '../controllers/countdown_controller'
+import './packs/live_chat'
 
 
 
