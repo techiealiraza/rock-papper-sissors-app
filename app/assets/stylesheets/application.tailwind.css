@@ -8,6 +8,12 @@
   .btn-brown {
     @apply text-black bg-gold rounded-lg hover:bg-gold_shade2;
   };
+  .choice-button {
+    @apply flex items-center bg-gold hover:bg-gold_shade2 px-4 rounded-xl py-3 mr-3;
+  };
+  .choice-button2 {
+    @apply flex items-center bg-gold px-4 rounded-xl py-3 mr-3;
+  };
 }
 
 

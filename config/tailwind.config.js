@@ -19,6 +19,7 @@ module.exports = {
         'rock_icon': "url('rock.png')",
         'scissor_icon': "url('scissor.png')",
         'paper_icon': "url('paper.png')",
+        'question_icon': "url('question.png')",
 
       },
       colors: {
