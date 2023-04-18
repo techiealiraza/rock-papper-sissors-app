@@ -15,17 +15,18 @@
     <% else %>
         <% opponent_user_index = 0 %>
     <% end %>
-    
+    <div class = "flex flex-wrap">
+    <div class = "flex-grow">
     <div class = "flex flex-col justify-center">
-        <div class = "bg-gold text-black text-xl mx-20 py-3 rounded-lg flex flex-row justify-center">
+        <div class = "bg-gold text-black text-xl mx-40 py-3 px-3 rounded-lg flex flex-row justify-center">
             <%= "Remaining Tries : #{@remaining_tries}" %>
         </div>
-    <div class = "flex flex-row justify-center">
-        <%= render 'random_images',image_id: 1, user_id: @players[current_user_index]%>
-        <%= render 'choice_timer', match: @match %>
-        <%= render 'random_images', image_id: 2, user_id: 'x'%>
+        <div class = "flex flex-row justify-center mt-5">
+            <%= render 'random_images',image_id: 1, user_id: @players[current_user_index]%>
+            <%= render 'choice_timer', match: @match %>
+            <%= render 'random_images', image_id: 2, user_id: 'x'%>
+        </div>
     </div>
-</div>
     <footer class = "mt-5 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5">
         <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
         <div class = "flex flex-row justify-center">
@@ -43,12 +44,15 @@
             </button>
         </div> 
     </footer>
-<div class="container-fluid flex-auto w-32">
+    </div>
+<div>
 	<%= render partial: "matches/match_message", locals: { messages: @messages,
 	match: @match } %>
 </div>
+</div>
 
 </div>
+
 <% else %>
     <div>
         Matched Ended

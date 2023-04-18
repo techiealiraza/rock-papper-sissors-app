@@ -68,7 +68,6 @@ class MatchesController < ApplicationController
                        else
                          @match.tries
                        end
-    @match = Match.find(params[:match_id])
     @players = @match.users.pluck(:id)
     current_user_index = @players.index(current_user.id)
     opponent_user_index = if current_user_index.zero?
@@ -82,6 +81,10 @@ class MatchesController < ApplicationController
                                                user: current_user).order('try_num')
     @opponent_user_selections = Selection.where(match_id: @match.id,
                                                 user: opponent_user).order('try_num')
+    # render template: 'result'
+    return unless @current_user_selections.size == @match.tries
+
+    redirect_to match_result_path(@match, notice: 'calculating Results')
 
     # current_user_index = @players.index(current_user.id)
     # if current_user_index == 0
@@ -110,10 +113,40 @@ class MatchesController < ApplicationController
                           else
                             0
                           end
-    current_user = current_user.id
+    current_user = @players[current_user_index]
     opponent_user = @players[opponent_user_index]
     @current_user_selections = Selection.where(match_id: @match.id, user: current_user).order('try_num')
     @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
+    # current_user_slections_size = @current_user_selections.size
+    # time = Time.now + 10.seconds
+    # is_user_made_choice = false
+    # while Time.now < time
+    #   @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
+    #   if @opponent_user_selections.size == current_user_slections_size
+    #     is_user_made_choice = true
+    #     break
+    #   end
+    # end
+    # return unless is_user_made_choice
+
+    # @current_user_latest_selection = @current_user_selections.last
+    # @opponent_user_latest_selection = @opponent_user_selections.last
+    # check_winner(@current_user_selections, @opponent_user_selections)
+  end
+
+  def check_winner(player1, player2)
+    # if player1.size == player2.size
+    selection1 = player1.selection
+    selection2 = player2.selection
+    redirect_to match_result_path(@match, notice: 'Draw') if selection1 == selection2
+    if (selection1 == 'rock' && selection2 == 'scissors') ||
+       (selection1 == 'scissors' && selection2 == 'paper') ||
+       (selection1 == 'paper' && selection2 == 'rock')
+
+      redirect_to match_result_path(@match, notice: 'Mr Wins')
+    else
+      redirect_to match_result_path(@match, notice: 'Test2 Wins')
+    end
   end
 
   # POST /matches or /matches.json

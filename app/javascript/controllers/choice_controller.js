@@ -26,7 +26,7 @@ export default class extends Controller {
     }
 
     connect() {
-        let timeInterval = 10; //time
+        let timeInterval = 3; //time
         //check if you have the last counter value
         let timeLeft = localStorage.getItem('timeLeft');
         if (isNaN(timeLeft)) {

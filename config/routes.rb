@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :matches do
     get '/page/:page', action: :index, on: :collection
     get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
+    get '/result', to: 'matches#result', as: 'result'
     resources :messages, only: [:create]
     member do
       get :playmatch

@@ -28,9 +28,12 @@
     <%= @match.match_time.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
+<% players = @match.users.pluck(:id) %>
+<% if  players.include?(current_user.id) %>
   <div class = " my-5 flex flex-row items-center justify-center px-3">
     <%= link_to "Start", match_playmatch_path(match_id: @match.id), class: "px-7 py-2 btn-brown " %>
   </div>
+<% end %>
 
 
 <!-- <% if (Time.now.utc + (5*3600)) > @match.match_time && (Time.now.utc + (5*3600))<@match.match_time+5.minutes %> -->
