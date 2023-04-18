@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, unless: :new
+  skip_authorization_check only: :new
 
   def show
     @user = User.find(params[:id])
@@ -17,9 +18,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super do |resource|
+      if resource.valid? && resource.persisted?
+        resource.update(
+          otp_required_for_login: true,
+          otp_secret: User.generate_otp_secret,
+          role: :member
+        )
+      end
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -45,7 +54,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
@@ -58,9 +67,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    # Customize the redirect location based on the role of the user
+    if resource.admin?
+      root_path
+    elsif resourse.member?
+      root_path
+    else
+      root_path
+    end
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)

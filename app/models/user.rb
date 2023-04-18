@@ -12,7 +12,15 @@ class User < ApplicationRecord
   devise :registerable,
          :recoverable, :rememberable, :validatable
 
-  ROLES = %i[guest legend admin super_admin]
+  ROLES = %i[guest member admin super_admin]
+
+  def self.generate_otp_secret
+    ROTP::Base32.random_base32
+  end
+
+  def member?
+    role == 'member'
+  end
 
   def admin?
     role == 'admin'

@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   #   redirect_to main_app.root_url, alert: exception.message
   # end
 
+
   # # def index
   # #   if current_user
   # #     current_user.otp_required_for_login = true
@@ -22,9 +23,11 @@ class ApplicationController < ActionController::Base
 
   # private
 
-  # # def load_and_authorize_resource
-  # #   authorize! params[:action].to_sym, current_user
-  # # end
+
+  # def load_and_authorize_resource
+  #   authorize! params[:action].to_sym, current_user
+  # end
+
 
   # def devise_controller?
   #   is_a?(Devise::SessionsController)
