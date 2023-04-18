@@ -94,21 +94,21 @@ export default class extends Controller {
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         var csrf_token = document.getElementsByName("csrf-token")[0].content;
         xhr.setRequestHeader("X-CSRF-Token", csrf_token); 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-              if (xhr.status === 200 || xhr.status === 201) {
-                // Handle the successful response
-                var response = JSON.parse(xhr.responseText);
-                console.log(response.data);
-              } else if (xhr.status === 422) {
-                // Handle the error response
-                console.error("Error:", xhr.responseText);
-              } else {
-                // Handle other error cases
-                console.error("Error:", xhr.responseText);
-              }
-            }
-        };
+        // xhr.onreadystatechange = function() {
+        //     if (xhr.readyState === XMLHttpRequest.DONE) {
+        //       if (xhr.status === 200 || xhr.status === 201) {
+        //         // Handle the successful response
+        //         var response = JSON.parse(xhr.responseText);
+        //         console.log(response.data);
+        //       } else if (xhr.status === 422) {
+        //         // Handle the error response
+        //         console.error("Error:", xhr.responseText);
+        //       } else {
+        //         // Handle other error cases
+        //         console.error("Error:", xhr.responseText);
+        //       }
+        //     }
+        // };
         if (data != undefined && data != "string") {
         // xhr.send(JSON.stringify(data));
         }

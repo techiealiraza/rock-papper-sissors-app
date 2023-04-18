@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :matches do
     get '/page/:page', action: :index, on: :collection
     get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
+    get '/result', to: 'matches#result', as: 'result'
     resources :messages, only: [:create]
     member do
       get :playmatch
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   # get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'registrations'
+    registrations: 'users/registrations'
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
