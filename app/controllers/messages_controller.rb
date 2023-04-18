@@ -21,12 +21,11 @@ class MessagesController < ApplicationController
     user_id = params[:user_id]
     match_id = params[:match_id]
     message = params[:message]
-
     @message = Message.new(user_id:, match_id:, message:)
 
     if @message.save
+      head :no_content
       broadcast_message(@message)
-      redirect_to playmatch_match_path(match_id)
     else
       render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
     end
@@ -55,13 +54,15 @@ class MessagesController < ApplicationController
   private
 
   def broadcast_message(message)
+    user = User.where(id: message.user_id)
+    user_name = user[0].name
     payload = {
       message: message.message,
-      user_id: message.user_id,
+      user_name:,
       created_at: message.created_at.strftime('%H:%M:%S')
     }
-
-    ActionCable.server.broadcast("match_#{message.match_id}", payload)
+    # byebug
+    ActionCable.server.broadcast("room_channel_#{message.match_id}", payload)
   end
 
   # Use callbacks to share common setup or constraints between actions.
