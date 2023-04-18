@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_12_061911) do
+ActiveRecord::Schema.define(version: 2023_04_13_162541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2023_04_12_061911) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "round", default: 0
+    t.integer "tries", default: 3
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
 
@@ -70,6 +71,8 @@ ActiveRecord::Schema.define(version: 2023_04_12_061911) do
     t.string "selection"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "winner", default: false
+    t.integer "try_num"
     t.index ["match_id"], name: "index_selections_on_match_id"
   end
 

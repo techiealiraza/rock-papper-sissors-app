@@ -61,19 +61,59 @@ class MatchesController < ApplicationController
 
   def playmatch
     @match = Match.find(params[:match_id])
-    @players = @match.users
-    player1 = @players[0]
-    player2 = @players[1]
+    @players = @match.users.pluck(:id)
+    @done_tries = Selection.where(match_id: @match.id, user: current_user.id)
+    @remaining_tries = if @done_tries
+                         @match.tries - @done_tries.length
+                       else
+                         @match.tries
+                       end
+    @match = Match.find(params[:match_id])
+    @players = @match.users.pluck(:id)
+    current_user_index = @players.index(current_user.id)
+    opponent_user_index = if current_user_index.zero?
+                            1
+                          else
+                            0
+                          end
+    current_user = @players[current_user_index]
+    opponent_user = @players[opponent_user_index]
+    @current_user_selections = Selection.where(match_id: @match.id,
+                                               user: current_user).order('try_num')
+    @opponent_user_selections = Selection.where(match_id: @match.id,
+                                                user: opponent_user).order('try_num')
 
-    if player1['selection'] == player2['selection']
-      # format.html { render match_playmatch_path(match), notice: 'tie' }
-    elsif (player1['selection'] == ROCK && player2['selection'] == SCISSOR) ||
-          (player1['selection'] == SCISSOR && player2['selection'] == PAPER) ||
-          (player1['selection'] == PAPER && player2['selection'] == ROCK)
-      puts "#{player1['played']} wins!"
-    else
-      puts "#{player2['played']} wins!"
-    end
+    # current_user_index = @players.index(current_user.id)
+    # if current_user_index == 0
+    #   opponent_user_index = 1
+    # else
+    #   opponent_user_index = 0
+    # end
+
+    # if player1['selection'] == player2['selection']
+    #   # format.html { render match_playmatch_path(match), notice: 'tie' }
+    # elsif (player1['selection'] == ROCK && player2['selection'] == SCISSOR) ||
+    #       (player1['selection'] == SCISSOR && player2['selection'] == PAPER) ||
+    #       (player1['selection'] == PAPER && player2['selection'] == ROCK)
+    #   puts "#{player1['played']} wins!"
+    # else
+    #   puts "#{player2['played']} wins!"
+    # end
+  end
+
+  def result
+    @match = Match.find(params[:match_id])
+    @players = @match.users.pluck(:id)
+    current_user_index = @players.index(current_user.id)
+    opponent_user_index = if current_user_index == 0
+                            1
+                          else
+                            0
+                          end
+    current_user = current_user.id
+    opponent_user = @players[opponent_user_index]
+    @current_user_selections = Selection.where(match_id: @match.id, user: current_user).order('try_num')
+    @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
   end
 
   # POST /matches or /matches.json
