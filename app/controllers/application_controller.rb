@@ -6,25 +6,17 @@ class ApplicationController < ActionController::Base
 
   # before_action :load_and_authorize_resource
 
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to main_app.root_url, alert: exception.message
-  end
+  # rescue_from CanCan::AccessDenied do |exception|
+  #   redirect_to main_app.root_url, alert: exception.message
+  # end
 
-  def index
-    if current_user
-      current_user.otp_required_for_login = true
-      current_user.otp_secret = User.generate_otp_secret
-      current_user.save!
-    else
-      redirect_to new_user_session_path, notice: 'You are not logged in.'
-    end
-  end
+  def index; end
 
   private
 
-  def load_and_authorize_resource
-    authorize! params[:action].to_sym, current_user
-  end
+  # def load_and_authorize_resource
+  #   authorize! params[:action].to_sym, current_user
+  # end
 
   def devise_controller?
     is_a?(Devise::SessionsController)

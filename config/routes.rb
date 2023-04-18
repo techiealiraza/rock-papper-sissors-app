@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   # get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'registrations'
+    registrations: 'users/registrations'
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
