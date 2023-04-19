@@ -22,9 +22,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.valid? && resource.persisted?
         resource.update(
-          role: :member
-          # otp_required_for_login: true,
-          # encrypted_otp_secret: User.generate_otp_secret
+
+          role: :member,
+          otp_required_for_login: true,
+          encrypted_otp_secret: User.generate_otp_secret
         )
       end
     end
