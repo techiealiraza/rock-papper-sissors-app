@@ -1,5 +1,6 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show edit update destroy]
+  after_action :result, only: %i[playmatch]
   ROCK = 'rock'
   PAPER = 'paper'
   SCISSOR = 'scissor'
@@ -69,6 +70,7 @@ class MatchesController < ApplicationController
                          @match.tries
                        end
     @players = @match.users.pluck(:id)
+    byebug
     current_user_index = @players.index(current_user.id)
     opponent_user_index = if current_user_index.zero?
                             1
@@ -81,6 +83,11 @@ class MatchesController < ApplicationController
                                                user: current_user).order('try_num')
     @opponent_user_selections = Selection.where(match_id: @match.id,
                                                 user: opponent_user).order('try_num')
+    @match_start_time = @match.match_time
+    @now_time = Time.now
+    seconds_to_add = (@done_tries.size + 1) * 5
+    @end_time = ((@match_start_time + seconds_to_add.minutes - 5.hours) - Time.now).to_i
+    # @end_time = 10
     # render template: 'result'
     return unless @current_user_selections.size == @match.tries
 
@@ -105,6 +112,7 @@ class MatchesController < ApplicationController
   end
 
   def result
+    # byebug
     @match = Match.find(params[:match_id])
     @players = @match.users.pluck(:id)
     current_user_index = @players.index(current_user.id)
@@ -117,21 +125,15 @@ class MatchesController < ApplicationController
     opponent_user = @players[opponent_user_index]
     @current_user_selections = Selection.where(match_id: @match.id, user: current_user).order('try_num')
     @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
-    # current_user_slections_size = @current_user_selections.size
-    # time = Time.now + 10.seconds
-    # is_user_made_choice = false
-    # while Time.now < time
-    #   @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
-    #   if @opponent_user_selections.size == current_user_slections_size
-    #     is_user_made_choice = true
-    #     break
-    #   end
-    # end
-    # return unless is_user_made_choice
 
-    # @current_user_latest_selection = @current_user_selections.last
-    # @opponent_user_latest_selection = @opponent_user_selections.last
-    # check_winner(@current_user_selections, @opponent_user_selections)
+    @current_user_latest_selection = @current_user_selections.last
+    if @opponent_user_selections.empty?
+      @current_user_latest_selection.winner = true
+      @current_user_latest_selection.save
+    else
+      @opponent_user_latest_selection = @opponent_user_selections.last
+      check_winner(@current_user_selections, @opponent_user_selections)
+    end
   end
 
   def check_winner(player1, player2)

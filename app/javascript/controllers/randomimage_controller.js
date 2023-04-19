@@ -110,7 +110,7 @@ export default class extends Controller {
             }
         };
         if (data != undefined && data != "string") {
-        // xhr.send(JSON.stringify(data));
+        xhr.send(JSON.stringify(data));
         }
         
     }
