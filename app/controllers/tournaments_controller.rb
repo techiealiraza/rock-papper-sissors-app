@@ -4,7 +4,6 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments or /tournaments.json
   def index
-    debugger
     @tournaments = Tournament.all.order(:registration_deadline).page(params[:page])
     # @tournaments = Tournament.page params[:page]
   end

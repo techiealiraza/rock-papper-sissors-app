@@ -1,8 +1,13 @@
 <div class="bg-background-image min-h-screen flex flex-col items-center">
 <% if notice.present? %>
-<p class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<p class="mt-3 py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
 <% end %>
 <% i = 0 %>
+<div class = "container-fluid mt-5 mr-7 rounded-lg py-3 px-10 bg-gold">
+    <%= @current_user_scores %>
+    <%= " : " %>
+    <%= @opponent_user_scores %>
+</div>
 <div class = "flex flex-row">
     <div class = "container-fluid mt-5 mr-7 rounded-lg py-3 px-10 bg-gold">
         You

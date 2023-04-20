@@ -10,12 +10,10 @@
         <% end %>
     </div>
     <div class = "text-white">
-        <%= @end_time %>
+        <%= @current_user_scores %>
     </div>
     <div class = "text-white">
-        <%= @match_start_time %>
-    </div><div class = "text-white">
-        <%= @end_time %>
+        <%= @opponent_user_scores %>
     </div>
     <!-- @match.users.length check if match b/w 3 or 2 players  -->
     <% current_user_index = @players.index(current_user.id) %>
