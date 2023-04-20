@@ -87,13 +87,10 @@ class MatchesController < ApplicationController
     @now_time = Time.now
     seconds_to_add = (@done_tries.size + 1) * 30
     @end_time = ((@match_start_time + seconds_to_add.seconds - 5.hours) - Time.now).to_i
-    # @end_time = 10
+    # ActionCable.server.broadcast('timer_channel', 10)
     @current_user_scores = Selection.where(match_id: @match.id, user: current_user, winner: true).size
     @opponent_user_scores = Selection.where(match_id: @match.id, user: opponent_user, winner: true).size
-    margin = (@current_user_scores - @opponent_user_scores).abs
-    # unless @opponent_user_selections.empty?
-    #   ActionCable.server.broadcast('image_channel', @opponent_user_selections.last.selection)
-    # end
+    # score_margin = (@current_user_scores - @opponent_user_scores).abs
     # byebug
     return unless @current_user_selections.size == @match.tries
 

@@ -1,11 +1,11 @@
 <div id = "match_id", data-match-id = <%= @match.id %>> </div>
-<div class = "flex px-5 flex-col h-1/2">
-<h2 class = "text-white ">Messages</h2>
+<div class = "flex px-5 flex-col">
+<h2 class = "text-white w-96 text-2xl">Messages</h2>
 <div class = "min-h-1/2 flex-col overflow-y-auto scrollbar-hide">
-<div id="message-list">
+<div id="message-list" class = "h-80">
 	<% @match.messages.all.each do |message| %>
    <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
-	   <div class="px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-gold text-black "><%= User.find(message.user_id).name %> : <%= message.message %></div>
+	   <div id = "msg_div" class="text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-gold text-black"><%= User.find(message.user_id).name %> : <%= message.message %></div>
    </div>
 	<% end %>
 </div>
@@ -14,9 +14,9 @@
 <%= form_with(url: match_messages_path(@match), remote: true, local: false) do |form| %>
 <div class = "flex flex-start"> 
   <%= form.hidden_field :match_id, value: @match.id %>
-  <%= form.text_field :message, class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4", id:"msg_field_" + current_user.name %>
+  <%= form.text_field :message, placeholder: 'type message', class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4 fixed bottom-0", id:"msg_field_" + current_user.name %>
   <%= form.hidden_field :user_id, value: current_user.id %>
-  <div class="actions mb-4 px-5 py-3 btn-brown">
+  <div >
       <%= form.submit%>
    </div>
 </div>
