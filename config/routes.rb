@@ -1,4 +1,6 @@
+require 'delayed_job_web'
 Rails.application.routes.draw do
+  match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
   resources :selection
   resources :matches
   resources :messages

@@ -3,22 +3,35 @@
 <p class="mt-3 py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
 <% end %>
 <% i = 0 %>
-<div class = "container-fluid mt-5 mr-7 rounded-lg py-3 px-10 bg-gold">
-    <%= @current_user_scores %>
-    <%= " : " %>
-    <%= @opponent_user_scores %>
-</div>
 <div class = "flex flex-row">
     <div class = "container-fluid mt-5 mr-7 rounded-lg py-3 px-10 bg-gold">
-        You
+        <%= current_user.name %><br>
+        <div class = "flex row justify-center text-xl">
+            <%= "#{@current_user_scores}" %>
+        </div>
     </div>
     <div class = "container-fluid mt-5 py-3 rounded-lg px-4 bg-gold">
-        Opponent
+        <%= "opponent" %><br>
+        <div class = "flex row justify-center text-xl">
+            <%= "#{@opponent_user_scores}" %>
+        </div>
+    </div>
+</div>
+<div class = "flex flex-row justify-center">
+    <div class = "mr-11 mt-5 p-2 rounded-lg bg-gold w-100">
+        Your<br>Selection
+    </div>
+    <div class = "mr-10  ml-2 mt-5 p-2 rounded-lg bg-gold w-100">
+        Opponent<br>Selection
+    </div>
+    <div class = "m-5 mt-5 p-2 rounded-lg bg-gold w-100">
+        Status
     </div>
 </div>
 <% @current_user_selections.each do |current_user_selection| %>
     <% opponent_user_selection = 'question.png' %>
     <% if current_user_selection.try_num == i %>
+        <% current_user_status = current_user_selection.winner %>
         <% current_user_selection = current_user_selection.selection + ".png" %>
     <% end %>
     <% if !@opponent_user_selections.size.zero? %>
@@ -30,8 +43,13 @@
     <% end %>
 
     <div class = "flex flex-row justify-center">
-        <%= image_tag(current_user_selection, width: "100", class: "bg-no-repeat m-5 mt-5 p-2 rounded-lg bg-gold") %>
-        <%= image_tag(opponent_user_selection, width: "100", class: "bg-no-repeat m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <%= image_tag(current_user_selection, width: "100", class: " m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <%= image_tag(opponent_user_selection, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <% if current_user_status %>
+            <%= image_tag("victory.gif", width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <% else %>
+            <%= image_tag("defeat.gif", width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <% end %>
     </div>
     <% i += 1 %>
 <% end %>

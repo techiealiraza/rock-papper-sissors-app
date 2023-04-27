@@ -1,6 +1,6 @@
-class TimerChannel < ApplicationCable::Channel
+class RandomChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "timer_channel_#{params[:match_id]}"
+    stream_from "random_channel_#{params[:match_id]}"
   end
 
   def unsubscribed

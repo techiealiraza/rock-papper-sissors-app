@@ -85,7 +85,11 @@ class MatchesController < ApplicationController
     @opponent_user_scores = Selection.where(match_id: @match.id, user: opponent_user, winner: true).size
     @match_start_time = @match.match_time
     @now_time = Time.now
-    seconds_to_add = (@done_tries.size + 1) * 30
+    seconds_to_add = if @current_user_selections.size.positive? || @opponent_user_selections.size.positive?
+                       (@done_tries.size + 1) * 40
+                     else
+                       (@done_tries.size + 1) * 30
+                     end
     @end_time = ((@match_start_time + seconds_to_add.seconds - 5.hours) - Time.now).to_i
     # ActionCable.server.broadcast('timer_channel', 10)
     @current_user_scores = Selection.where(match_id: @match.id, user: current_user, winner: true).size
@@ -137,7 +141,10 @@ class MatchesController < ApplicationController
     tournament_start_time = tournament.start_date
     registered_users.each_slice(2) do |user1, user2|
       match_start_time = tournament_start_time + 3.minutes
-      match = Match.create(tournament_id: tournament.id, match_time: match_start_time)
+      match = Match.create(tournament_id: tournament.id, match_time: match_start_time) # for now only for three_tries
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 5.seconds).perform_later(match.id) # first_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 15.seconds).perform_later(match.id) # second_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 25.seconds).perform_later(match.id) # third_try_delayed_job
       # usermatches = UsersMatch.new(match:, user: user1)
       matches << user_match_obj(match, user1)
       matches << user_match_obj(match, user2)
@@ -151,6 +158,7 @@ class MatchesController < ApplicationController
     match_start_time = tournament_start_time + 3.minutes
     registered_users.each_slice(3) do |user1, user2, user3|
       match = Match.create(tournament_id: tournament.id, match_time: match_start_time)
+      MatchBroadcastJob.delay(run_at: match_start_time - Time.now).perform_later(match.id)
       matches << user_match_obj(match, user1)
       matches << user_match_obj(match, user2)
       matches << user_match_obj(match, user3)
