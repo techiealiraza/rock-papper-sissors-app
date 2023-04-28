@@ -18,13 +18,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    debugger
     super do |resource|
       if resource.valid? && resource.persisted?
         resource.update(
-          role: :member,
-          otp_required_for_login: true,
-          encrypted_otp_secret: User.generate_otp_secret
+          role: :member
         )
       end
     end

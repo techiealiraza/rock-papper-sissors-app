@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  patch 'user_otp/enable'
+  get 'user_otp/disable'
   resources :selection
   resources :matches
   resources :messages
