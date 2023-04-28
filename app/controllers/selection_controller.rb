@@ -68,6 +68,11 @@ class SelectionController < ApplicationController
   def check_winner(player1, player2)
     # if player1.size == player2.size
     selection1 = player1.selection
+    if player2.nil?
+      player1.winner = true
+      player1.save
+      return
+    end
     selection2 = player2.selection
     # byebug
     return if selection1 == selection2

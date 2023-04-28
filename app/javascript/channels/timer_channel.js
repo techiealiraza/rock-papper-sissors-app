@@ -1,4 +1,6 @@
 import consumer from "./consumer"
+import { random_image, event_listener_to_buttons, disable_buttons, enable_buttons } from '../packs/buttons_activity';
+import { try_post } from '../packs/try_post';
 
 document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('match_id');
@@ -16,62 +18,31 @@ document.addEventListener('turbolinks:load', () => {
   },
 
   received(data) {
-    const imageUrls = [
-      "/assets/rock.png",
-      "/assets/paper.png",
-      "/assets/scissor.png",
-      "/assets/rock.png",
-      "/assets/paper.png",
-      "/assets/rock.png",
-      "/assets/scissor.png",
-    ];
     var seconds = data
     const displayDiv = document.getElementById("second_timer");
     displayDiv.textContent = seconds;
-    const random_img = document.getElementById(2)
-    const user_image = document.getElementById(1)
     if(data != 'Stop'){
-      var currentImageIndex = Math.ceil(Math.random() * 6)
-      random_img.src = imageUrls[currentImageIndex];
+      random_image();
     }
     if(data === 5)
     {
-      document.getElementById('rock_button').addEventListener('click', function() {
-          user_image.src = "/assets/rock.png";
-        });
-        document.getElementById('paper_button').addEventListener('click', function() {
-          user_image.src = "/assets/paper.png";
-        });
-        document.getElementById('scissor_button').addEventListener('click', function() {
-          user_image.src = "/assets/scissor.png";
-        });
-        enable_button("rock_button")
-        enable_button("paper_button")
-        enable_button("scissor_button")
+      event_listener_to_buttons()
     }
 
     if(data === 'Stop'){
-      var imageElement = document.getElementById(1);
-    var src = imageElement.src;
-    var fileName = src.substring(src.lastIndexOf('/') + 1);
-      console.log(fileName)
-      disable_button("rock_button")
-      disable_button("paper_button")
-      disable_button("scissor_button")
+    // var imageElement = document.getElementById(1);
+    // var src = imageElement.src;
+    // var fileName = src.substring(src.lastIndexOf('/') + 1);
+    // console.log(fileName)
+    disable_buttons()
+    // disable_button("rock_button")
+    // disable_button("paper_button")
+    // disable_button("scissor_button")
       
       // channel.perform('greet', {name: 'John'}, function(response) {
       //   console.log(response);
       // });
-    }
-    function disable_button(id){
-      document.getElementById(id).disabled = true;
-      document.getElementById(id).classList.remove('choice-button')
-      document.getElementById(id).classList.add('choice-button2')
-    }
-    function enable_button(id){
-      document.getElementById(id).disabled = false;
-      document.getElementById(id).classList.remove('choice-button')
-      document.getElementById(id).classList.add('choice-button2')
+      try_post()
     }
   }
 });
