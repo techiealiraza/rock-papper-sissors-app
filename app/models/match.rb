@@ -6,3 +6,7 @@ class Match < ApplicationRecord
   has_many :users, through: :users_matches
   has_many :selections
 end
+
+def started?
+  start_time < Time.now
+end

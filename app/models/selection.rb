@@ -1,6 +1,6 @@
 class Selection < ApplicationRecord
   belongs_to :match
-  before_save :add_try_num
+  # before_save :add_try_num
 
   def self.findByMatchAndUser(match_id, user_id)
     where(match_id:, user: user_id)
