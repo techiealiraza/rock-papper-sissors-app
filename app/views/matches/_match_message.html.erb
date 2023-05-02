@@ -4,9 +4,15 @@
 <div class = "min-h-1/2 flex-col overflow-y-auto scrollbar-hide">
 <div id="message-list" class = "h-80">
 	<% @match.messages.all.each do |message| %>
-   <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
-	   <div id = "msg_div" class="text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-gold text-black"><%= User.find(message.user_id).name %> : <%= message.message %></div>
+   <div class = "flex flex-row">
+   <div class = "rounded-full bg-gold_shade2 w-7 text-white text-center h-7">
+      <%= User.find(message.user_id).name[0,3] %>
    </div>
+   <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
+	   <div class=" max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-gold text-black">
+         <%= message.message %></div>
+   </div>
+</div>
 	<% end %>
 </div>
 </div>
@@ -27,6 +33,21 @@
 <div id="match-channel" data-match-id="<%= @match.id %>">
 
 </div>
+
+<script>
+   function stringToColor(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  let color = '#';
+  for (let i = 0; i < 3; i++) {
+    let value = (hash >> (i * 8)) & 0xff;
+    color += ('00' + value.toString(16)).substr(-2);
+  }
+  return color;
+}
+</script>
 
 <!-- <div class="flex-1 p:2 sm:p-6 flex flex-col h-screen justify-start">
     <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">

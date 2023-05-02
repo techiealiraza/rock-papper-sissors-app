@@ -8,7 +8,6 @@ function try_post(){
     var fileName = src.substring(src.lastIndexOf('/') + 1);
     const user_selection_image = fileName.substring(0, fileName.lastIndexOf('.'));
     if(fileName[0] == 'q'){
-        console.log('returnnning')
         return
     }
     var data = {

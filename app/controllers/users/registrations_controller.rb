@@ -21,7 +21,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.valid? && resource.persisted?
         resource.update(
-
           role: :member
         )
       end

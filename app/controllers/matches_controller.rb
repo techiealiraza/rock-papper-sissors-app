@@ -70,6 +70,8 @@ class MatchesController < ApplicationController
                        end
     @players = @match.users.pluck(:id)
     current_user_index = @players.index(current_user.id)
+    return if current_user_index.nil?
+
     opponent_user_index = if current_user_index.zero?
                             1
                           else
