@@ -3,16 +3,8 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   before_action :authenticate_2fa!, only: [:create]
-
-  # def authenticate_2fa
-  #   user = self.resource = User.find_by(email: user_params[:email])
-  #   return unless user && user.valid_password?(user_params[:email]) && user.otp_required_for_login
-
-  #   session[:user_id] = user.id
-  #   CodeMailer.send_code(user).deliver_now
-  #   render 'user_otp/two_fa'
-  # end
-
+  # account_sid = ENV['TWILIO_ACCOUNT_SID']
+  # auth_token = ENV['TWILIO_AUTH_TOKEN']
   def authenticate_2fa!
     user = self.resource = find_user
     return unless user
@@ -24,6 +16,14 @@ class Users::SessionsController < Devise::SessionsController
     elsif user.valid_password?(user_params[:password]) && user.otp_required_for_login
       session[:user_id] = user.id
       CodeMailer.send_code(user).deliver_now
+      @code = User.generate_otp(user.otp_secret)
+      message = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']).messages.create(
+        body: "your OTP is :: #{@code}",
+        from: '+15856321481',
+        to: '+923212674285'
+      )
+
+      puts message.sid
       render 'user_otp/two_fa'
       # elsif
       #   flash[:alert] = 'Invalid email or pasadsword'
