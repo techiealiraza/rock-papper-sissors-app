@@ -142,11 +142,11 @@ class MatchesController < ApplicationController
     matches = []
     tournament_start_time = tournament.start_date
     registered_users.each_slice(2) do |user1, user2|
-      match_start_time = tournament_start_time + 3.minutes
+      match_start_time = tournament_start_time + 10.seconds
       match = Match.create(tournament_id: tournament.id, match_time: match_start_time) # for now only for three_tries
-      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 5.seconds).perform_later(match.id) # first_try_delayed_job
-      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 15.seconds).perform_later(match.id) # second_try_delayed_job
-      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 25.seconds).perform_later(match.id) # third_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 5.seconds).perform_later(match.id, 1) # first_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 15.seconds).perform_later(match.id, 2) # second_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 25.seconds).perform_later(match.id, 3) # third_try_delayed_job
       # usermatches = UsersMatch.new(match:, user: user1)
       matches << user_match_obj(match, user1)
       matches << user_match_obj(match, user2)
