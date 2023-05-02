@@ -24,6 +24,7 @@ gem 'redis', '~> 4.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
+gem 'letter_opener', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -77,8 +78,13 @@ gem 'hotwire-rails', '~> 0.1.3'
 gem 'kaminari'
 gem 'whenever', '~> 1.0'
 
-gem "cancancan", "~> 3.5"
+
+gem 'cancancan', '~> 3.5'
+
+gem "attr_encrypted", "~> 3.1"
+
 
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'delayed_job_web', '~> 1.4.4', require: 'delayed_job_active_record'
+
