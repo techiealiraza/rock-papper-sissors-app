@@ -1,5 +1,7 @@
 require 'delayed_job_web'
 Rails.application.routes.draw do
+  patch 'user_otp/enable'
+  get 'user_otp/disable'
   match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
   resources :selection
   resources :matches
