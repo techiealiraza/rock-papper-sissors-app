@@ -1,13 +1,13 @@
 class MatchBroadcastJob < ApplicationJob
   queue_as :default
-  def perform(match_id)
+  def perform(match_id, try_num)
     seconds = 5
     while seconds.positive?
-      ActionCable.server.broadcast("timer_channel_#{match_id}", seconds)
+      ActionCable.server.broadcast("timer_channel_#{match_id}", { seconds:, try_num: })
       seconds -= 1
       sleep 1
     end
-    ActionCable.server.broadcast("timer_channel_#{match_id}", 'Stop')
+    ActionCable.server.broadcast("timer_channel_#{match_id}", { seconds: 'Stop', try_num: })
   end
 
   # def random_image(match_id)
