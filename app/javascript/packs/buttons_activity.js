@@ -11,9 +11,6 @@ function random_image(){
     const random_img = document.getElementById(2)
     var currentImageIndex = Math.ceil(Math.random() * 6)
     random_img.src = imageUrls[currentImageIndex];
-    var src = random_img.src;
-    var fileName = src.substring(src.lastIndexOf('/') + 1);
-    console.log(`Random_image_name ${fileName}`)
 }
 function event_listener_to_buttons(){
     const user_image = document.getElementById(1)
