@@ -18,30 +18,23 @@ document.addEventListener('turbolinks:load', () => {
   },
 
   received(data) {
-    var seconds = data
+    // debugger
+    var seconds = data.seconds
+    var try_num = data.try_num
     const displayDiv = document.getElementById("second_timer");
+    const triesDiv = document.getElementById(`tries_${match_id}`);
     displayDiv.textContent = seconds;
     if(data != 'Stop'){
+      triesDiv.textContent = `Try Number: ${try_num}`;
       random_image();
     }
-    if(data === 5)
+    if(seconds === 5)
     {
       event_listener_to_buttons()
     }
 
-    if(data === 'Stop'){
-    // var imageElement = document.getElementById(1);
-    // var src = imageElement.src;
-    // var fileName = src.substring(src.lastIndexOf('/') + 1);
-    // console.log(fileName)
-    disable_buttons()
-    // disable_button("rock_button")
-    // disable_button("paper_button")
-    // disable_button("scissor_button")
-      
-      // channel.perform('greet', {name: 'John'}, function(response) {
-      //   console.log(response);
-      // });
+    if(seconds === 'Stop'){
+      disable_buttons()
       try_post()
     }
   }
