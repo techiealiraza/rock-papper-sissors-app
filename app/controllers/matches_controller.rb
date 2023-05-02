@@ -81,72 +81,24 @@ class MatchesController < ApplicationController
                                                user: current_user).order('try_num')
     @opponent_user_selections = Selection.where(match_id: @match.id,
                                                 user: opponent_user).order('try_num')
-    # render template: 'result'
+    @current_user_scores = Selection.where(match_id: @match.id, user: current_user, winner: true).size
+    @opponent_user_scores = Selection.where(match_id: @match.id, user: opponent_user, winner: true).size
+    @match_start_time = @match.match_time
+    @now_time = Time.now
+    seconds_to_add = if @current_user_selections.size.positive? || @opponent_user_selections.size.positive?
+                       (@done_tries.size + 1) * 40
+                     else
+                       (@done_tries.size + 1) * 30
+                     end
+    @end_time = ((@match_start_time + seconds_to_add.seconds - 5.hours) - Time.now).to_i
+    # ActionCable.server.broadcast('timer_channel', 10)
+    @current_user_scores = Selection.where(match_id: @match.id, user: current_user, winner: true).size
+    @opponent_user_scores = Selection.where(match_id: @match.id, user: opponent_user, winner: true).size
+    # score_margin = (@current_user_scores - @opponent_user_scores).abs
+    # byebug
     return unless @current_user_selections.size == @match.tries
 
-    redirect_to match_result_path(@match, notice: 'calculating Results')
-
-    # current_user_index = @players.index(current_user.id)
-    # if current_user_index == 0
-    #   opponent_user_index = 1
-    # else
-    #   opponent_user_index = 0
-    # end
-
-    # if player1['selection'] == player2['selection']
-    #   # format.html { render match_playmatch_path(match), notice: 'tie' }
-    # elsif (player1['selection'] == ROCK && player2['selection'] == SCISSOR) ||
-    #       (player1['selection'] == SCISSOR && player2['selection'] == PAPER) ||
-    #       (player1['selection'] == PAPER && player2['selection'] == ROCK)
-    #   puts "#{player1['played']} wins!"
-    # else
-    #   puts "#{player2['played']} wins!"
-    # end
-  end
-
-  def result
-    @match = Match.find(params[:match_id])
-    @players = @match.users.pluck(:id)
-    current_user_index = @players.index(current_user.id)
-    opponent_user_index = if current_user_index == 0
-                            1
-                          else
-                            0
-                          end
-    current_user = @players[current_user_index]
-    opponent_user = @players[opponent_user_index]
-    @current_user_selections = Selection.where(match_id: @match.id, user: current_user).order('try_num')
-    @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
-    # current_user_slections_size = @current_user_selections.size
-    # time = Time.now + 10.seconds
-    # is_user_made_choice = false
-    # while Time.now < time
-    #   @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
-    #   if @opponent_user_selections.size == current_user_slections_size
-    #     is_user_made_choice = true
-    #     break
-    #   end
-    # end
-    # return unless is_user_made_choice
-
-    # @current_user_latest_selection = @current_user_selections.last
-    # @opponent_user_latest_selection = @opponent_user_selections.last
-    # check_winner(@current_user_selections, @opponent_user_selections)
-  end
-
-  def check_winner(player1, player2)
-    # if player1.size == player2.size
-    selection1 = player1.selection
-    selection2 = player2.selection
-    redirect_to match_result_path(@match, notice: 'Draw') if selection1 == selection2
-    if (selection1 == 'rock' && selection2 == 'scissors') ||
-       (selection1 == 'scissors' && selection2 == 'paper') ||
-       (selection1 == 'paper' && selection2 == 'rock')
-
-      redirect_to match_result_path(@match, notice: 'Mr Wins')
-    else
-      redirect_to match_result_path(@match, notice: 'Test2 Wins')
-    end
+    redirect_to match_result_path(@match)
   end
 
   # POST /matches or /matches.json
@@ -189,7 +141,10 @@ class MatchesController < ApplicationController
     tournament_start_time = tournament.start_date
     registered_users.each_slice(2) do |user1, user2|
       match_start_time = tournament_start_time + 3.minutes
-      match = Match.create(tournament_id: tournament.id, match_time: match_start_time)
+      match = Match.create(tournament_id: tournament.id, match_time: match_start_time) # for now only for three_tries
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 5.seconds).perform_later(match.id) # first_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 15.seconds).perform_later(match.id) # second_try_delayed_job
+      MatchBroadcastJob.delay(run_at: match.match_time - 5.hours + 25.seconds).perform_later(match.id) # third_try_delayed_job
       # usermatches = UsersMatch.new(match:, user: user1)
       matches << user_match_obj(match, user1)
       matches << user_match_obj(match, user2)
@@ -203,11 +158,34 @@ class MatchesController < ApplicationController
     match_start_time = tournament_start_time + 3.minutes
     registered_users.each_slice(3) do |user1, user2, user3|
       match = Match.create(tournament_id: tournament.id, match_time: match_start_time)
+      MatchBroadcastJob.delay(run_at: match_start_time - Time.now).perform_later(match.id)
       matches << user_match_obj(match, user1)
       matches << user_match_obj(match, user2)
       matches << user_match_obj(match, user3)
     end
     matches
+  end
+
+  def result
+    @match = Match.find(params[:match_id])
+    @players = @match.users.pluck(:id)
+    @players = @match.users.pluck(:id)
+    current_user_index = @players.index(current_user.id)
+    opponent_user_index = if current_user_index.zero?
+                            1
+                          else
+                            0
+                          end
+    current_user = @players[current_user_index]
+    opponent_user = @players[opponent_user_index]
+    @current_user_selections = Selection.where(match_id: @match.id,
+                                               user: current_user).order('try_num')
+    @opponent_user_selections = Selection.where(match_id: @match.id,
+                                                user: opponent_user).order('try_num')
+    @current_user_scores = Selection.where(match_id: @match.id,
+                                           user: current_user, winner: true).size
+    @opponent_user_scores = Selection.where(match_id: @match.id,
+                                            user: opponent_user, winner: true).size
   end
 
   def user_match_obj(match, user)

@@ -8,6 +8,8 @@
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
+import './buttons_activity'
+import './try_post'
 import "channels"
 // import "change"
 import '../css/application.scss'

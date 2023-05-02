@@ -3,19 +3,19 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 //   static values = { id: String };
   
-  imageUrls = [
-    "/assets/rock.png",
-    "/assets/paper.png",
-    "/assets/scissor.png",
-    "/assets/rock.png",
-    "/assets/paper.png",
-    "/assets/rock.png",
-    "/assets/scissor.png",
+  // imageUrls = [
+  //   "/assets/rock.png",
+  //   "/assets/paper.png",
+  //   "/assets/scissor.png",
+  //   "/assets/rock.png",
+  //   "/assets/paper.png",
+  //   "/assets/rock.png",
+  //   "/assets/scissor.png",
 
-  ];
+  // ];
 
   interval = 100;
-  currentImageIndex = 0;
+  // currentImageIndex = 0;
 
   connect() {
     const matchId = this.element.dataset.matchId;
@@ -31,36 +31,35 @@ export default class extends Controller {
   
 
   changeImage() {
-    var id = this.element.dataset.id
-    const imageContainer = document.getElementById(2);
-    if (imageContainer) {
-      imageContainer.src = this.imageUrls[this.currentImageIndex];
-      this.currentImageIndex = Math.ceil(Math.random() * 6);
+    // var id = this.element.dataset.id
+    // const imageContainer = document.getElementById(2);
+    // if (imageContainer) {
+      // imageContainer.src = this.imageUrls[this.currentImageIndex];
+      // this.currentImageIndex = Math.ceil(Math.random() * 6);
       var first_image = this.choiceName(1).split('.')[0]
-      var second_image = this.choiceName(2).split('.')[0]
-      // console.log(`${first_image} ${second_image}`)
-      // const userId = this.element.dataset.userId;
-      
+      // var second_image = this.choiceName(2).split('.')[0]
+      // // console.log(`${first_image} ${second_image}`)
+      // // const userId = this.element.dataset.userId;
+      var user_image = document.getElementById(1)
       document.getElementById('rock_button').addEventListener('click', function() {
-          var user_image = document.getElementById(1)
           user_image.src = "/assets/rock.png";
         });
         document.getElementById('paper_button').addEventListener('click', function() {
-          var user_image = document.getElementById(1)
           user_image.src = "/assets/paper.png";
         });
         document.getElementById('scissor_button').addEventListener('click', function() {
-          var user_image = document.getElementById(1)
           user_image.src = "/assets/scissor.png";
         });
+        enable_button("rock_button")
+        enable_button("paper_button")
+        enable_button("scissor_button")
           
-    }
-    var timerDivValue = document.getElementById("second").textContent
+    // }
+    var timerDivValue = document.getElementById("second_timer").textContent
     if (timerDivValue != "Stop"){
         setTimeout(() => this.changeImage(), this.interval);
     }
     else{
-    
       disable_button("rock_button")
       disable_button("paper_button")
       disable_button("scissor_button")
@@ -76,7 +75,7 @@ export default class extends Controller {
             imageContainer.src = this.imageUrls[this.currentImageIndex];
             var first_image = this.choiceName(1).split('.')[0]
           }
-          // console.log(">>>>......>>>>")
+          console.log(">>>>......>>>>")
           // console.log(typeof first_image)
           // console.log(">>>>.......>>>>")
           var data = {
@@ -94,21 +93,21 @@ export default class extends Controller {
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         var csrf_token = document.getElementsByName("csrf-token")[0].content;
         xhr.setRequestHeader("X-CSRF-Token", csrf_token); 
-        // xhr.onreadystatechange = function() {
-        //     if (xhr.readyState === XMLHttpRequest.DONE) {
-        //       if (xhr.status === 200 || xhr.status === 201) {
-        //         // Handle the successful response
-        //         var response = JSON.parse(xhr.responseText);
-        //         console.log(response.data);
-        //       } else if (xhr.status === 422) {
-        //         // Handle the error response
-        //         console.error("Error:", xhr.responseText);
-        //       } else {
-        //         // Handle other error cases
-        //         console.error("Error:", xhr.responseText);
-        //       }
-        //     }
-        // };
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200 || xhr.status === 201) {
+                // Handle the successful response
+                var response = JSON.parse(xhr.responseText);
+                console.log(response.data);
+              } else if (xhr.status === 422) {
+                // Handle the error response
+                console.error("Error:", xhr.responseText);
+              } else {
+                // Handle other error cases
+                console.error("Error:", xhr.responseText);
+              }
+            }
+        };
         if (data != undefined && data != "string") {
         // xhr.send(JSON.stringify(data));
         }
@@ -116,6 +115,11 @@ export default class extends Controller {
     }
     function disable_button(id){
       document.getElementById(id).disabled = true;
+      document.getElementById(id).classList.remove('choice-button')
+      document.getElementById(id).classList.add('choice-button2')
+    }
+    function enable_button(id){
+      document.getElementById(id).disabled = false;
       document.getElementById(id).classList.remove('choice-button')
       document.getElementById(id).classList.add('choice-button2')
     }

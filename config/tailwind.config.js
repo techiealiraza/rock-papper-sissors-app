@@ -20,6 +20,8 @@ module.exports = {
         'scissor_icon': "url('scissor.png')",
         'paper_icon': "url('paper.png')",
         'question_icon': "url('question.png')",
+        'victory': "url('victory.png')",
+        'defeat': "url('defeat.png')",
 
       },
       colors: {
