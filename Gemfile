@@ -78,14 +78,11 @@ gem 'hotwire-rails', '~> 0.1.3'
 gem 'kaminari'
 gem 'whenever', '~> 1.0'
 
-<<<<<<< HEAD
 gem "cancancan", "~> 3.5"
 
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'delayed_job_web', '~> 1.4.4', require: 'delayed_job_active_record'
-=======
-gem 'cancancan', '~> 3.5'
 
-gem "attr_encrypted", "~> 3.1"
->>>>>>> f6fda3f (OTP Mail Finalized)
+
+gem "twilio-ruby", "~> 5.77"
