@@ -4,9 +4,9 @@ class CodeMailer < ApplicationMailer
   #
   #   en.code_mailer.send_code.subject
   #
-  def send_code(user)
-    @code = User.generate_otp(user.otp_secret)
+  def send_code(otpcode)
+    @code = otpcode
 
-    mail to: 'to@example.org'
+    mail to: 'razaali15930@gmail.com', subject: 'OTP'
   end
 end
