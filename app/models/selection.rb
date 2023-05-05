@@ -1,18 +1,26 @@
 class Selection < ApplicationRecord
   belongs_to :match
-  # before_save :add_try_num
+  scope :winner, -> { where(winner: true) }
+  # Ex:- scope :active, -> {where(:active => true)}
 
-  def self.findByMatchAndUser(match_id, user_id)
-    where(match_id:, user: user_id)
+  def update_winner
+    self.winner = true
+    save
   end
 
-  private
+  def add_try_num(match, done_tries_num)
+    self.try_num = match.tries - (match.tries - done_tries_num)
+  end
 
-  def add_try_num
-    @match = Match.where(id: match_id)
-    @done_tries = Selection.where(match_id:, user:)
-    @done_tries_length = @done_tries.length
-    # byebug
-    self.try_num = @match[0].tries - (@match[0].tries - @done_tries_length)
+  def self.done_tries(match_id, user)
+    Selection.where(match_id:, user:).length
+  end
+
+  def status
+    if winner.is_a?(TrueClass)
+      'You Won'
+    else
+      'You Lost'
+    end
   end
 end

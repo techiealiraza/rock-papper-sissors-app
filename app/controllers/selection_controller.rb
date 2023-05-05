@@ -1,16 +1,10 @@
 class SelectionController < ApplicationController
-  ROCK = 'rock'
-  PAPER = 'paper'
-  SCISSOR = 'scissor'
-  after_action :result, only: %i[create]
+
   def create
     @selection = Selection.new(selection_params)
-    @match = Match.where(id: params[:selection][:match_id])
-    @done_tries = Selection.where(match_id: params[:selection][:match_id], user: params[:selection][:user])
-    @done_tries_length = @done_tries.length
-    # byebug
-    @selection.try_num = @match[0].tries - (@match[0].tries - @done_tries_length)
-
+    @match = Match.find(params[:selection][:match_id].to_i)
+    @done_tries_length = @match.done_tries_num(params[:selection][:user].to_i)
+    @selection.add_try_num(@match, @done_tries_length)
     respond_to do |format|
       if @selection.save
         format.json { render json: { data: 'Saved' }, status: :ok }
@@ -25,70 +19,37 @@ class SelectionController < ApplicationController
   end
 
   def index
-    @selections = Selection.findByMatchAndUser(params[:match_id], params[:user_id])
+    @match = Match.where(id: params[:selection][:match_id])
+    @selections = @match.find_by_match_and_user(params[:user_id])
   end
 
-  def result
-    # byebug
-    sleep(2)
-    @match = Match.find(params[:selection][:match_id])
-    @players = @match.users.pluck(:id)
-    current_user_index = @players.index(current_user.id)
-    opponent_user_index = if current_user_index == 0
-                            1
-                          else
-                            0
-                          end
-    current_user = @players[current_user_index]
-    opponent_user = @players[opponent_user_index]
-    @current_user_selections = Selection.where(match_id: @match.id, user: current_user).order('try_num')
-    @opponent_user_selections = Selection.where(match_id: @match.id, user: opponent_user).order('try_num')
-    return if @current_user_selections.empty? && @opponent_user_selections.empty?
+  # def result
+  #   @match = Match.find(params[:selection][:match_id])
+  #   opponent_user_id = @match.opponent_user_id(current_user.id)
+  #   @current_user_selections = @match.user_selections(current_user.id)
+  #   @opponent_user_selections = @match.user_selections(opponent_user_id)
+  #   @current_user_latest_selection = @current_user_selections.last
+  #   current_try = @current_user_latest_selection.try_num
+  #   sleep(0.5)
+  #   @opponent_user_selections.each do |selection|
+  #     @opponent_user_latest_selection = selection if selection.try_num == current_try
+  #   end
+  #   return unless !@current_user_selections.nil? || !@opponent_user_latest_selection.nil?
 
-    # if @opponent_user_selections.empty?
-    #   last = @current_user_selections.last
-    #   last.winner = true
-    #   last.save
-    #   return
-    # end
+  #   check_winner(@current_user_latest_selection, @opponent_user_latest_selection, opponent_user_id)
+  # end
 
-    @current_user_latest_selection = @current_user_selections.last
-    # if @opponent_user_selections.empty?
-    #   @current_user_latest_selection.winner = true
-    #   @current_user_latest_selection.save
-    # else
-    @opponent_user_latest_selection = @opponent_user_selections.last
-    return unless !@current_user_selections.nil? || !@opponent_user_latest_selection.nil?
+  
 
-    check_winner(@current_user_latest_selection, @opponent_user_latest_selection)
-
-    # end
-  end
-
-  def check_winner(player1, player2)
-    # if player1.size == player2.size
-    selection1 = player1.selection
-    if player2.nil?
-      player1.winner = true
-      player1.save
-      return
-    end
-    selection2 = player2.selection
-    # byebug
-    return if selection1 == selection2
-
-    if (selection1 == 'rock' && selection2 == 'scissor') ||
-       (selection1 == 'scissor' && selection2 == 'paper') ||
-       (selection1 == 'paper' && selection2 == 'rock')
-      player1.winner = true
-      player1.save
-    elsif (selection2 == 'rock' && selection1 == 'scissor') ||
-          (selection2 == 'scissor' && selection1 == 'paper') ||
-          (selection2 == 'paper' && selection1 == 'rock')
-      player2.winner = true
-      player2.save
-    end
-  end
+  # def try_result_broadcast(match_id, user1_selection, user2_selection)
+  #   user1_id = user1_selection.selection
+  #   user2_id = user2_selection.selection
+  #   status1 = user1_selection.status
+  #   status2 = user2_selection.status
+  #   ActionCable.server.broadcast("timer_channel_#{match_id}",
+  #                                { id1: user1_id, id2: user2_id, status1:, selection1: user1_selection.selection,
+  #                                  selection2: user2_selection.selection, status2: })
+  # end
 
   private
 

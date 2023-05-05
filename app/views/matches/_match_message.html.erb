@@ -1,14 +1,16 @@
 <div id = "match_id", data-match-id = <%= @match.id %>> </div>
 <div class = "flex px-5 flex-col">
-<h2 class = "text-white w-96 text-2xl mb-2">Messages</h2>
-<div class = "min-h-1/2 flex-col overflow-y-auto scrollbar-hide">
-<div id="message-list" class = "h-80">
-	<% @match.messages.all.each do |message| %>
+<div class = "flex-col overflow-y-auto overflow-x-hidden ">
+<div id="message-list" class = "">
+	<% @match.messages.all.reverse.each do |message| %>
    <div class = "flex flex-row">
    <div class = "rounded-full bg-gold_shade2 w-7 text-white text-center h-7">
       <%= User.find(message.user_id).name[0,3] %>
    </div>
    <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
+      <div class = "flex flex-row items-end">
+         <div class = "text-white"> <%= (message.created_at + 5.hours).strftime('%H:%M:%S') %></div>
+       </div>
 	   <div class=" max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-gold text-black">
          <%= message.message %></div>
    </div>
@@ -16,131 +18,9 @@
 	<% end %>
 </div>
 </div>
-<div class ="flex-grow items-end my-3">
-<%= form_with(url: match_messages_path(@match), remote: true, local: false) do |form| %>
-<div class = "flex flex-start"> 
-  <%= form.hidden_field :match_id, value: @match.id %>
-  <%= form.text_field :message, :autocomplete => :off, :required => 'required', placeholder: 'type message', class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4 fixed bottom-0", id:"msg_field_" + current_user.name %>
-  <%= form.hidden_field :user_id, value: current_user.id %>
-  <div >
-      <%= form.submit%>
-   </div>
-</div>
-<% end %>
-</div>
+
 </div>
 
 <div id="match-channel" data-match-id="<%= @match.id %>">
 
 </div>
-
-<script>
-   function stringToColor(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let color = '#';
-  for (let i = 0; i < 3; i++) {
-    let value = (hash >> (i * 8)) & 0xff;
-    color += ('00' + value.toString(16)).substr(-2);
-  }
-  return color;
-}
-</script>
-
-<!-- <div class="flex-1 p:2 sm:p-6 flex flex-col h-screen justify-start">
-    <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-       <div class="relative flex items-center space-x-4">
-          <div class="relative">
-            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" class="w-10 sm:w-16 h-10 sm:h-16 rounded-full">
-          </div>
-          <div class="flex flex-col leading-tight">
-             <div class="text-2xl mt-1 flex items-center">
-                <span class="text-gray-700 mr-3">Tournament Name</span>
-             </div>
-             <span class="text-lg text-gray-600">Player1 vs Player2</span>
-          </div>
-       </div>
-    </div>
-    <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-       <div class="chat-message">
-          <div class="flex items-end">
-             <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">Can be verified on any platform using docker</span></div>
-             </div>
-             <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full order-1">
-          </div>
-       </div>
-       <div class="chat-message">
-          <div class="flex items-end">
-             <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                <div><span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">Command was run with root privileges. I'm sure about that.</span></div>
-                <div><span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">I've update the description so it's more obviously now</span></div>
-                <div><span class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">FYI https://askubuntu.com/a/700266/510172</span></div>
-                <div>
-                   <span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
-                      Check the line above (it ends with a # so, I'm running it as root )
-                      <pre># npm install -g @vue/devtools</pre>
-                   </span>
-                </div>
-             </div>
-             <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full order-1">
-          </div>
-       </div>
-       <div class="chat-message">
-          <div class="flex items-end ">
-             <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">Any updates on this issue? I'm getting the same error when trying to install devtools. Thanks</span></div>
-             </div>
-             <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full order-1">
-          </div>
-       </div>
-       <div class="chat-message">
-          <div class="flex items-end">
-             <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">Thanks for your message David. I thought I'm alone with this issue. Please, ? the issue to support it :)</span></div>
-             </div>
-             <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full order-1">
-          </div>
-       </div>
-    </div>
- </div>
-    <footer class="pb-3 border-t-2 border-gold px-4 pt-4 mb-2 ">
-       <div class="relative flex">
-          <input type="text" placeholder="Write your message!" class="w-full focus:outline-none focus:placeholder-gold_shade2 text-gold_shade2 placeholder-gold_shade2 bg-gray-200 rounded-md ">
-          <div class="absolute right-0 items-center  ">
-             <div>
-                <button id="button" type="submit" class="bg-gold shadow-xl hover:bg-gold_shade2 text-white font-bold rounded py-2 w-20">Send</button>
-             </div>
-          </div>
-       </div>
-    </footer>
- 
- <style>
- .scrollbar-w-2::-webkit-scrollbar {
-   width: 0.25rem;
-   height: 0.25rem;
- }
- 
- .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
-   --bg-opacity: 1;
-   background-color: #f7fafc;
-   background-color: rgba(247, 250, 252, var(--bg-opacity));
- }
- 
- .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
-   --bg-opacity: 1;
-   background-color: #edf2f7;
-   background-color: rgba(237, 242, 247, var(--bg-opacity));
- }
- 
- .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
-   border-radius: 0.25rem;
- }
- </style>
- 
- <script>
-     const el = document.getElementById('messages')
-     el.scrollTop = el.scrollHeight
- </script> -->

@@ -3,6 +3,8 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   before_action :authenticate_2fa!, only: [:create]
+  # account_sid = 'AC312933a0ff499fcf81e3c4219ad80710'
+  # auth_token = '8fe209d1a73ffc6ad9108cd4fa75156c'
   before_action :authenticate_user!, except: %i[new create destroy]
   before_action :load_and_authorize_resource, except: %i[new create destroy]
   def authenticate_2fa!
@@ -22,7 +24,6 @@ class Users::SessionsController < Devise::SessionsController
       #   from: '+15856321481',
       #   to: '+923212674285'
       # )
-
       # puts message.sid
       render 'user_otp/two_fa'
       # elsif
@@ -30,7 +31,6 @@ class Users::SessionsController < Devise::SessionsController
       #   redirect_to new_user_session_path
     end
   end
-
   def auth_with_2fa(user)
     return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
 

@@ -20,18 +20,22 @@ document.addEventListener('turbolinks:load', () => {
 
       const msgs = document.getElementById("message-list");
       const msg_element = document.getElementById(`msg_field_${data.user_name}`)
-      const messageHTML = `<div class = "flex flex-row">
+      const messageHTML = `<div class = "my-1 flex flex-row">
       <div class = "rounded-full bg-gold_shade2 w-7 text-white text-center h-7">
       ${data.user_name.substring(0,3)}
       </div>
-      <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
+      <div class ="flex flex-col space-y-2 text-xs  ml-2 items-start">
+      <div class = "flex flex-row items-end">
+        <div class = "text-white">${data.created_at}</div>
+      </div>
         <div class="line-clamp-10 max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-gold text-black">
-        ${data.message}</div>
+        ${data.message}
+        </div>
       </div>
    </div>`;
    
-      msgs.insertAdjacentHTML("beforeend", messageHTML);
-      const last_elem = msgs.lastChild;
+      msgs.insertAdjacentHTML("afterbegin", messageHTML);
+      const last_elem = msgs.firstChild;
       last_elem.scrollIntoView({ behavior: 'smooth', block: 'end' });last_elem.scrollIntoView({ behavior: 'smooth', block: 'end' });
       msg_element.value = "";
 
