@@ -24,6 +24,11 @@ module.exports = {
         'defeat': "url('defeat.png')",
 
       },
+      spacing: {
+        '40': '40%',
+        '50': '50%',
+        '20': '20%',
+      },
       colors: {
         "gold": "#d97706",
         "gold_shade2": "#b45309",

@@ -59,7 +59,7 @@ class MessagesController < ApplicationController
     payload = {
       message: message.message,
       user_name:,
-      created_at: message.created_at.strftime('%H:%M:%S')
+      created_at: (message.created_at + 5.hours).strftime('%H:%M:%S')
     }
     # byebug
     ActionCable.server.broadcast("room_channel_#{message.match_id}", payload)
