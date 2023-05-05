@@ -9,6 +9,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, :two_factor_authenticatable,
          :recoverable, :rememberable, :validatable,
+         :trackable, :confirmable,
          otp_secret_encryption_key: ENV['OTP_SECRET_ENCRYPTION_KEY']
 
   ROLES = %i[guest member admin super_admin]

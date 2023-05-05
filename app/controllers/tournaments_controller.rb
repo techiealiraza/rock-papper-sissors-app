@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_tournament, only: %i[show edit update destroy]
-
+  load_and_authorize_resource
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all.order(:registration_deadline).page(params[:page])
