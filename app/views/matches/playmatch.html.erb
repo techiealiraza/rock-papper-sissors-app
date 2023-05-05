@@ -10,12 +10,6 @@
             </p>
         <% end %>
     </div>
-    <div class = "text-white">
-        <%= @current_user_scores %>
-    </div>
-    <div class = "text-white">
-        <%= @opponent_user_scores %>
-    </div>
     <!-- @match.users.length check if match b/w 3 or 2 players  -->
     <% current_user_index = @players.index(current_user.id) %>
     <% if current_user_index == 0 %>
@@ -25,10 +19,15 @@
     <% end %>
     <div class = "flex flex-col">
     <div class = "flex-grow">
-    <div class = "flex flex-col justify-center">
-        <div class = "bg-gold text-black text-xl mx-40 py-3 px-3 rounded-lg flex flex-row justify-center">
+    <div class = "flex flex-col space-between">
+        <div class = "flex flex-row justify-center space-x-0">
+        <div class = "my-3 bg-gold text-black text-xl py-3 px-3 rounded-lg mr-3">
+            <%= "Total Tries : #{@match.tries}" %>
+        </div>
+        <div id = <%= "tries_" + @match.id.to_s %> class = "pl-2 my-3 bg-gold text-black text-xl  py-3 px-3 rounded-lg">
             <%= "Remaining Tries : #{@remaining_tries}" %>
         </div>
+    </div>
         <div class = "flex flex-row justify-center mt-5">
             <%= render 'random_images',image_id: 1, user_id: @players[current_user_index]%>
             <%= render 'choice_timer', match: @match, remaining_seconds: @end_time %>
