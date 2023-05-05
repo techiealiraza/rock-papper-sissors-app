@@ -6,7 +6,7 @@ function random_image(){
         "/assets/rock.png",
         "/assets/paper.png",
         "/assets/rock.png",
-        "/assets/scissor.png",
+        "/assets/scissor.png",  
       ];
     const random_img = document.getElementById(2)
     var currentImageIndex = Math.ceil(Math.random() * 6)

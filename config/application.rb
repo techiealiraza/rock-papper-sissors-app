@@ -18,5 +18,6 @@ module RockPaperSissorsApp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.active_job.queue_adapter = :delayed_job
+    config.serve_static_assets = true
   end
 end
