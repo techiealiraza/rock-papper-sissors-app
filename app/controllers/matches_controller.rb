@@ -32,8 +32,8 @@ class MatchesController < ApplicationController
     opponent_user = @match.opponent_user_id(current_user.id)
     @current_user_selections = @match.user_selections(current_user.id)
     @opponent_user_selections = @match.user_selections(opponent_user)
-    @current_user_scores = @current_user_selections.where(winner: true).size
-    @opponent_user_scores = @opponent_user_selections.where(winner: true).size
+    @current_user_scores = @current_user_selections.winner.size
+    @opponent_user_scores = @opponent_user_selections.winner.size
 
     return unless @current_user_selections.size == @match.tries
 
@@ -47,25 +47,26 @@ class MatchesController < ApplicationController
     matches = []
     registered_users = tournament.users.shuffle
     length = registered_users.length
-    redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' and return if length.zero?
-
-    if (length - 8).zero?
-      matches = group_by_two(registered_users, tournament)
-    else
-      redirect_to tournament_path(tournament_id), notice: 'Enrolled Players are less than 8'
+    if length.zero?
+    redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament'
     end
+    # if (length - 8).zero?
+      matches = group_by_two(registered_users, tournament)
+    # else
+      # redirect_to tournament_path(tournament_id), notice: 'Enrolled Players are less than 8'
+    # end
     Match.transaction do
       matches.each(&:save!)
     end
-    redirect_to tournament_path(tournament_id), notice: 'Matches Generated' and return
+    redirect_to tournament_path(tournament_id), notice: 'Matches Generated'
   end
 
   def group_by_two(registered_users, tournament)
     matches = []
     registered_users.each_slice(2) do |user1, user2|
-      match_start_time = tournament.start_date + 10.seconds
+      match_start_time = tournament.start_date + 3.seconds
       match = Match.create(tournament_id: tournament.id, match_time: match_start_time)
-      match_broadcast_job(match.match_time - 5.hours + 5.seconds, match_id, 1, match.tries)
+      match_broadcast_job(match.match_time - 5.hours + 5.seconds, match.id, 1, match.tries)
       matches << user_match_obj(match, user1)
       matches << user_match_obj(match, user2)
     end
@@ -75,7 +76,7 @@ class MatchesController < ApplicationController
   def match_broadcast_job(run_at, match_id, try_num, tries)
     3.times do
       MatchBroadcastJob.delay(run_at:).perform_later(match_id, try_num, tries)
-      run_at += 10.seconds
+      run_at += 1.seconds
       try_num += 1
     end
   end
@@ -87,13 +88,13 @@ class MatchesController < ApplicationController
     @opponent_user_selections = @match.user_selections(opponent_user)
     @current_user_scores = @current_user_selections.winner.size
     @opponent_user_scores = @opponent_user_selections.winner.size
-    @status = status(@current_user_scores, @opponent_user_scores)
+    @status = status(@match)
   end
 
-  def status(score1, score2)
-    if score1 > score2
+  def status(match)
+    if match.match_winner_id == current_user.id
       'You Won'
-    elsif score2 > score1
+    elsif match.match_winner_id != current_user.id
       'You Lost'
     else
       'Wait'
