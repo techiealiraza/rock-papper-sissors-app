@@ -10,6 +10,9 @@
         <tr>
           <th>Match No</th>
           <th>Date</th>
+          <th>player1</th>
+          <th>player2</th>
+          <th>Round No</th>
           <th>View</th>
         </tr>
       </thead>
@@ -17,8 +20,11 @@
         <% adjusted_index = @matches.current_page * 3 - 2 %>
         <% @matches.each_with_index do |match, index| %>
           <tr>
-            <td class = "px-6 py-3" ><%= adjusted_index%></td>
+            <td class = "px-6 py-3" ><%= adjusted_index %></td>
             <td><%= match.match_time.strftime("%B %d, %Y %I:%M %p")%></td>
+            <td class = "px-6 py-3" ><%= match.users.first.name %></td>
+            <td class = "px-6 py-3" ><%= match.users.last.name %></td>
+            <td class = "px-6 py-3" ><%= match.round %></td>
             <td>
               <%= link_to "Show", match, class: "mb-4 px-3 py-2 btn-brown" %>
             </td>
