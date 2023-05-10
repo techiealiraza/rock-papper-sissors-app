@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: [:index]
 
   def index
     tournament = Tournament.find(params[:tournament_id])

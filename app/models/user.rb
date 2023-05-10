@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_many :tournaments_users
   has_many :messages
@@ -12,7 +14,7 @@ class User < ApplicationRecord
          :trackable, :confirmable,
          otp_secret_encryption_key: ENV['OTP_SECRET_ENCRYPTION_KEY']
 
-  ROLES = %i[guest member admin super_admin]
+  # ROLES = %i[guest member admin super_admin]
 
   def self.generate_otp_secret
     ROTP::Base32.random_base32

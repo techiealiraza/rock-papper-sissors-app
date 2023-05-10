@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Selection < ApplicationRecord
   belongs_to :match
   scope :winner, -> { where(winner: true) }

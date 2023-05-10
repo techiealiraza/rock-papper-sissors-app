@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   rescue_from CanCan::AccessDenied do |_exception|
@@ -11,7 +12,7 @@ class ApplicationController < ActionController::Base
       puts session[:next]
       redirect_to main_app.root_url, alert: 'You have to log in to continue.'
     else
-      render file: "#{Rails.root}/public/404.html", formats: [:html], status: 403, layout: false
+      render file: "#{Rails.root}/public/403.html", formats: [:html], status: 403, layout: false
     end
   end
 

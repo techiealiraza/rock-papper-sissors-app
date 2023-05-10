@@ -1,78 +1,56 @@
 <div class="bg-background-image min-h-screen flex flex-col">
-<div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-6">
-  <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full ">
-    <h1 class="mb-8 text-3xl text-center text-white">Tournament</h1>
-<%= form_with(model: tournament, class: "contents") do |form| %>
-  <% if tournament.errors.any? %>
-    <div id="error_explanation" class="bg-black-400 text-gold px-3 py-2 font-medium rounded-lg mt-3">
-      <!-- <h2><%= pluralize(tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2> -->
-
-      <ul>
-        <% tournament.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+  <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-6">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full ">
+      <h1 class="mb-8 text-3xl text-center text-white">Tournament</h1>
+      <%= form_with(model: tournament, class: "contents") do |form| %>
+        <% if tournament.errors.any? %>
+          <div id="error_explanation" class="bg-black-400 text-gold px-3 py-2 font-medium rounded-lg mt-3">
+            <!-- <h2><%= pluralize(tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2> -->
+            <ul>
+              <% tournament.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+        <div class="my-5">
+          <%= form.label :name, class: "text-white"%>
+          <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+        <%= form.label :image, class: "text-white"%>
+        <div class="personal-image">
+          <label class="label ml-0">
+            <%= form.file_field :image, onchange: "loadFile(event)"%>
+            <% if @tournament.image.attached? %>
+              <%= image_tag(@tournament.image, class: "h-40 w-full rounded-lg", id: "output")%>
+            <% else %>
+              <%= image_tag('image_icon.png', class: "h-40 w-full rounded-lg", id: "output")%>
+            <% end %>
+          </label>
+        </div>
+        <div class="my-5">
+          <%= form.label :description, class: "text-white" %>
+          <%= form.text_field :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+        <div class="my-5">
+          <%= form.label :registration_deadline, class: "text-white "%>
+          <%= form.datetime_local_field :registration_deadline, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+        <div class="my-5">
+          <%= form.label :start_date, class: "text-white "%>
+          <%= form.datetime_local_field :start_date, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+        <div class="my-5">
+          <%= form.label :end_date, class: "text-white" %>
+          <%= form.datetime_local_field :end_date, class: "block shadow rounded-md border booutline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+        <div class="flex flex-row items-center justify-center ">
+          <div class="actions mb-4 px-10 py-3 btn-brown">
+            <%= form.submit "Add Tournament" %>
+          </div>
+          <%= link_to 'Back', request.referer || root_path , class: "px-7 py-2 btn-brown "%>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="my-5">
-    <%= form.label :name, class: "text-white"%>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
-
-  <%= form.label :image, class: "text-white"%>
-  <div class="personal-image">
-    <label class="label ml-0">
-        <%= form.file_field :image, onchange: "loadFile(event)"%>
-        <% if @tournament.image.attached? %>
-          <%= image_tag(@tournament.image, class: "h-40 w-full rounded-lg", id: "output")%>
-        <% else %>
-          <%= image_tag('image_icon.png', class: "h-40 w-full rounded-lg", id: "output")%>
-        <% end %>
-    </label>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :description, class: "text-white" %>
-    <%= form.text_field :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :registration_deadline, class: "text-white "%>
-    <%= form.datetime_local_field :registration_deadline, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :start_date, class: "text-white "%>
-    <%= form.datetime_local_field :start_date, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :end_date, class: "text-white" %>
-    <%= form.datetime_local_field :end_date, class: "block shadow rounded-md border booutline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="flex flex-row items-center justify-center ">
-    <div class="actions mb-4 px-10 py-3 btn-brown">
-    <%= form.submit "Add Tournament" %>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<% end %>
-  </div>
-</div>
 </div>

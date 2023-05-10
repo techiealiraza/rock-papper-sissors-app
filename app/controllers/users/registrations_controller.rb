@@ -21,7 +21,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.valid? && resource.persisted?
         resource.update(
-          role: :member
+          role: :member,
+          otp_required_for_login: true,
+          otp_secret: User.generate_otp_secret
         )
       end
     end
@@ -72,9 +74,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # The path used after sign up.
   def after_sign_up_path_for(resource)
     # Customize the redirect location based on the role of the user
-    if resource.admin?
+    if resource.member?
       root_path
-    elsif resource.member?
+    elsif resource.admin?
       root_path
     else
       root_path

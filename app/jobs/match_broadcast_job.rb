@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Match_Broadcast_Job
 class MatchBroadcastJob < ApplicationJob
   queue_as :default
