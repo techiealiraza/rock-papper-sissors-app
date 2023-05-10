@@ -41,16 +41,27 @@ class Tournament < ApplicationRecord
   end
 
   def match_winners_count(round)
-    matches.where.not(match_winner_id: nil).where(round: round)
+    matches.where.not(match_winner_id: nil).where(round:)
   end
 
   def matches_by_round(round)
-    matches.where(round: round)
+    matches.where(round:)
   end
 
   def current_round_winners(round)
-    ids = matches.where.not(match_winner_id: nil).where(round: round).pluck(:match_winner_id)
+    ids = matches.where.not(match_winner_id: nil).where(round:).pluck(:match_winner_id)
     User.where(id: ids)
   end
 
+  def update_winner(tournament_winner_id)
+    update(tournament_winner_id:)
+  end
+
+  def current_match_time
+    if matches.empty?
+      start_date + 30.seconds
+    else
+      Time.now + 5.hours + 90.seconds
+    end
+  end
 end
