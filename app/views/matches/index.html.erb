@@ -1,10 +1,6 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
-<div class="py-20 flex flex-row items-center justify-evenly ">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-gold mb-5 text-black font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
+  <div class="py-20 flex flex-row items-center justify-evenly ">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
     <table class="w-full text-sm text-left text-black mx-5">
       <thead class="text-lg bg-gold_shade2 items-center">
         <tr>
@@ -33,17 +29,13 @@
         <% end %>
       </tbody>
     </table>
-    
   </div>
   <div class = "pb-20 flex flex-row items-center justify-center">
     <div class=" bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
       <div class="btn-group">
+        <%= link_to 'Back', request.referer || root_path , class: "px-7 py-2 btn-brown "%>
         <%= paginate @matches, window: 1,outer_window: 2 %>
       </div>
     </div>
   </div>
 </div>
-
-
-
-

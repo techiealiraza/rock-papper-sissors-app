@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 class TournamentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_tournament, only: %i[show edit update destroy]
   load_and_authorize_resource
+  before_action :authenticate_user!, except: [:index]
+
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all.order(:registration_deadline).page(params[:page])
@@ -17,7 +21,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1/edit
   def edit; end
 
-  def registration
+  def register
     @tournament = Tournament.find(params[:tournament_id])
     @user = User.find(params[:user_id])
     # @tournaments_user = @tournament.tournaments_user.build(user_id: current_user.id)

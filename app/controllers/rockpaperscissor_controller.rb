@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 class RockpaperscissorController < ApplicationController
-  def home
-  end
+  before_action :authenticate_user!, except: [:home]
+  def home; end
 end

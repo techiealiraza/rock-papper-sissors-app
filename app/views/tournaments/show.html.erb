@@ -5,34 +5,35 @@
       <div class=" text-white">
         <div class="">
           <div class="flex items-center justify-center">
-            <% if notice.present? %>
-              <p class="py-2 px-3  bg-gold mb-5 text-black font-medium rounded-lg  flex flex-wrap items-center justify-center "
-                id="notice">
-                <%= notice %>
-              </p>
-              <% end %>
           </div>
-
           <%= render @tournament %>
-            <div class="flex flex-row items-center justify-center py-3">
-              <% if @tournament.start_date.after?(Time.now.utc + (5*3600))%>
+          <div class="flex flex-row items-center justify-center py-3">
+            <% if @tournament.start_date.after?(Time.now.utc + (5*3600)) %>
+              <% if can? :edit, Tournament %>
                 <%= link_to 'Edit' , edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown " %>
-                  <% end %>
-                    <% if @tournament.start_date.after?(Time.now.utc + (5*3600))%>
-                      <div class="inline-block mx-2">
-                        <%= button_to 'Delete' , tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" , data: {confirm: "Are you sure?" } %>
-                      </div>
-                    <%end%>
-                  <% if @tournament.registration_deadline.before?(Time.now.utc + (5*3600))%>
-                    <% if @tournament.matches.size==0 %>
-                      <%= link_to 'Generate Matches' , create_matches_path(tournament_id: @tournament.id), method: :post, class: "mb-4 px-10 py-3 btn-brown " %>
-                    <% else %>
-                      <%= link_to 'View Matches' , matches_path(tournament_id: @tournament.id), method: :get, class: "mb-4 px-10 py-3 btn-brown " %>
-                    <% end %>
-                  <% end %>
-            </div>
-
-            <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->
+              <% end %>
+            <% end %>
+            <% if @tournament.start_date.after?(Time.now.utc + (5*3600)) %>
+              <div class="inline-block mx-2">
+                <% if can? :delete, Tournament %>
+                  <%= button_to 'Delete' , tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown" , data: {confirm: "Are you sure?" } %>
+                </div>
+              <% end %>
+            <% end %>
+            <% if @tournament.registration_deadline.before?(Time.now.utc + (5*3600)) %>
+              <% if @tournament.matches.size==0 %>
+                <% if can? :create_matches, Match %>
+                  <%= link_to 'Generate Matches' , create_matches_path(tournament_id: @tournament.id), method: :post, class: "mb-4 px-10 py-3 btn-brown " %>
+                <% end %>
+              <% else %>
+                <% if can? :view, Match %>
+                  <%= link_to 'View Matches' , matches_path(tournament_id: @tournament.id), method: :get, class: "mb-4 px-10 py-3 btn-brown " %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= link_to 'Back', request.referer || root_path , class: "px-7 py-2 btn-brown "%>
+          </div>
+          <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->
         </div>
       </div>
     </div>
