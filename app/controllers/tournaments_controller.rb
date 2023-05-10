@@ -9,7 +9,6 @@ class TournamentsController < ApplicationController
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all.order(:registration_deadline).page(params[:page])
-    # @tournaments = Tournament.page params[:page]
   end
 
   def show; end
@@ -30,7 +29,7 @@ class TournamentsController < ApplicationController
     if @tournaments_user.save
       redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!'
     else
-      redirect_to tournament_url(@tournament), notice: 'Registration failed'
+      redirect_to tournament_url(@tournament), notice: 'Already Registered'
     end
   end
 
