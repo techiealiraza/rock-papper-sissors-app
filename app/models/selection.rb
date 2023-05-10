@@ -17,10 +17,9 @@ class Selection < ApplicationRecord
   end
 
   def status
+    user_name = User.find(user).name
     if winner.is_a?(TrueClass)
-      'You Won'
-    else
-      'You Lost'
+      user_name + 'won'
     end
   end
 end

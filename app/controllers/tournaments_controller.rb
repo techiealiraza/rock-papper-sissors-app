@@ -25,7 +25,7 @@ class TournamentsController < ApplicationController
     if @tournaments_user.save
       redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!'
     else
-      redirect_to tournament_url(@tournament), notice: 'Registration failed'
+      redirect_to tournament_url(@tournament), notice: 'Already Registered'
     end
   end
 

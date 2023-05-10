@@ -12,18 +12,18 @@
 <% i = 0 %>
 <div class="mt-10 flex flex-row justify-between w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
     <div class = "container-fluid mt-5  rounded-lg py-3 px-10 bg-gold">
-        <%= "Your" %><br>scores
+        <%= @player1_name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
             <%= "#{@current_user_scores}" %>
         </div>
     </div>
     <div class = "flex flex-col">
         <h1 class="container-fluid mb-8 text-6xl text-center text-white">
-            <%= @status %>
+            <%= @result_message %>
         </h1>
     </div>
     <div class = "container-fluid mt-5 py-3 rounded-lg px-4 bg-gold">
-        <%= "opponent" %><br>scores
+        <%= @player2_name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
             <%= "#{@opponent_user_scores}" %>
         </div>
