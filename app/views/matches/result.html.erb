@@ -12,45 +12,37 @@
 <% i = 0 %>
 <div class="mt-10 flex flex-row justify-between w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
     <div class = "container-fluid mt-5  rounded-lg py-3 px-10 bg-gold">
-        <%= "Your" %><br>scores
+        <%= @player1_name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
             <%= "#{@current_user_scores}" %>
         </div>
     </div>
     <div class = "flex flex-col">
         <h1 class="container-fluid mb-8 text-6xl text-center text-white">
-            <%= @status %>
+            <%= @result_message %>
         </h1>
     </div>
     <div class = "container-fluid mt-5 py-3 rounded-lg px-4 bg-gold">
-        <%= "opponent" %><br>scores
+        <%= @player2_name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
             <%= "#{@opponent_user_scores}" %>
         </div>
     </div>
 </div>
-<% @current_user_selections.each do |current_user_selection| %>
-    <% opponent_user_selection = 'question.png' %>
-    <% if current_user_selection.try_num == i %>
-        <% current_user_status = current_user_selection.winner %>
-        <% current_user_selection = current_user_selection.selection + ".png" %>
-    <% end %>
-    <% if !@opponent_user_selections.size.zero? %>
-        <% if !@opponent_user_selections[i].nil? %>
-            <% if @opponent_user_selections[i].try_num == i %>
-                <% opponent_user_selection = @opponent_user_selections[i].selection + ".png" %>
-            <% end %>
-        <% end %>
-    <% end %>
 
+<% @current_user_selections.each do |current_user_selection| %>
+        <% current_user_status = current_user_selection.winner %>
+        <% current_user_choice = current_user_selection.selection %>
+        <% current_user_choice = current_user_choice + ".png" %>
+        <% opponent_user_choice = @opponent_user_selections[i].selection + ".png" %>   
     <div class = "flex flex-row justify-center">
-        <%= image_tag(current_user_selection, width: "100", class: " m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <%= image_tag(current_user_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
         <% if current_user_status %>
             <%= image_tag("victory.gif", width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
         <% else %>
             <%= image_tag("defeat.gif", width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
         <% end %>
-        <%= image_tag(opponent_user_selection, width: "100", class: "m-5 mt-15 p-2 rounded-lg bg-gold") %>
+        <%= image_tag(opponent_user_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
     </div>
     <% i += 1 %>
 <% end %>

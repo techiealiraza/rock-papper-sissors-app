@@ -5,8 +5,10 @@ import { try_post } from '../packs/try_post';
 document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('match_id');
   const userElement = document.getElementById('user_id');
+  const playerElement = document.getElementById('player_check');
   const match_id = element.getAttribute('data-match-id');
   const user_id = userElement.getAttribute('data-user-id');
+  const is_player = playerElement.getAttribute('data-player-check')
   consumer.subscriptions.create({channel: "TimerChannel", match_id: match_id},  {
   connected() {
     // debugger
@@ -61,7 +63,9 @@ document.addEventListener('turbolinks:load', () => {
       }
       else{
         disable_buttons()
-        try_post()
+        if(is_player){
+          try_post()
+        }
       }
     }
   }
