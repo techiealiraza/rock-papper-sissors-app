@@ -10,29 +10,35 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <div class="navbar-text bg-gold w-full ">
+    <nav class="flex items-center justify-between flex-wrap bg-gold p-5 m-2 ">
+      <a href="#"
+              class=" btn-brown px-3 py-2 text-lg font-normal"
+              aria-current="page">Dashboard</a>
+      <a href="/tournaments"
+              class=" btn-brown px-3 py-2 text-lg font-normal">Tournaments</a>
+      <a href="#"
+              class=" btn-brown px-3 py-2 text-lg font-normal">Matches</a>
+      <a href="#"
+              class=" btn-brown px-3 py-2 text-lg font-normal">LeaderBoard</a>
       <% if user_signed_in? %>
-        Logged in as <strong>
-          <%= current_user.email %>
-        </strong>.
-        <%= link_to 'Edit profile' , edit_user_registration_path, :class=> 'btn-brown navbar-link float-right px-2' %> 
-          <%= link_to "Logout" , destroy_user_session_path, method: :delete, :class=> 'btn-brown navbar-link float-right px-2' %>
-            <% else %>
-              <%= link_to "Sign up" , new_user_registration_path, :class=> 'btn-brown navbar-link float-right px-2' %>
-                <%= link_to "Login" , new_user_session_path, :class=> 'btn-brown navbar-link float-right px-2' %>
-                  <% end %>
-      </div> 
-
+        <%= link_to 'Edit profile' , edit_user_registration_path, :class=> 'btn-brown px-3 py-2 text-lg font-normal ' %>
+        <%= link_to "Logout" , destroy_user_session_path, method: :delete, :class=> 'btn-brown px-3 py-2 text-lg font-normal' %>
+        <strong class="float-right inline-block px-3 text-lg">
+          Logged in as : 
+          <%= current_user.email.split('@').first %>
+        </strong>
+      <% else %>
+        <%= link_to "Sign up" , new_user_registration_path, :class=> 'btn-brown px-3 py-2 text-lg font-normal' %>
+        <%= link_to "Login" , new_user_session_path, :class=> 'btn-brown px-3 py-2 text-lg font-normal' %>
+      <% end %>
+    </nav>
     <p class="notice">
       <%= notice %>
     </p>
-     <p class="alert">
+    <p class="alert">
       <%= alert %>
-
-    </p> 
-
+    </p>
     <%= yield %>
-
     <script>
       var loadFile = function(event) {
         var output = document.getElementById('output');

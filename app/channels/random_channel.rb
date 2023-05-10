@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RandomChannel < ApplicationCable::Channel
   def subscribed
     stream_from "random_channel_#{params[:match_id]}"

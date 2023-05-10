@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'delayed_job_web'
 Rails.application.routes.draw do
 <<<<<<< HEAD
@@ -11,7 +13,7 @@ Rails.application.routes.draw do
   resources :messages
   resources :tournaments do
     member do
-      post 'registration'
+      post 'register'
     end
   end
   resources :tournaments do
@@ -31,7 +33,8 @@ Rails.application.routes.draw do
   # get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations'
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'

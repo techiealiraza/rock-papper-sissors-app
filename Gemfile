@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -78,13 +80,16 @@ gem 'hotwire-rails', '~> 0.1.3'
 gem 'kaminari'
 gem 'whenever', '~> 1.0'
 
-gem "cancancan", "~> 3.5"
+gem 'cancancan', '~> 3.5'
 
-gem 'delayed_job_active_record'
+gem 'attr_encrypted', '~> 3.1'
+
 gem 'daemons'
+gem 'delayed_job_active_record'
 gem 'delayed_job_web', '~> 1.4.4', require: 'delayed_job_active_record'
 
+gem 'twilio-ruby', '~> 5.77'
 
-gem "twilio-ruby", "~> 5.77"
+gem 'erb_lint', '~> 0.4.0'
 
-gem "erb_lint", "~> 0.4.0"
+gem 'htmlbeautifier', '~> 1.4'

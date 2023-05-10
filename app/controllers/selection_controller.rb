@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class SelectionController < ApplicationController
+  # before_action :authenticate_user!, except: [:home]
 
   def create
     @selection = Selection.new(selection_params)
@@ -38,8 +41,6 @@ class SelectionController < ApplicationController
 
   #   check_winner(@current_user_latest_selection, @opponent_user_latest_selection, opponent_user_id)
   # end
-
-  
 
   # def try_result_broadcast(match_id, user1_selection, user2_selection)
   #   user1_id = user1_selection.selection
