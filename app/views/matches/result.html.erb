@@ -1,11 +1,4 @@
 <div class="bg-background-image min-h-screen flex flex-col items-center">
-  <!-- <div>
-    <% if current_user.avatar.attached? %>
-        <%= image_tag(current_user.avatar.variant(resize: "#{40}x#{40}!"), class: " m-5 mt-5 p-2 rounded-lg bg-gold") %>
-    <% else %>
-        <%= image_tag("default_avatar.png", width: "40", class: " m-5 mt-5 p-2 rounded-lg bg-gold") %>  
-    <% end %>    
-</div> -->
   <% i = 0 %>
   <div class="mt-10 flex flex-row justify-between w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
     <div class = "container-fluid mt-5  rounded-lg py-3 px-10 bg-gold">
@@ -33,7 +26,7 @@
         <% opponent_user_choice = @player2_selections[i].selection + ".png" %> 
         <% status = player1_selection.status || @player2_selections[i].status %>
         <% if !status %>
-            <% status = "  Draw  " %>
+            <% status = "Draw" %>
         <% end %>
     <div class = "flex flex-row justify-center">
         <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>

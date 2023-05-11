@@ -9,20 +9,16 @@ Rails.application.routes.draw do
   get 'user_otp/disable'
 >>>>>>> f6fda3f (OTP Mail Finalized)
   resources :selection
-  # resources :messages
-  # resources :tournaments do
-  #   member do
-  #     post 'register'
-  #   end
-  # end
   resources :tournaments do
-    # get '/page/:page', action: :index, on: :collection
-
+    member do
+      post 'register'
+      post '/create_matches', to: 'tournaments#create_matches'
+    end
     resources :matches do
-      # get '/page/:page', action: :index, on: :collection
-      get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
-      get '/result', to: 'matches#result', as: 'result'
-      # get '/result', to: 'matches#result', as: 'result'
+      member do
+        get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
+        get '/result', to: 'matches#result', as: 'result'
+      end
       resources :messages, only: [:create]
       # member do
       #   get :playmatch
@@ -30,8 +26,6 @@ Rails.application.routes.draw do
     end
   end
   get 'rockpaperscissor/home'
-  post 'matches/create_matches', to: 'matches#create_matches', as: 'create_matches'
-  # get 'matches/view_match', to: 'matches#matches_index', as: 'matches_index'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',

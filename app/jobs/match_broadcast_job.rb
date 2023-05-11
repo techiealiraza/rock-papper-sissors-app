@@ -28,7 +28,7 @@ class MatchBroadcastJob < ApplicationJob
     selection1 = selections_data[0]
     selection2 = selections_data[1]
     update_winner(selection1, selection2)
-    status = selection1.status || selection2.status
+    status = selection1.status || selection2.status || 'Draw'
     ActionCable.server.broadcast("timer_channel_#{job.arguments[0]}",
                                  { id1: user1_id, id2: user2_id, status1: status, selection1: selection1.selection,
                                    selection2: selection2.selection, status2: status })

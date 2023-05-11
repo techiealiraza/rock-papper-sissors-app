@@ -41,7 +41,7 @@
 <% if can? :register, Tournament %>
   <% if tournament.registration_deadline.after?(Time.now.utc + (5*3600)) %>
     <div class="flex flex-row items-center justify-center pt-4">
-      <%= form_with url: registration_tournament_path(tournament.id), method: :post do |form| %>
+      <%= form_with url: register_tournament_path(tournament.id), method: :post do |form| %>
         <%= form.hidden_field :user_id, value: current_user.id %>
         <%= form.hidden_field :tournament_id, value: tournament.id %>
         <%= form.submit "Register", class: "actions my-4 px-10 py-3 btn-brown" %>
@@ -50,7 +50,7 @@
   <% end %>
 <% else %>
   <div class="flex flex-row items-center justify-center pt-4">
-  <h1 class="text-red-900">Admins cant Register for Tournament</h1>
+  <h1 class="text-white">Admins can't Register for Tournament</h1>
   </div>
 <% end %>
 
