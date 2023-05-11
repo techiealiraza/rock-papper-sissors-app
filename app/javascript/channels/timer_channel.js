@@ -4,10 +4,12 @@ import { try_post } from '../packs/try_post';
 
 document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('match_id');
-  const userElement = document.getElementById('user_id');
+  const user1Element = document.getElementById('player1_id');
+  const user2Element = document.getElementById('player2_id');
   const playerElement = document.getElementById('player_check');
   const match_id = element.getAttribute('data-match-id');
-  const user_id = userElement.getAttribute('data-user-id');
+  const player1_id = user1Element.getAttribute('data-player1-id');
+  const player2_id = user2Element.getAttribute('data-player2-id');
   const is_player = playerElement.getAttribute('data-player-check')
   consumer.subscriptions.create({channel: "TimerChannel", match_id: match_id},  {
   connected() {
@@ -23,25 +25,15 @@ document.addEventListener('turbolinks:load', () => {
 
   received(data) {
     if(data.id1 != undefined){
-      let id1 = data.id1
-      let id2 = data.id2
       let selection1 = data.selection1
       let selection2 = data.selection2
       let status1 = data.status1
-      let status2 = data.status2
-      const user_selection = document.getElementById(1)
-      const opponent_selection = document.getElementById(2)
+      const user1_selection = document.getElementById(player1_id)
+      const user2_selection = document.getElementById(player2_id)
       const displayDiv = document.getElementById("second_timer")
-      if(parseInt(user_id) == id1){
-        user_selection.src = "/assets/"+selection1+".png"
-        opponent_selection.src = "/assets/"+selection2+".png"
+        user1_selection.src = "/assets/"+selection1+".png"
+        user2_selection.src = "/assets/"+selection2+".png"
         displayDiv.textContent = status1;
-      }
-      else if(parseInt(user_id) == id2){
-        user_selection.src = "/assets/"+selection2+".png"
-        opponent_selection.src = "/assets/"+selection1+".png"
-        displayDiv.textContent = status2;
-      }
     }
     else{
       let seconds = data.seconds
@@ -55,8 +47,8 @@ document.addEventListener('turbolinks:load', () => {
         if(seconds === 5)
         {
           event_listener_to_buttons()
-          const user_selection = document.getElementById(1)
-          const opponent_selection = document.getElementById(2)
+          const user_selection = document.getElementById(player1_id)
+          const opponent_selection = document.getElementById(player2_id)
           user_selection.src = "/assets/question.png"
           opponent_selection.src = "/assets/question.png"
         }
