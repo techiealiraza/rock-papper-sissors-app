@@ -6,23 +6,24 @@ Rails.application.routes.draw do
   get 'user_otp/disable'
   match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
   resources :selection
-  resources :matches
-  resources :messages
+  # resources :messages
+  # resources :tournaments do
+  #   member do
+  #     post 'register'
+  #   end
+  # end
   resources :tournaments do
-    member do
-      post 'register'
-    end
-  end
-  resources :tournaments do
-    get '/page/:page', action: :index, on: :collection
-  end
-  resources :matches do
-    get '/page/:page', action: :index, on: :collection
-    get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
-    get '/result', to: 'matches#result', as: 'result'
-    resources :messages, only: [:create]
-    member do
-      get :playmatch
+    # get '/page/:page', action: :index, on: :collection
+
+    resources :matches do
+      # get '/page/:page', action: :index, on: :collection
+      get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
+      get '/result', to: 'matches#result', as: 'result'
+      # get '/result', to: 'matches#result', as: 'result'
+      resources :messages, only: [:create]
+      # member do
+      #   get :playmatch
+      # end
     end
   end
   get 'rockpaperscissor/home'

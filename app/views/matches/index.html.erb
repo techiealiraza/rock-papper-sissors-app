@@ -1,4 +1,5 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
+  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
   <div class="py-20 flex flex-row items-center justify-evenly ">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
     <table class="w-full text-sm text-left text-black mx-5">
@@ -22,7 +23,7 @@
             <td class = "px-6 py-3" ><%= match.users.last.name %></td>
             <td class = "px-6 py-3" ><%= match.round %></td>
             <td>
-              <%= link_to "Show", match, class: "mb-4 px-3 py-2 btn-brown" %>
+              <%= link_to "show", tournament_match_url(id: match.id), method: :get, class: "mb-4 px-3 py-2 btn-brown" %>
             </td>
           </tr>
           <% adjusted_index = adjusted_index + 1%>
@@ -33,7 +34,6 @@
   <div class = "pb-20 flex flex-row items-center justify-center">
     <div class=" bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
       <div class="btn-group">
-        <%= link_to 'Back', request.referer || root_path , class: "px-7 py-2 btn-brown "%>
         <%= paginate @matches, window: 1,outer_window: 2 %>
       </div>
     </div>

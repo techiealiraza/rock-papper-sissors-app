@@ -22,6 +22,8 @@ class MatchBroadcastJob < ApplicationJob
     user2_selections = match.user_selections(user2_id)
     size1 = user1_selections.size
     size2 = user2_selections.size
+    puts size1
+    puts size2
     selections_data = match.last_selections(size1, size2, try_num)
     selection1 = selections_data[0]
     selection2 = selections_data[1]
