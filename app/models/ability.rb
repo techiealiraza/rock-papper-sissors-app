@@ -16,7 +16,7 @@ class Ability
     if user.member?
       can %i[create new index], Message
       can :register, Tournament
-      can %i[playmatch index show m atches_index], Match
+      can %i[playmatch index show result matches_index], Match
       can :manage, UsersMatch, user_id: user.id
       can :create, Selection, match: { users: { id: user.id } }
 
@@ -25,8 +25,8 @@ class Ability
     # Admin users can create tournaments, generate matches, and manage users
     elsif user.admin?
       can %i[create new index], Message
-      can %i[new create index edit], Tournament
-      can %i[playmatch create_matches new create], Match
+      can %i[new create create_matches index edit], Tournament
+      can %i[playmatch result new create], Match
       cannot %i[edit update destroy], Selection
 
     # Super admins can do everything an admin can do, and also manage admin rights

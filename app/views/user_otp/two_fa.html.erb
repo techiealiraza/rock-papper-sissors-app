@@ -1,29 +1,23 @@
-<div class="h-screen bg-blue-500 py-20 px-3">
-  <div class="container mx-auto">
-    <div class="max-w-sm mx-auto md:max-w-lg">
-      <div class="w-full">
-        <div class="bg-white h-64 py-3 rounded text-center">
-          <h1 class="text-2xl font-bold">OTP Verification</h1>
-          <div class="flex flex-col mt-4">
-            <span>Enter the OTP you received at</span>
-            <span class="font-bold">+91******876</span>
-          </div>
+<div class="bg-background-image min-h-screen flex flex-col justify-between">
+  <div class="container flex-1 flex flex-col items-center justify-center px-6">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
+          <h1 class=" flex flex-row justify-center text-white text-2xl font-bold">OTP Verification</h1>
           <div id="otp" class="flex flex-row justify-center text-center px-2 mt-5">
             <%= form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| %>
               <div class="form-group">
-                <%= f.label :otp_attempt %> <br />
-                <div class = "bg-red-300">
-                  <%= f.text_field :otp_attempt %>
+                <div class = "flex flex-row justify-start text-white pt-3">
+                  <%= f.label "OTP" %>
                 </div>
+                  <%= f.text_field :otp_attempt, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
               </div>
-              <%= f.submit  "Submit" %>
+              <div class = "pt-3 flex flex-row justify-center">
+              <div class = "px-7 py-2 btn-brown">
+                <%= f.submit  "Submit"%>
+              </div>
+            </div>
+
             <%end%>
           </div>
-          <div class="flex justify-center text-center mt-5">
-            <a class="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer"><span class="font-bold">Resend OTP</span><i class='bx bx-caret-right ml-1'></i></a>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

@@ -1,29 +1,4 @@
-<!-- <h2>Log in</h2>
-<%= javascript_tag "displayClock()" %>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %> -->
 
 <div class="bg-background-image min-h-screen flex flex-col">
   <div
@@ -43,49 +18,6 @@
       <div class="field">
         <%= f.label :email, class: "text-white" %> <%= f.email_field :email,
         autofocus: true, autocomplete: "email" , class: "border border-gold w-full rounded pt-3 mb-3" %>
-      </div>
-      <!-- <input
-          type="text"
-          class="block border border-grey-light w-full pt-3 rounded mb-4 border-gold"
-          name="email"
-          placeholder="Email"
-        /> -->
-
-      <div
-        class="py-1 flex flex-row space-x-20 items-center justify-center border border-gold rounded bg-white mb-3"
-        x-data="app"
-      >
-        <div data-controller="pass">
-          <input
-            type="radio"
-            name="option"
-            id="1"
-            class="peer hidden"
-            data-action="click->pass#password"
-          />
-          <label
-            for="1"
-            class="px-7 block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-gold peer-checked:text-black"
-            >Password</label
-          >
-        </div>
-
-        <div data-controller="pass">
-          <input
-            type="radio"
-            name="option"
-            id="2"
-            class="peer hidden"
-            data-action="click->pass#otp"
-            checked
-          />
-          <label
-            for="2"
-            class="text-black px-7 block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-gold peer-checked:text-black"
-          >
-            OTP
-          </label>
-        </div>
       </div>
       <div>
         <%= f.label :password, class: "text-white" %> 
