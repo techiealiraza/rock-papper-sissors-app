@@ -1,8 +1,10 @@
 <div id = "match_id", data-match-id = <%= @match.id %>> </div>
+<div id = "player1_id", data-player1-id = <%= @match.users.first.id %>> </div>
+<div id = "player2_id", data-player2-id = <%= @match.users.last.id %>> </div>
 <div id = "user_id", data-user-id = <%= current_user.id %>> </div>
 <div id = "player_check", data-player-check = <%= @is_player %>> </div>
 <div class="bg-background-image flex flex-col h-screen ">
-  <%= link_to 'Back', request.referer || root_path , class: "px-7 py-2 btn-brown "%>
+  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
   <div class = "flex flex-col">
     <div class = "flex-grow flex-1">
       <div class = "flex flex-col items-center">
@@ -10,12 +12,13 @@
           <%= "Remaining Tries : #{@remaining_tries}" %>
         </div>
         <div class = "flex flex-row justify-center">
-          <%= render 'random_images',image_id: 1 %>
+          <%= render 'random_images', image_id: @match.users.first.id %>
           <%= render 'choice_timer', match: @match, remaining_seconds: @end_time %>
-          <%= render 'random_images', image_id: 2 %>
+          <%= render 'random_images', image_id: @match.users.last.id %>
         </div>
       </div>
     </div>
+    <% if can? :create, Selection %>
     <div class = "mt-3 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5 max-w-1/2">
       <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
       <div class = "flex flex-row justify-center">
@@ -33,10 +36,11 @@
         </button>
       </div>
     </div>
+    <% end %>
   </div>
   <h2 class = "text-white w-96 text-2xl mb-2">Messages</h2>
   <div class ="my-3">
-    <%= form_with(url: match_messages_path(@match), remote: true, local: false) do |form| %>
+    <%= form_with(url: tournament_match_messages_path(@match), remote: true, local: false) do |form| %>
       <div>
         <%= form.hidden_field :match_id, value: @match.id %>
         <%= form.text_field :message, :autocomplete => :off, :required => 'required', placeholder: 'type message', class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4 ", id:"msg_field_" + current_user.name %>

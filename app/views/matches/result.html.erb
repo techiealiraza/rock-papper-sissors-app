@@ -11,7 +11,7 @@
     <div class = "container-fluid mt-5  rounded-lg py-3 px-10 bg-gold">
         <%= @player1_name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
-            <%= "#{@current_user_scores}" %>
+            <%= "#{@player1_scores}" %>
         </div>
     </div>
     <div class = "flex flex-col">
@@ -22,26 +22,29 @@
     <div class = "container-fluid mt-5 py-3 rounded-lg px-4 bg-gold">
         <%= @player2_name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
-            <%= "#{@opponent_user_scores}" %>
+            <%= "#{@player2_scores}" %>
         </div>
     </div>
 </div>
 
-<% @current_user_selections.each do |current_user_selection| %>
-        <% current_user_status = current_user_selection.winner %>
-        <% current_user_choice = current_user_selection.selection %>
-        <% current_user_choice = current_user_choice + ".png" %>
-        <% opponent_user_choice = @opponent_user_selections[i].selection + ".png" %>   
-    <div class = "flex flex-row justify-center">
-        <%= image_tag(current_user_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
-        <% if current_user_status %>
-            <%= image_tag("victory.gif", width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
-        <% else %>
-            <%= image_tag("defeat.gif", width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+<% @player1_selections.each do |player1_selection| %>
+        <% player1_choice = player1_selection.selection %>
+        <% player1_choice = player1_choice + ".png" %>
+        <% opponent_user_choice = @player2_selections[i].selection + ".png" %> 
+        <% status = player1_selection.status || @player2_selections[i].status %>
+        <% if !status %>
+            <% status = "  Draw  " %>
         <% end %>
+    <div class = "flex flex-row justify-center">
+        <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+        <div class = "m-5 mt-5 p-2 flex flex-col justify-center rounded-lg bg-gold text-xl">
+            <%= status %>
+        </div>
         <%= image_tag(opponent_user_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
     </div>
     <% i += 1 %>
   <% end %>
-  <%= link_to 'Back', request.referer || root_path , class: "px-7 py-2 btn-brown "%>
+  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
+
 </div>
+

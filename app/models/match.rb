@@ -77,6 +77,8 @@ class Match < ApplicationRecord
       [set_random_choices(user1_id, try_num), user_selection_by(user2_id, try_num - 1)]
     elsif size2 < size1
       [user_selection_by(user1_id, try_num - 1), set_random_choices(user2_id, try_num)]
+    else
+      [user_selection_by(user1_id, try_num - 1), user_selection_by(user2_id, try_num - 1)]
     end
   end
 

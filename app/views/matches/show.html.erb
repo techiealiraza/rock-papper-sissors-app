@@ -24,9 +24,10 @@
       </p>
       <% players = @match.users.pluck(:id) %>
       <div class = " my-5 flex flex-row items-center justify-center px-3">
-        <%= link_to "Start", match_playmatch_path(match_id: @match.id), class: "px-7 py-2 btn-brown " %>
-        <%= link_to 'Back', request.referer || root_path %>
+        <%= link_to "view", tournament_match_playmatch_path(match_id: @match.id), class: "px-7 py-2 btn-brown " %>
       </div>
+      <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
+
       <!-- <% if (Time.now.utc + (5*3600)) > @match.match_time && (Time.now.utc + (5*3600))<@match.match_time+5.minutes %> -->
       <!-- <div class = " my-5 flex flex-row items-center justify-center px-3"> -->
       <!-- replace root_path with the match view -->
