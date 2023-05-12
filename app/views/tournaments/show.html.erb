@@ -7,7 +7,7 @@
           <div class="flex items-center justify-center">
           </div>
           <%= render @tournament %>
-          <div class="flex flex-row items-center justify-center py-3">
+          <div class="flex flex-col items-center justify-center py-3">
             <% if @tournament.start_date.after?(Time.now.utc + (5*3600)) %>
               <% if can? :edit, Tournament %>
                 <%= link_to 'Edit' , edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown " %>
@@ -22,19 +22,19 @@
             <% end %>
             <% if @tournament.registration_deadline.before?(Time.now.utc + (5*3600)) %>
               <% if @tournament.matches.size==0 %>
-                <% if can? :create_matches, Match %>
-                  <%= link_to 'Generate Matches' , create_matches_path(tournament_id: @tournament.id), method: :post, class: "mb-4 px-10 py-3 btn-brown" %>
+                <% if can? :create_matches, Tournament %>
+                  <%= link_to 'Generate Matches' , create_matches_tournament_path(@tournament.id), method: :post, class: "mb-4 px-10 py-3 btn-brown" %>
                 <% end %>
               <% else %>
                 <% if can? :show, Match %>
-                  <%= link_to 'View Matches' , tournament_matches_path(tournament_id: @tournament.id), method: :get, class: "mb-4 px-10 py-3 btn-brown" %>
+                  <%= link_to 'View Matches' , tournament_matches_path(@tournament), method: :get, class: "mb-4 px-10 py-3 btn-brown" %>
                 <% end %>
               <% end %>
             <% end %>
           </div>
-          <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
           <!-- <%= link_to 'Back to tournaments', tournaments_path, class: "actions mb-4 px-10 py-3 btn-brown" %> -->
         </div>
+        <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
       </div>
     </div>
   </div>

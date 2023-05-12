@@ -21,11 +21,19 @@
 </p>
 <%= render 'registration_deadline', tournament: tournament %>
 <p class="pt-5">
-  <strong class="block font-medium text-white">Registered Users</strong>
+  <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= @tournament.users.length %>
   </div>
 </p>
+<% if @tournament.tournament_winner_id %>
+  <p class="pt-5">
+    <strong class="block font-medium text-white">Tournament Winner</strong>
+    <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+      <%= User.find(@tournament.tournament_winner_id).name %>
+    </div>
+  </p>
+<% end %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Start date</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
@@ -41,7 +49,7 @@
 <% if can? :register, Tournament %>
   <% if tournament.registration_deadline.after?(Time.now.utc + (5*3600)) %>
     <div class="flex flex-row items-center justify-center pt-4">
-      <%= form_with url: registration_tournament_path(tournament.id), method: :post do |form| %>
+      <%= form_with url: register_tournament_path(tournament.id), method: :post do |form| %>
         <%= form.hidden_field :user_id, value: current_user.id %>
         <%= form.hidden_field :tournament_id, value: tournament.id %>
         <%= form.submit "Register", class: "actions my-4 px-10 py-3 btn-brown" %>
@@ -50,7 +58,7 @@
   <% end %>
 <% else %>
   <div class="flex flex-row items-center justify-center pt-4">
-  <h1 class="text-red-900">Admins cant Register for Tournament</h1>
+  <h1 class="text-white">Admins can't Register for Tournament</h1>
   </div>
 <% end %>
 

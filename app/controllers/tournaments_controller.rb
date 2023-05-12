@@ -2,13 +2,12 @@
 
 class TournamentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_tournament, only: %i[show edit update destroy]
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index]
 
   # GET /tournaments or /tournaments.json
   def index
-    @tournaments = Tournament.all.order(:registration_deadline).page(params[:page])
+    @tournaments = @tournaments.order(:registration_deadline).page(params[:page])
   end
 
   def show; end
@@ -22,15 +21,30 @@ class TournamentsController < ApplicationController
   def edit; end
 
   def register
-    @tournament = Tournament.find(params[:tournament_id])
     @user = User.find(params[:user_id])
-    # @tournaments_user = @tournament.tournaments_user.build(user_id: current_user.id)
     @tournaments_user = TournamentsUser.new(user: @user, tournament: @tournament)
     if @tournaments_user.save
       redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!'
     else
       redirect_to tournament_url(@tournament), notice: 'Already Registered'
     end
+  end
+
+  def create_matches
+    registered_users = @tournament.users
+    matches = MatchCreator.new(@tournament, registered_users).create_match
+    matches.each(&:delayed_job)
+    # length = registered_users.length
+    # redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
+    # if (length % 8).zero?
+    # matches = group_by_two(registered_users, tournament)
+    # else
+    # redirect_to tournament_path(tournament_id), notice: 'Enrolled Players are less than 8'
+    # end
+    # Match.transaction do
+    #   matches.each(&:save!)
+    # end
+    redirect_to tournament_path(@tournament), notice: 'Matches Generated'
   end
 
   def create
@@ -67,11 +81,6 @@ class TournamentsController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_tournament
-    @tournament = Tournament.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def tournament_params

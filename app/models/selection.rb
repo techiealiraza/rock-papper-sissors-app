@@ -3,7 +3,6 @@
 class Selection < ApplicationRecord
   belongs_to :match
   scope :winner, -> { where(winner: true) }
-  # Ex:- scope :active, -> {where(:active => true)}
 
   def update_winner
     self.winner = true

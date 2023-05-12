@@ -22,6 +22,7 @@ module.exports = {
         'question_icon': "url('question.png')",
         'victory': "url('victory.png')",
         'defeat': "url('defeat.png')",
+        '404': "url('404.png')",
 
       },
       spacing: {

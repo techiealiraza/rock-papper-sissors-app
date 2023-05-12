@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class MessagesController < ApplicationController
+  load_and_authorize_resource
   def index
     @messages = Message.all
   end
 
   def show
-    @match = Match.find(params[:id])
+    # @match = Match.find(params[:id])
     @matchmessage = @match.messages
   end
 
@@ -19,7 +20,6 @@ class MessagesController < ApplicationController
   def edit; end
 
   def create
-    # @message = current_user.messages.build(message_params)
     user_id = params[:user_id]
     match_id = params[:match_id]
     message = params[:message]

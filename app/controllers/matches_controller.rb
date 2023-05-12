@@ -1,24 +1,16 @@
 # frozen_string_literal: true
 
 class MatchesController < ApplicationController
-  before_action :find_tournament, only: %i[index playmatch result]
-  before_action :set_match, only: %i[playmatch result]
-  load_and_authorize_resource
+  load_and_authorize_resource :tournament
+  load_and_authorize_resource through: :tournament
+
   before_action :authenticate_user!, except: [:index]
 
   def index
-    # tournament = Tournament.find(params[:tournament_id])
-    @matches = []
-    @matches = @tournament.matches.page(params[:page])
-  end
-
-  def matches_index
-    # match = Match.find(params[:match_id])
-    @players = match.users
+    @matches = @matches.desc.page(params[:page])
   end
 
   def show
-    # @match = Match.find(params[:id])
     @usermatches = @match.users
   end
 
@@ -34,31 +26,10 @@ class MatchesController < ApplicationController
 
     return if @match.match_winner_id.nil?
 
-    redirect_to tournament_match_result_path(@match)
-  end
-
-  def create_matches
-    # tournament_id = params[:tournament_id]
-    # tournament = Tournament.find(tournament_id)
-    registered_users = @tournament.users
-    matches = MatchCreator.new(tournament, registered_users).create_match
-    matches.each(&:delayed_job)
-    # length = registered_users.length
-    # redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
-    # if (length - 8).zero?
-    # matches = group_by_two(registered_users, tournament)
-    # else
-    # redirect_to tournament_path(tournament_id), notice: 'Enrolled Players are less than 8'
-    # end
-    # Match.transaction do
-    #   matches.each(&:save!)
-    # end
-    redirect_to tournament_path(tournament_id), notice: 'Matches Generated'
+    redirect_to result_tournament_match_path(match_id: @match)
   end
 
   def result
-    byebug
-    # @match = Match.find(params[:match_id])
     players = @match.users
     @player1_name = players.first.name
     @player2_name = players.last.name
@@ -88,14 +59,6 @@ class MatchesController < ApplicationController
   end
 
   private
-
-  def find_tournament
-    @tournament = Tournament.find(params[:tournament_id])
-  end
-
-  def set_match
-    @match = Match.find(params[:match_id])
-  end
 
   def match_params
     params.require(:match).permit(:match_winner_id, :winner_score, :match_time, :tournament_id)
