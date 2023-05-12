@@ -12,16 +12,23 @@
           <th class="px-6 py-3">No</th>
           <th>Name</th>
           <th>Registration Deadline</th>
+          <th>Winner</th>
           <th>View</th>
         </tr>
       </thead>
       <tbody class="bg-gold text-lg">
         <% adjusted_index = @tournaments.current_page * 3 - 2 %>
         <% @tournaments.each_with_index do |tournament, index| %>
+        <% if tournament.tournament_winner_id %>
+          <% winner_name = User.find(tournament.tournament_winner_id).name %>
+        <% else %>
+          <% winner_name = '---' %>
+        <% end %>
           <tr>
             <td class="px-6 py-3"><%= adjusted_index %></td>
             <td class=""><%= tournament.name %></td>
             <td><%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %></td>
+            <td><%= winner_name %></td>
             <td>
               <%= link_to "Show", tournament, class: "mb-4 px-3 py-2 btn-brown" %>
             </td>

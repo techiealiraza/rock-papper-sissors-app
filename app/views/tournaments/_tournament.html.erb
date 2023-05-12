@@ -21,11 +21,19 @@
 </p>
 <%= render 'registration_deadline', tournament: tournament %>
 <p class="pt-5">
-  <strong class="block font-medium text-white">Registered Users</strong>
+  <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
     <%= @tournament.users.length %>
   </div>
 </p>
+<% if @tournament.tournament_winner_id %>
+  <p class="pt-5">
+    <strong class="block font-medium text-white">Tournament Winner</strong>
+    <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+      <%= User.find(@tournament.tournament_winner_id).name %>
+    </div>
+  </p>
+<% end %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Start date</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
