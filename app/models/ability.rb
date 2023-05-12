@@ -16,7 +16,7 @@ class Ability
     if user.member?
       can %i[create new index], Message
       can :register, Tournament
-      can %i[playmatch index show result matches_index], Match
+      can %i[playmatch index show result], Match
       can :manage, UsersMatch, user_id: user.id
       can :create, Selection, match: { users: { id: user.id } }
 

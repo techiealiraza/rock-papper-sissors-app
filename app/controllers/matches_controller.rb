@@ -7,11 +7,7 @@ class MatchesController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    @matches = @matches.page(params[:page])
-  end
-
-  def matches_index
-    @players = match.users
+    @matches = @matches.desc.page(params[:page])
   end
 
   def show

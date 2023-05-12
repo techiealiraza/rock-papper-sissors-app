@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Match < ApplicationRecord
-  paginates_per 3
+  paginates_per 4
   belongs_to :tournament
   has_many :messages
   has_many :users_matches
   has_many :users, through: :users_matches
   has_many :selections
+  scope :desc, -> { order(round: :desc) }
 
   def started?
     start_time < Time.now
