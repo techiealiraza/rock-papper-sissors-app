@@ -6,44 +6,35 @@ class MessagesController < ApplicationController
     @messages = Message.all
   end
 
-  def show
-    # @match = Match.find(params[:id])
-    @matchmessage = @match.messages
-  end
-
   # GET /tournaments/new
   def new
     @message = Message.new
   end
 
-  # GET /tournaments/1/edit
-  def edit; end
-
   def create
-    user_id = params[:user_id]
-    match_id = params[:match_id]
-    message = params[:message]
-    @message = Message.new(user_id:, match_id:, message:)
-
-    if @message.save
-      head :no_content
-      broadcast_message(@message)
-    else
-      render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
+    @message = Message.new(message_params)
+    respond_to do |format|
+      if @message.save
+        format.json { render json: { data: 'Saved' }, status: :ok }
+        broadcast_message(@message)
+      else
+        format.json { render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   private
 
+  def message_params
+    params.permit(:user_id, :match_id, :message)
+  end
+
   def broadcast_message(message)
-    user = User.where(id: message.user_id)
-    user_name = user[0].name
     payload = {
       message: message.message,
-      user_name:,
+      user_name: message.user_name,
       created_at: (message.created_at + 5.hours).strftime('%H:%M:%S')
     }
-    # byebug
     ActionCable.server.broadcast("room_channel_#{message.match_id}", payload)
   end
 end

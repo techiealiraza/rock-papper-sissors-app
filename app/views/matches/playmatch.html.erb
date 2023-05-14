@@ -40,7 +40,7 @@
   </div>
   <h2 class = "text-white w-96 text-2xl mb-2">Messages</h2>
   <div class ="my-3">
-    <%= form_with(url: tournament_match_messages_path(match_id: @match.id), remote: true, local: false) do |form| %>
+    <%= form_with(url: tournament_match_messages_path(match_id: @match), remote: true, local: false) do |form| %>
       <div>
         <%= form.hidden_field :match_id, value: @match.id %>
         <%= form.text_field :message, :autocomplete => :off, :required => 'required', placeholder: 'type message', class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4 ", id:"msg_field_" + current_user.name %>

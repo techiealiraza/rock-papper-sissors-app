@@ -3,16 +3,17 @@
 class MatchesController < ApplicationController
   load_and_authorize_resource :tournament
   load_and_authorize_resource through: :tournament
-
-  before_action :authenticate_user!, except: [:index]
+  skip_load_and_authorize_resource only: :all
 
   def index
     @matches = @matches.desc.page(params[:page])
   end
 
-  def show
-    @usermatches = @match.users
+  def all
+    @matches = Match.all.page(params[:page])
   end
+
+  def show; end
 
   def new
     @match = Match.new
@@ -51,10 +52,12 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    @match.destroy
     respond_to do |format|
-      format.html { redirect_to matches_url, notice: 'Match was successfully destroyed.' }
-      format.json { head :no_content }
+      if @match.destroy
+        format.html { redirect_to matches_url, notice: 'Match was successfully destroyed.' }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   get 'user_otp/disable'
 >>>>>>> f6fda3f (OTP Mail Finalized)
   resources :selection
+
+  get '/matches_all', to: 'matches#all'
+
   resources :tournaments do
     member do
       post 'register'
@@ -20,9 +23,6 @@ Rails.application.routes.draw do
         get '/result', to: 'matches#result', as: 'result'
       end
       resources :messages, only: [:create]
-      # member do
-      #   get :playmatch
-      # end
     end
   end
   get 'rockpaperscissor/home'
