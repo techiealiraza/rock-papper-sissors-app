@@ -1,44 +1,47 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
-  <div class="flex flex-row items-center justify-center">
+  <div class="flex flex-row items-center justify-center pb-5">
     <% if can? :new, Tournament %>
-      <%= link_to 'Add New Tournament', new_tournament_path, method: :get, class: "mb-4 mt-2  px-2 py-3 btn-brown " %>
+      <%= link_to 'Add New Tournament' , new_tournament_path, method: :get, class: "mb-4 mt-2 px-2 py-3 btn-brown  " %>
+        <% end %>
+  </div>
+  <div class="container flex flex-wrap items-center justify-center p-5 pb-5">
+    <% @tournaments.each do |tournament| %>
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-3 mr-10 mb-10">
+    <p class="pt-5">
+      <strong class="block font-medium text-white">Name</strong>
+      <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2   bg-white text-black">
+        <%= tournament.name %>
+      </div>
+    </p>
+    <p class="pt-5">
+      <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
+      <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+        <%= tournament.users.length %>
+      </div>
+    </p>
+      <p class="pt-5">
+        <strong class="block font-medium text-white">Tournament Winner</strong>
+        <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+          <% if tournament.tournament_winner_id %>
+            <%= User.find(tournament.tournament_winner_id).name%>
+          <% else %>
+            <%= 'Winner not decide yet' %>
+          <% end %>
+        </div>
+      </p>
+    <p class="pt-5">
+      <strong class="block font-medium text-white">Start date</strong>
+      <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+        <%= tournament.start_date.strftime("%B %d, %Y %I:%M %p") %>
+      </div>
+    </p>
+    <div class = "flex flex-row justify-center pt-2">
+      <%= link_to 'Show' , tournament_path(tournament) , class: "mb-4 px-10 py-3 btn-brown" %>
+    </div>
+  </div>  
     <% end %>
   </div>
-  <div class="py-20 flex flex-row items-center justify-evenly ">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
-    <table class="w-full text-sm text-left text-black mx-5">
-      <thead class="text-lg bg-gold_shade2 items-center">
-        <tr>
-          <th class="px-6 py-3">No</th>
-          <th>Name</th>
-          <th>Registration Deadline</th>
-          <th>Winner</th>
-          <th>View</th>
-        </tr>
-      </thead>
-      <tbody class="bg-gold text-lg">
-        <% adjusted_index = @tournaments.current_page * 3 - 2 %>
-        <% @tournaments.each_with_index do |tournament, index| %>
-        <% if tournament.tournament_winner_id %>
-          <% winner_name = User.find(tournament.tournament_winner_id).name %>
-        <% else %>
-          <% winner_name = '---' %>
-        <% end %>
-          <tr>
-            <td class="px-6 py-3"><%= adjusted_index %></td>
-            <td class=""><%= tournament.name %></td>
-            <td><%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %></td>
-            <td><%= winner_name %></td>
-            <td>
-              <%= link_to "Show", tournament, class: "mb-4 px-3 py-2 btn-brown" %>
-            </td>
-          </tr>
-          <% adjusted_index = adjusted_index + 1 %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="pb-20 flex flex-row items-center justify-center">
+  <div class = "pb-20 flex flex-row items-center justify-center">
     <div class=" bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
       <div class="btn-group">
         <%= paginate @tournaments, window: 1,outer_window: 2 %>

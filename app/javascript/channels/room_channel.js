@@ -57,7 +57,9 @@ document.addEventListener('turbolinks:load', () => {
       msgs.insertAdjacentHTML("afterbegin", messageHTML);
       const last_elem = msgs.firstChild;
       last_elem.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      msg_element.value = "";
+      if(msg_element){
+        msg_element.value = "";
+      }
 
     },
   });
