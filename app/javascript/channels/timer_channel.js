@@ -1,5 +1,5 @@
 import consumer from "./consumer"
-import { random_image, event_listener_to_buttons, disable_buttons, enable_buttons } from '../packs/buttons_activity';
+import { event_listener_to_buttons, disable_buttons} from '../packs/buttons_activity';
 import { try_post } from '../packs/try_post';
 
 document.addEventListener('turbolinks:load', () => {
