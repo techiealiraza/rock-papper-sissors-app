@@ -11,25 +11,23 @@
   </head>
   <body>
     <nav class="flex items-center justify-between flex-wrap bg-gold p-3 m-2 ">
-      <a href="#"
+      <!-- <a href="#"
               class=" btn-brown px-3 py-2 text-lg font-normal"
-              aria-current="page">Dashboard</a>
-      <a href="/tournaments"
-              class=" btn-brown px-3 py-2 text-lg font-normal">Tournaments</a>
-      <a href="#"
-              class=" btn-brown px-3 py-2 text-lg font-normal">Matches</a>
-      <a href="#"
-              class=" btn-brown px-3 py-2 text-lg font-normal">LeaderBoard</a>
+              aria-current="page">Dashboard</a> -->
+      
+      <%= link_to 'Tournaments' , tournaments_path , class: "mb-4 px-10 py-3 btn-brown" %>
+      <%= link_to 'Matches' , matches_all_path , class: "mb-4 px-10 py-3 btn-brown" %>
+      <!-- <a href="#" class=" btn-brown px-3 py-2 text-lg font-normal">LeaderBoard</a> -->
       <% if user_signed_in? %>
-        <%= link_to 'Edit profile' , edit_user_registration_path, :class=> 'btn-brown px-3 py-2 text-lg font-normal ' %>
-        <%= link_to "Logout" , destroy_user_session_path, method: :delete, :class=> 'btn-brown px-3 py-2 text-lg font-normal' %>
+        <%= link_to 'Edit profile' , edit_user_registration_path, :class=> 'mb-4 px-10 py-3 btn-brown' %>
+        <%= link_to "Logout" , destroy_user_session_path, method: :delete, :class=> 'mb-4 px-10 py-3 btn-brown' %>
         <strong class="float-right inline-block px-3 text-lg">
           Logged in as : 
-          <%= current_user.email.split('@').first %>
+          <%= current_user.name %>
         </strong>
       <% else %>
-        <%= link_to "Sign up" , new_user_registration_path, :class=> 'btn-brown px-3 py-2 text-lg font-normal' %>
-        <%= link_to "Login" , new_user_session_path, :class=> 'btn-brown px-3 py-2 text-lg font-normal' %>
+        <%= link_to "Sign up" , new_user_registration_path, :class=> 'mb-4 px-10 py-3 btn-brown' %>
+        <%= link_to "Login" , new_user_session_path, :class=> 'mb-4 px-10 py-3 btn-brown' %>
       <% end %>
     </nav>
     <p class="notice">
@@ -47,6 +45,18 @@
           URL.revokeObjectURL(output.src) // free memory
         }
       };
+    </script>
+    <script>
+        var i = 0;
+        var txt = 'We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings.';
+        var speed = 50;
+        function typeWriter() {
+          if (i < txt.length) {
+            document.getElementById("home_description").innerHTML += txt.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+          }
+        }
     </script>
   </body>
 </html>

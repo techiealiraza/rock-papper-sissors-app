@@ -21,12 +21,6 @@ class SelectionController < ApplicationController
     @selection = Selection.new
   end
 
-
-  def index
-    @match = Match.where(id: params[:selection][:match_id])
-    @selections = @match.find_by_match_and_user(params[:user_id])
-  end
-
   private
 
   def selection_params

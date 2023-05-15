@@ -6,14 +6,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   rescue_from CanCan::AccessDenied do |_exception|
-    # https://github.com/ryanb/cancan/wiki/Devise
-    if current_user.nil?
-      session[:next] = request.fullpath
-      puts session[:next]
-      redirect_to main_app.root_url, alert: 'You have to log in to continue.'
-    else
-      render file: "#{Rails.root}/public/403.html", formats: [:html], status: 403, layout: false
-    end
+    render file: "#{Rails.root}/public/403.html", formats: [:html], status: 403, layout: false
   end
 
   def record_not_found

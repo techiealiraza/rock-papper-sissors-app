@@ -30,11 +30,11 @@
           <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
         <div class="field">
-          <%= f.label :password, class: "text-white" %> <i>(leave blank if you don't want to change it)</i><br>
+          <%= f.label :password, class: "text-white" %> <i class = "text-gold">(leave blank if you don't want to change it)</i><br>
           <%= f.password_field :password, autocomplete: "new-password", class: "border border-gold w-full rounded" %>
           <% if @minimum_password_length %>
             <br>
-            <em><%= @minimum_password_length %> characters minimum</em>
+            <em class = "text-gold"><%= @minimum_password_length %> characters minimum</em>
           <% end %>
         </div>
         <div class="field ">

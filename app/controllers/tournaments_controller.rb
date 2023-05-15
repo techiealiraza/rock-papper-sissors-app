@@ -21,8 +21,7 @@ class TournamentsController < ApplicationController
   def edit; end
 
   def register
-    @user = User.find(params[:user_id])
-    @tournaments_user = TournamentsUser.new(user: @user, tournament: @tournament)
+    @tournaments_user = TournamentsUser.new(user: current_user, tournament: @tournament)
     if @tournaments_user.save
       redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!'
     else
@@ -32,18 +31,11 @@ class TournamentsController < ApplicationController
 
   def create_matches
     registered_users = @tournament.users
-    matches = MatchCreator.new(@tournament, registered_users).create_match
-    matches.each(&:delayed_job)
-    # length = registered_users.length
+    length = registered_users.length
     # redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
-    # if (length % 8).zero?
-    # matches = group_by_two(registered_users, tournament)
-    # else
-    # redirect_to tournament_path(tournament_id), notice: 'Enrolled Players are less than 8'
-    # end
-    # Match.transaction do
-    #   matches.each(&:save!)
-    # end
+    return unless (length - 8).zero?
+
+    MatchCreator.new(@tournament, registered_users).create_match
     redirect_to tournament_path(@tournament), notice: 'Matches Generated'
   end
 

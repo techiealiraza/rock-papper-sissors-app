@@ -3,8 +3,8 @@
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
       <h1 class="mb-8 text-6xl text-center text-white">Match</h1>
       <div class="text-4xl text-white mr-5 flex flex-row items-center justify-center">
-        <% length = @usermatches.length-1 %>
-        <% @usermatches.each_with_index do |player, i| %>
+        <% length = @match.users.length-1 %>
+        <% @match.users.each_with_index do |player, i| %>
           <div class="ml-3 text-gold">
             <%= player.name.capitalize %>
           </div>
@@ -27,14 +27,6 @@
         <%= link_to "view", playmatch_tournament_match_path(match_id: @match.id), class: "px-7 py-2 btn-brown " %>
       </div>
       <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
-
-      <!-- <% if (Time.now.utc + (5*3600)) > @match.match_time && (Time.now.utc + (5*3600))<@match.match_time+5.minutes %> -->
-      <!-- <div class = " my-5 flex flex-row items-center justify-center px-3"> -->
-      <!-- replace root_path with the match view -->
-      <!-- <%= link_to "Start", root_path, class: "actions mb-4 mr-3 btn-brown " %> -->
-      <!-- </div> -->
-      <!-- <% end %> -->
-      <!-- <div class= "btn-brown">Hi</div> -->
     </div>
   </div>
 </div>
