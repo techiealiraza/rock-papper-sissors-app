@@ -25,6 +25,14 @@ class User < ApplicationRecord
     totp.now
   end
 
+  def leaderboard
+    User.select('users.*, COUNT(DISTINCT matches.id) AS total_matches_played, COUNT(matches.match_winner_id) AS total_matches_won, COUNT(DISTINCT tournaments.id) AS total_tournaments_won')
+        .joins(:users_matches, :matches)
+        .joins('LEFT JOIN tournaments ON matches.match_winner_id = users.id')
+        .group('users.id')
+        .order('total_tournaments_won DESC')
+  end
+
   def member?
     role == 'member'
   end
