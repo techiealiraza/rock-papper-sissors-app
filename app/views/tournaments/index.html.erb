@@ -4,7 +4,7 @@
       <%= link_to 'Add New Tournament' , new_tournament_path, method: :get, class: "mb-4 mt-2 px-2 py-3 btn-brown  " %>
         <% end %>
   </div>
-  <div class="container flex flex-wrap items-center justify-center p-5 pb-5">
+  <div class="container flex flex-wrap justify-center p-5 pb-5">
     <% @tournaments.each do |tournament| %>
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-3 mr-10 mb-10">
     <p class="pt-5">

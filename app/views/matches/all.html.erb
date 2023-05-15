@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody class="bg-gold text-lg">
-        <% adjusted_index = @matches.current_page * 3 - 2 %>
+        <% adjusted_index = @matches.current_page * 5 - 4 %>
         <% @matches.each_with_index do |match, index| %>
           <%= winner_id = match.match_winner_id || '---'%>
           <% if winner_id == '---' %>

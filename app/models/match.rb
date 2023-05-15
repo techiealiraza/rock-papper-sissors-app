@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Match < ApplicationRecord
-  paginates_per 3
+  paginates_per 5
   belongs_to :tournament
   has_many :messages
   has_many :users_matches
@@ -40,14 +40,9 @@ class Match < ApplicationRecord
 
   def delayed_job(try_num = 1)
     if try_num == 1
-      run_at = match_time - 5.hours + 20.seconds
-      3.times do
-        MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
-        run_at += 9.seconds
-        try_num += 1
-      end
+      MatchBroadcastJob.delay(run_at: match_time - 5.hours + 10.seconds).perform_later(id, try_num, tries)
     else
-      MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
+      MatchBroadcastJob.delay(run_at: 2.seconds.from_now).perform_later(id, try_num, tries)
     end
   end
 
