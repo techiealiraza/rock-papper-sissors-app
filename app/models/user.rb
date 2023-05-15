@@ -25,12 +25,22 @@ class User < ApplicationRecord
     totp.now
   end
 
-  def leaderboard
-    User.select('users.*, COUNT(DISTINCT matches.id) AS total_matches_played, COUNT(matches.match_winner_id) AS total_matches_won, COUNT(DISTINCT tournaments.id) AS total_tournaments_won')
-        .joins(:users_matches, :matches)
-        .joins('LEFT JOIN tournaments ON matches.match_winner_id = users.id')
-        .group('users.id')
-        .order('total_tournaments_won DESC')
+  def self.leaderboard
+    # User.select('users.name AS Player, COUNT(DISTINCT users_matches.match_id) AS Matches_Played, matches_won_subquery.matches_won_count AS Matches_Won, COUNT(DISTINCT tournaments.id) AS Tournaments_Won')
+    #     .joins(:users_matches)
+    #     .joins('LEFT JOIN matches ON users_matches.match_id = matches.id')
+    #     .joins('LEFT JOIN tournaments ON tournaments.tournament_winner_id = users.id')
+    #     .joins('LEFT JOIN (SELECT matches.match_winner_id, COUNT(*) AS matches_won_count FROM matches GROUP BY matches.match_winner_id) AS matches_won_subquery ON matches_won_subquery.match_winner_id = users.id')
+    #     .group('users.id, users.name, matches_won_subquery.matches_won_count')
+    #     .order('Tournaments_Won DESC')
+    User.select('users.name AS Player, COUNT(DISTINCT users_matches.match_id) AS Matches_Played, matches_won_subquery.matches_won_count AS Matches_Won, COUNT(DISTINCT tournaments.id) AS Tournaments_Won, COUNT(DISTINCT users_tournaments.tournament_id) AS Tournaments_Played')
+        .joins(:users_matches)
+        .joins('LEFT JOIN matches ON users_matches.match_id = matches.id')
+        .joins('LEFT JOIN tournaments ON tournaments.tournament_winner_id = users.id')
+        .joins('LEFT JOIN (SELECT matches.match_winner_id, COUNT(*) AS matches_won_count FROM matches GROUP BY matches.match_winner_id) AS matches_won_subquery ON matches_won_subquery.match_winner_id = users.id')
+        .joins('LEFT JOIN tournaments_users AS users_tournaments ON users.id = users_tournaments.user_id')
+        .group('users.id, users.name, matches_won_subquery.matches_won_count')
+        .order('Tournaments_Won DESC')
   end
 
   def member?
