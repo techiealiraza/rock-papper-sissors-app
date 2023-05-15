@@ -61,21 +61,56 @@ class Match < ApplicationRecord
   end
 
   def last_selections(size1, size2, try_num)
-    user1_id = users.first.id
-    user2_id = users.last.id
     if size1 == size2 && size2 == try_num - 1
-      random_selections(user1_id, user2_id, try_num)
+      random_selections(users.first.id, users.last.id, try_num)
     elsif size1 < size2
-      [set_random_choices(user1_id, try_num), Selection.find_by(match_id: id, user: user2_id, try_num: try_num - 1)]
+      [set_random_choices(users.first.id, try_num),
+       Selection.find_by(match_id: id, user: users.last.id, try_num: try_num - 1)]
     elsif size2 < size1
-      [Selection.find_by(match_id: id, user: user1_id, try_num: try_num - 1), set_random_choices(user2_id, try_num)]
+      [Selection.find_by(match_id: id, user: users.first.id, try_num: try_num - 1),
+       set_random_choices(users.last.id, try_num)]
     else
-      [Selection.find_by(match_id: id, user: user1_id, try_num: try_num - 1),
-       Selection.find_by(match_id: id, user: user2_id, try_num: try_num - 1)]
+      both_player_selection(try_num)
     end
+  end
+
+  def both_player_selection(try_num)
+    [Selection.find_by(match_id: id, user: users.first.id, try_num: try_num - 1),
+     Selection.find_by(match_id: id, user: users.last.id, try_num: try_num - 1)]
   end
 
   def random_selections(user1_id, user2_id, try_num)
     [set_random_choices(user1_id, try_num), set_random_choices(user2_id, try_num)]
+  end
+
+  def selections_data(try_num)
+    sleep(3)
+    selections_data = calculate_selections_data(try_num)
+    update_winner(selections_data.first, selections_data.last)
+    [users.first.id, users.last.id, status(selections_data), selections_data.first, selections_data.last]
+  end
+
+  def status(selections_data)
+    selections_data.first.status || selections_data.last.status || 'Draw'
+  end
+
+  def calculate_selections_data(try_num)
+    user1_selections = user_selections(users.first.id)
+    user2_selections = user_selections(users.last.id)
+    last_selections(user1_selections.size, user2_selections.size, try_num)
+  end
+
+  def update_winner(selection1, selection2)
+    choice1 = selection1.selection
+    choice2 = selection2.selection
+    return if choice1 == choice2
+
+    if (choice1 == 'rock' && choice2 == 'scissor') ||
+       (choice1 == 'scissor' && choice2 == 'paper') ||
+       (choice1 == 'paper' && choice2 == 'rock')
+      selection1.update_winner
+    else
+      selection2.update_winner
+    end
   end
 end
