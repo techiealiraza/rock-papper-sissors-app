@@ -34,8 +34,8 @@ class MatchesController < ApplicationController
     players = @match.users
     @player1_name = players.first.name
     @player2_name = players.last.name
-    @player1_selections = @match.user_selections(players.first.id)
-    @player2_selections = @match.user_selections(players.last.id)
+    @player1_selections = @match.user_selections(players.first.id).order(:try_num)
+    @player2_selections = @match.user_selections(players.last.id).order(:try_num)
     @player1_scores = @player1_selections.winner.size
     @player2_scores = @player2_selections.winner.size
     @result_message = @match.result_message(current_user.id)

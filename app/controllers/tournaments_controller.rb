@@ -32,12 +32,10 @@ class TournamentsController < ApplicationController
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
-    if (length % 8).zero?
-      matches = MatchCreator.new(@tournament, registered_users).create_match
-      matches.each(&:delayed_job)
-      redirect_to tournament_path(tournament_id), notice: 'Enrolled Players are less than 8'
-    end
+    # redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
+    return unless (length - 8).zero?
+
+    MatchCreator.new(@tournament, registered_users).create_match
     redirect_to tournament_path(@tournament), notice: 'Matches Generated'
   end
 

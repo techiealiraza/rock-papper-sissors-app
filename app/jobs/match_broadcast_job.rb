@@ -26,7 +26,7 @@ class MatchBroadcastJob < ApplicationJob
     selection1 = selections_data[0]
     selection2 = selections_data[1]
     update_winner(selection1, selection2)
-    status = selection1.status || selection2.status || 'Draw'
+    status = selection1.status || selection2.status || '  Draw  '
     ActionCable.server.broadcast("timer_channel_#{job.arguments[0]}",
                                  { id1: user1_id, id2: user2_id, status1: status, selection1: selection1.selection,
                                    selection2: selection2.selection, status2: status })
@@ -58,6 +58,8 @@ class MatchBroadcastJob < ApplicationJob
       match.match_winner_id = user2_id
       match.save
       generate_matches(match)
+    elsif try_num < 3
+      match.delayed_job(try_num + 1)
     end
   end
 
@@ -81,9 +83,8 @@ class MatchBroadcastJob < ApplicationJob
     if done_matches_count == matches_count_by_round && matches_count_by_round == 1
       tournament.update_winner(match.match_winner_id)
     elsif done_matches_count == matches_count_by_round && done_matches_count > 1
-      matches = MatchCreator.new(tournament, tournament.current_round_winners(match.round),
-                                 next_match_round).create_match
-      matches.each(&:delayed_job)
+      MatchCreator.new(tournament, tournament.current_round_winners(match.round),
+                       next_match_round).create_match
     end
   end
 

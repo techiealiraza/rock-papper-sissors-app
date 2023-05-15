@@ -3,7 +3,6 @@ import consumer from "./consumer";
 document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('match_id');
   const match_id = element.getAttribute('data-match-id');
-  console.log(match_id)
   // debugger
   consumer.subscriptions.create({channel: "RoomChannel", match_id: match_id},  {
     connected() {
@@ -12,7 +11,7 @@ document.addEventListener('turbolinks:load', () => {
     },
   
     disconnected() {
-      console.log("Disonnected ...!");
+      console.log("Disconnected ...!");
       // Called when the subscription has been terminated by the server
     },
   

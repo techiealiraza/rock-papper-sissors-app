@@ -13,7 +13,7 @@ class MatchCreator
     Match.transaction do
       user_matches.each(&:save!)
     end
-    matches
+    matches.each(&:delayed_job)
   end
 
   def group_by_two
