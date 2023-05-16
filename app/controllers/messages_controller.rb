@@ -32,8 +32,8 @@ class MessagesController < ApplicationController
   def broadcast_message(message)
     payload = {
       message: message.message,
-      user_name: message.user_name,
-      created_at: (message.created_at + 5.hours).strftime('%H:%M:%S')
+      user_name: message.name,
+      created_at: message.created_at.in_time_zone('Asia/Karachi').strftime('%H:%M:%S')
     }
     ActionCable.server.broadcast("room_channel_#{message.match_id}", payload)
   end

@@ -41,26 +41,6 @@ class MatchesController < ApplicationController
     @result_message = @match.result_message(current_user.id)
   end
 
-  def update
-    respond_to do |format|
-      if @match.update(match_params)
-        format.html { redirect_to match_url(@match), notice: 'Match was successfully updated.' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    respond_to do |format|
-      if @match.destroy
-        format.html { redirect_to matches_url, notice: 'Match was successfully destroyed.' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
 
   def match_params

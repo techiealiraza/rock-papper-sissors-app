@@ -16,7 +16,7 @@
     <% end %>
    <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
       <div class = "flex flex-row items-end">
-         <div class = "text-white"> <%= (message.created_at + 5.hours).strftime('%H:%M:%S') %></div>
+         <div class = "text-white"> <%= (message.created_at.in_time_zone('Asia/Karachi')).strftime('%H:%M:%S') %></div>
        </div>
       <% if message.user_id == current_user.id %>
 	     <div class=" max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-white">
