@@ -1,17 +1,3 @@
-function random_image() {
-	const imageUrls = [
-		"/assets/rock.png",
-		"/assets/paper.png",
-		"/assets/scissor.png",
-		"/assets/rock.png",
-		"/assets/paper.png",
-		"/assets/rock.png",
-		"/assets/scissor.png",
-	];
-	const random_img = document.getElementById(2);
-	var currentImageIndex = Math.ceil(Math.random() * 6);
-	random_img.src = imageUrls[currentImageIndex];
-}
 function event_listener_to_buttons() {
 	const user1Element = document.getElementById("player1_id");
 	const user2Element = document.getElementById("player2_id");
@@ -73,8 +59,6 @@ function enable_button(id) {
 }
 
 export {
-	random_image,
 	event_listener_to_buttons,
 	disable_buttons,
-	enable_buttons,
 };
