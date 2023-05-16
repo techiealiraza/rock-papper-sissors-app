@@ -5,19 +5,16 @@ class TournamentsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index]
 
-  # GET /tournaments or /tournaments.json
   def index
     @tournaments = @tournaments.order(:registration_deadline).page(params[:page])
   end
 
   def show; end
 
-  # GET /tournaments/new
   def new
     @tournament = Tournament.new
   end
 
-  # GET /tournaments/1/edit
   def edit; end
 
   def register
@@ -32,7 +29,6 @@ class TournamentsController < ApplicationController
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    # redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
     return unless (length - 8).zero?
 
     MatchCreator.new(@tournament, registered_users).create_match
@@ -52,7 +48,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tournaments/1 or /tournaments/1.json
   def update
     respond_to do |format|
       if @tournament.update(tournament_params)
@@ -63,7 +58,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-  # DELETE /tournaments/1 or /tournaments/1.json
   def destroy
     @tournament.destroy
 
@@ -74,7 +68,6 @@ class TournamentsController < ApplicationController
 
   private
 
-  # Only allow a list of trusted parameters through.
   def tournament_params
     params.require(:tournament).permit(:name, :description, :start_date, :end_date, :tournament_winner_id, :image,
                                        :registration_deadline)

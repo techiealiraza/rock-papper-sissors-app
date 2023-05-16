@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from CanCan::AccessDenied, with: :access_denied
 
-  rescue_from CanCan::AccessDenied do |_exception|
+  def access_denied
     render file: "#{Rails.root}/public/403.html", formats: [:html], status: 403, layout: false
   end
 

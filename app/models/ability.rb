@@ -18,7 +18,7 @@ class Ability
       can :register, Tournament
       can %i[playmatch index show result all], Match
       can :manage, UsersMatch, user_id: user.id
-      can :create, Selection, match: { users: { id: user.id } }
+      can :create, Selection, match: { user_id: user.id }
 
       cannot %i[edit update destroy], Selection
 

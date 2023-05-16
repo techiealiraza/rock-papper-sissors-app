@@ -21,28 +21,17 @@ class MatchBroadcastJob < ApplicationJob
     selection1 = data[3]
     selection2 = data[4]
     broadcast(match.id, user1_id, user2_id, status, [selection1, selection2])
-    # ActionCable.server.broadcast("timer_channel_#{job.arguments[0]}",
-    #                              { id1: user1_id, id2: user2_id, status1: status, selection1: selection1.selection,
-    #                                selection2: selection2.selection, status2: status })
     sleep(0.5)
     score1 = match.user_selections(user1_id).winner.size
     score2 = match.user_selections(user2_id).winner.size
     if try_num == 3 && score1 == score2
       match.update(tries: 4)
       broadcast(match.id, user1_id, user2_id, '1 try added', [selection1, selection2])
-      # ActionCable.server.broadcast("timer_channel_#{job.arguments[0]}",
-      #                              { id1: user1_id, id2: user2_id, status1: '1 Try Added', selection1: selection1.selection,
-      #                                selection2: selection2.selection, status2: '1 Try Added' })
       sleep(2)
       MatchBroadcastJob.perform_later(match.id, try_num + 1, 4)
     elsif try_num == 4 && score1 == score2
       sleep 2
       broadcast(match.id, user1_id, user2_id, 'Random Picking', [selection1, selection2])
-      # ActionCable.server.broadcast("timer_channel_#{job.arguments[0]}",
-      #                              { id1: user1_id, id2: user2_id, status1: 'Picking Random Winner',
-      #                                selection1: selection1.selection,
-      #                                selection2: selection2.selection,
-      #                                status2: 'Picking Random Winner' })
       match.update(match_winner_id: pick_random(user1_id, user2_id))
       broadcast(match.id, user1_id, user2_id, 'Random Picking', [selection1, selection2])
       generate_matches(match)
@@ -76,12 +65,6 @@ class MatchBroadcastJob < ApplicationJob
     tournament = match.tournament
     done_matches_count = tournament.match_winners_count(match.round).size
     matches_count_by_round = tournament.matches_by_round(match.round).size
-    puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    puts done_matches_count
-    puts matches_count_by_round
-    puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
     if done_matches_count == matches_count_by_round && matches_count_by_round == 1
       tournament.update_winner(match.match_winner_id)
     elsif done_matches_count == matches_count_by_round && done_matches_count > 1

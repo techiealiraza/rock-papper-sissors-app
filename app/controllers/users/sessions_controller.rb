@@ -2,10 +2,7 @@
 
 module Users
   class SessionsController < Devise::SessionsController
-    # before_action :configure_sign_in_params, only: [:create]
     before_action :authenticate_2fa!, only: [:create]
-    # account_sid = 'AC312933a0ff499fcf81e3c4219ad80710'
-    # auth_token = '8fe209d1a73ffc6ad9108cd4fa75156c'
     before_action :authenticate_user!, except: %i[new create destroy]
     before_action :load_and_authorize_resource, except: %i[new create destroy]
     def authenticate_2fa!
@@ -20,16 +17,13 @@ module Users
         session[:user_id] = user.id
         @code = User.generate_otp(user.otp_secret)
         CodeMailer.send_code(@code).deliver_now
-        # message = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']).messages.create(
-        #   body: "your OTP is :: #{@code}",
-        #   from: '+15856321481',
-        #   to: '+923212674285'
-        # )
-        # puts message.sid
+        message = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']).messages.create(
+          body: "your OTP is :: #{@code}",
+          from: '+15856321481',
+          to: '+923212674285'
+        )
+        puts message.sid
         render 'user_otp/two_fa'
-        # elsif
-        #   flash[:alert] = 'Invalid email or pasadsword'
-        #   redirect_to new_user_session_path
       end
     end
 
@@ -64,7 +58,6 @@ module Users
       end
     end
 
-    # POST /resource/sign_in
     def create
       super do |resource|
         if resource.valid? && resource.persisted?
@@ -76,17 +69,5 @@ module Users
         end
       end
     end
-
-    # DELETE /resource/sign_out
-    # def destroy
-    #   super
-    # end
-
-    # protected
-
-    # If you have extra params to permit, append them to the sanitizer.
-    # def configure_sign_in_params
-    #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-    # end
   end
 end

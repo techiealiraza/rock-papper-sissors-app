@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SelectionController < ApplicationController
-  # before_action :authenticate_user!, except: [:home]
+  before_action :authenticate_user!
 
   def create
     @selection = Selection.new(selection_params)

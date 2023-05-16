@@ -1,4 +1,3 @@
-<!-- <div class = "w-fill"> -->
 <p class="pt-5">
   <strong class="block font-medium text-white">Name</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2   bg-white text-black">
@@ -58,14 +57,11 @@
   <% end %>
 <% else %>
   <div class="flex flex-row items-center justify-center pt-4">
-  <h1 class="text-white">Admins can't Register for Tournament</h1>
+    <h1 class="text-white">Admins can't Register for Tournament</h1>
   </div>
 <% end %>
-
 <% if action_name != "show" %>
   <div class=" my-5 flex flex-row items-center justify-center px-3">
     <%= link_to "Show", tournament, class: "actions mb-4 mr-3  px-10 py-3 btn-brown " %>
   </div>
-  <!-- <hr class="mt-6"> -->
 <% end %>
-<!-- </div> -->
