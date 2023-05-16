@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <% if can? :create, Selection %>
+    <% if (can? :create, Selection) && @is_player %>
     <div class = "mt-3 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5 max-w-1/2">
       <div class="text-white text-xl flex flex-row justify-center ">Please select</div>
       <div class = "flex flex-row justify-center">
@@ -38,7 +38,7 @@
     </div>
     <% end %>
   </div>
-  <h2 class = "text-white w-96 text-2xl mb-2">Messages</h2>
+  <h2 class = "text-white w-96 text-2xl sm:text-xl mb-2">Messages</h2>
   <div class ="my-3">
     <%= form_with(url: tournament_match_messages_path(match_id: @match), remote: true, local: false) do |form| %>
       <div>

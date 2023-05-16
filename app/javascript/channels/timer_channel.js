@@ -13,14 +13,11 @@ document.addEventListener('turbolinks:load', () => {
   const is_player = playerElement.getAttribute('data-player-check')
   consumer.subscriptions.create({channel: "TimerChannel", match_id: match_id},  {
   connected() {
-    // debugger
     console.log(`Connected to timer ${match_id}`);
-    // Called when the subscription is ready for use on the server
   },
 
   disconnected() {
     console.log("Disconnected from Timer Channel")
-    // Called when the subscription has been terminated by the server
   },
 
   received(data) {
@@ -58,6 +55,9 @@ document.addEventListener('turbolinks:load', () => {
         if(is_player){
           try_post()
         }
+      }
+      if(try_num >= 3){
+        window.location.reload
       }
     }
   }

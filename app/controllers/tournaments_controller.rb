@@ -1,23 +1,18 @@
-# frozen_string_literal: true
-
+# Tournamnets Controller
 class TournamentsController < ApplicationController
-  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index]
 
-  # GET /tournaments or /tournaments.json
   def index
     @tournaments = @tournaments.order(:registration_deadline).page(params[:page])
   end
 
   def show; end
 
-  # GET /tournaments/new
   def new
     @tournament = Tournament.new
   end
 
-  # GET /tournaments/1/edit
   def edit; end
 
   def register
@@ -52,7 +47,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tournaments/1 or /tournaments/1.json
   def update
     respond_to do |format|
       if @tournament.update(tournament_params)
@@ -63,20 +57,25 @@ class TournamentsController < ApplicationController
     end
   end
 
-  # DELETE /tournaments/1 or /tournaments/1.json
   def destroy
-    @tournament.destroy
-
     respond_to do |format|
-      format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
+      if @tournament.destroy
+        format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
 
   private
 
-  # Only allow a list of trusted parameters through.
   def tournament_params
-    params.require(:tournament).permit(:name, :description, :start_date, :end_date, :tournament_winner_id, :image,
+    params.require(:tournament).permit(:name,
+                                       :description,
+                                       :start_date,
+                                       :end_date,
+                                       :tournament_winner_id,
+                                       :image,
                                        :registration_deadline)
   end
 end

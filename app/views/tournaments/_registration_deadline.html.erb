@@ -1,11 +1,11 @@
-<% if tournament.registration_deadline.before?(Time.now.utc + (5*3600))%>
+<% if Time.now.utc.after?(tournament.registration_deadline)%>
   <div class="p-5 mt-5 h-40 bg-gold rounded-xl flex flex-col items-center justify-center">
     <div class= "flex flex-row items-center text-2xl">
         Registration Closed
     </div>
   </div>
   <% else %>
-  <div class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= tournament.id %>, data-countdown-time=<%= tournament.registration_deadline.to_json.html_safe %>>
+  <div class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= tournament.id %>, data-countdown-time=<%= (Time.current.utc - tournament.registration_deadline.utc).to_json.html_safe %>>
     <div class="days-container text-black">
       <div class="days", data-countdown-id = <%= tournament.id %>></div>
       <div class="days-label">d</div>
