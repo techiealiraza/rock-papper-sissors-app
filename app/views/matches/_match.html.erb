@@ -1,32 +1,4 @@
-<!-- <div class="bg-background-image min-h-screen"> -->
-
 <div id="<%= dom_id match %>">
-  <!-- <p class="my-5">
-    <strong class="block font-medium mb-1">Match winner:</strong>
-    <%= match.match_winner_id %>
-  </p> -->
-
-
-  
- 
-  <!-- <p class="pt-5">
-    <strong class="block font-medium text-white">Start DateTime</strong>
-    <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
-      <% if !match.match_time.nil? %>
-        <%= match.match_time.strftime("%B %d, %Y %I:%M %p") %>
-      <% else %>
-        <%= "Not yet" %>
-      <% end %>
-  </div>
-  </p> -->
-
-  <!-- <p class="my-5">
-    <strong class="block font-medium mb-1">Tournament:</strong>
-    <%= match.tournament_id %>
-  </p> -->
-    <%= link_to "Show", match, class: "mb-4 px-3 py-2 btn-brown" %>
-
-  <!-- <% if action_name != "show" %> -->
-    <!-- <%= link_to 'Edit this match', edit_match_path(match), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %> -->
-  <% end %>
+  <%= link_to "Show", match, class: "mb-4 px-3 py-2 btn-brown" %>
+<% end %>
 </div>
