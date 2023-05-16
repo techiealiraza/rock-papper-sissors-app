@@ -9,12 +9,10 @@ class Selection < ApplicationRecord
     save
   end
 
-  def add_try_num(match, done_tries_num)
+  def add_try_num
+    match = Match.find(match_id)
+    done_tries_num = match.done_tries_num(user)
     self.try_num = match.tries - (match.tries - done_tries_num)
-  end
-
-  def self.done_tries(match_id, user)
-    Selection.where(match_id:, user:).length
   end
 
   def status

@@ -46,7 +46,7 @@
   </div>
 </p>
 <% if can? :register, Tournament %>
-  <% if tournament.registration_deadline.after?(Time.now.utc + (5*3600)) %>
+  <% if Time.current.utc.before?(tournament.registration_deadline) %>
     <div class="flex flex-row items-center justify-center pt-4">
       <%= form_with url: register_tournament_path(tournament.id), method: :post do |form| %>
         <%= form.hidden_field :user_id, value: current_user.id %>

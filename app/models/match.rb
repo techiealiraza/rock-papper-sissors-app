@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Match Model
 class Match < ApplicationRecord
   paginates_per 5
   belongs_to :tournament
@@ -10,15 +11,15 @@ class Match < ApplicationRecord
   scope :desc, -> { order(round: :desc) }
 
   def opponent_user_id(current_user_id)
-    UsersMatch.where(match_id: id).where.not(user_id: current_user_id).pluck(:user_id).first
+    users_matches.find_by(match_id: id, user: User.where.not(id: current_user_id)).user_id
   end
 
-  def user_selections(user_id)
-    Selection.where(match_id: id, user: user_id)
+  def user_selections(user)
+    selections.where(user:)
   end
 
   def done_tries_num(user)
-    Selection.where(match_id: id, user:).size
+    selections.where(user:).size
   end
 
   def remaining_tries(user)
@@ -34,13 +35,13 @@ class Match < ApplicationRecord
     if match_winner_id == current_user_id
       'You Won'
     else
-      "#{User.find(match_winner_id).name} won"
+      "#{users.find(match_winner_id).name} won"
     end
   end
 
   def delayed_job(try_num = 1)
     if try_num == 1
-      MatchBroadcastJob.delay(run_at: match_time - 5.hours + 10.seconds).perform_later(id, try_num, tries)
+      MatchBroadcastJob.delay(run_at: match_time.utc + 10.seconds).perform_later(id, try_num, tries)
     else
       MatchBroadcastJob.delay(run_at: 2.seconds.from_now).perform_later(id, try_num, tries)
     end
@@ -56,7 +57,7 @@ class Match < ApplicationRecord
   end
 
   def user_selection_by(user, try_num)
-    Selection.where(match_id: id, user:, try_num:).first
+    selections.find_by(user:, try_num:)
   end
 
   def last_selections(size1, size2, try_num)
@@ -64,9 +65,9 @@ class Match < ApplicationRecord
       random_selections(users.first.id, users.last.id, try_num)
     elsif size1 < size2
       [set_random_choices(users.first.id, try_num),
-       Selection.find_by(match_id: id, user: users.last.id, try_num: try_num - 1)]
+       user_selection_by(users.last.id, try_num - 1)]
     elsif size2 < size1
-      [Selection.find_by(match_id: id, user: users.first.id, try_num: try_num - 1),
+      [user_selection_by(users.first.id, try_num - 1),
        set_random_choices(users.last.id, try_num)]
     else
       both_player_selection(try_num)
@@ -74,8 +75,8 @@ class Match < ApplicationRecord
   end
 
   def both_player_selection(try_num)
-    [Selection.find_by(match_id: id, user: users.first.id, try_num: try_num - 1),
-     Selection.find_by(match_id: id, user: users.last.id, try_num: try_num - 1)]
+    [user_selection_by(users.first.id, try_num - 1),
+     user_selection_by(users.last.id, try_num - 1)]
   end
 
   def random_selections(user1_id, user2_id, try_num)
