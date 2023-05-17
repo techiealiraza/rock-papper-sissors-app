@@ -65,11 +65,11 @@ class MatchBroadcastJob < ApplicationJob
     tournament = match.tournament
     done_matches_count = tournament.match_winners_count(match.round).size
     matches_count_by_round = tournament.matches_by_round(match.round).size
-    if done_matches_count == matches_count_by_round && matches_count_by_round == 1
-      tournament.update_winner(match.match_winner_id)
-    elsif done_matches_count == matches_count_by_round && done_matches_count > 1
+    if done_matches_count == matches_count_by_round && done_matches_count > 1
       MatchCreator.new(tournament, tournament.current_round_winners(match.round),
                        next_match_round).create_match
+    else
+      tournament.update(tournament_winner_id: match.match_winner_id)
     end
   end
 end
