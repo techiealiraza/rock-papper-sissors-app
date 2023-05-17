@@ -1,8 +1,7 @@
-<div class="bg-background-image min-h-screen flex flex-col justify-between">
+<div class="bg-background-image min-h-screen flex flex-col">
   <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
-  <div class="py-20 flex flex-row items-center justify-evenly ">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
-    <table class="w-full text-sm text-left text-black mx-5">
+  <div class="pl-2 pt-10 flex flex-row pr-24">
+    <table class="w-full text-sm text-left text-black ">
       <thead class="text-lg bg-gold_shade2 items-center">
         <tr>
           <th>No</th>
@@ -17,8 +16,8 @@
       <tbody class="bg-gold text-lg">
         <% adjusted_index = @matches.current_page * 5 - 4 %>
         <% @matches.each_with_index do |match, index| %>
-          <%= winner_id = match.match_winner_id || '---'%>
-          <% if winner_id == '---' %>
+          <%= winner_id = match.match_winner_id || '--'%>
+          <% if winner_id == '--' %>
             <% winner_name = winner_id %>
           <% else %>
             <% winner_name = User.find(winner_id).name %>
@@ -39,7 +38,7 @@
       </tbody>
     </table>
   </div>
-  <div class = "pb-20 flex flex-row items-center justify-center">
+  <div class = "pt-10 flex flex-row justify-center">
     <div class=" bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
       <div class="btn-group">
         <%= paginate @matches, window: 1, outer_window: 2 %>

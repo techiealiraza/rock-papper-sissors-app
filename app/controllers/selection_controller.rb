@@ -3,7 +3,6 @@
 class SelectionController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-
   def create
     @selection = Selection.new(selection_params)
     @selection.add_try_num

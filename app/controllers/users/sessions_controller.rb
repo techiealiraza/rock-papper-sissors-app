@@ -17,12 +17,12 @@ module Users
         session[:user_id] = user.id
         @code = User.generate_otp(user.otp_secret)
         CodeMailer.send_code(@code).deliver_now
-        message = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']).messages.create(
-          body: "your OTP is :: #{@code}",
-          from: '+15856321481',
-          to: '+923212674285'
-        )
-        puts message.sid
+        # message = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']).messages.create(
+        #   body: "your OTP is :: #{@code}",
+        #   from: '+15856321481',
+        #   to: '+923212674285'
+        # )
+        # puts message.sid
         render 'user_otp/two_fa'
       end
     end
