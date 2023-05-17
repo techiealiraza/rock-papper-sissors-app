@@ -14,7 +14,7 @@ class Tournament < ApplicationRecord
 
   def deadline_before_start_date
     return if registration_deadline.nil? || start_date.nil?
-    return unless registration_deadline > start_date || registration_deadline < Time.now.getlocal
+    return unless registration_deadline > start_date || registration_deadline < Time.now
 
     errors.add(:registration_deadline, 'Registration Deadline is after Start Date')
   end
@@ -35,7 +35,7 @@ class Tournament < ApplicationRecord
 
   def start_date_validation
     return if start_date.nil?
-    return unless start_date < Time.now.getlocal
+    return unless start_date < Time.now
 
     errors.add(:start_date, 'Start Date is in Past')
   end
@@ -61,7 +61,7 @@ class Tournament < ApplicationRecord
     if matches.empty?
       start_date + 30.seconds
     else
-      Time.now + 5.hours + 90.seconds
+      Time.now + 90.seconds
     end
   end
 end

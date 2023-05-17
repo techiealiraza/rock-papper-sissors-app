@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
+# Tournamnets Controller
 class TournamentsController < ApplicationController
-  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index]
 
@@ -59,17 +57,24 @@ class TournamentsController < ApplicationController
   end
 
   def destroy
-    @tournament.destroy
-
     respond_to do |format|
-      format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
+      if @tournament.destroy
+        format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
 
   private
 
   def tournament_params
-    params.require(:tournament).permit(:name, :description, :start_date, :end_date, :tournament_winner_id, :image,
+    params.require(:tournament).permit(:name,
+                                       :description,
+                                       :start_date,
+                                       :end_date,
+                                       :tournament_winner_id,
+                                       :image,
                                        :registration_deadline)
   end
 end

@@ -2,12 +2,12 @@
 
 class SelectionController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
+
 
   def create
     @selection = Selection.new(selection_params)
-    @match = Match.find(params[:selection][:match_id].to_i)
-    @done_tries_length = @match.done_tries_num(params[:selection][:user].to_i)
-    @selection.add_try_num(@match, @done_tries_length)
+    @selection.add_try_num
     respond_to do |format|
       if @selection.save
         format.json { render json: { data: 'Saved' }, status: :ok }

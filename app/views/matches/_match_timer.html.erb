@@ -1,4 +1,4 @@
-<% if match.match_time.before?(Time.now.utc + (5*3600))%>
+<% if match.match_time.before?(Time.now)%>
 <% else %>
   <div id="days" class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= match.id %>, data-countdown-time=<%= match.match_time.to_json.html_safe %>>
     <div class="days-container">

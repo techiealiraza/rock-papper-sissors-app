@@ -26,7 +26,7 @@ class Ability
     elsif user.admin?
       can %i[create new index], Message
       can %i[new create create_matches index edit], Tournament
-      can %i[playmatch result new create all], Match
+      can %i[playmatch result index show new create all], Match
       cannot %i[edit update destroy], Selection
 
     # Super admins can do everything an admin can do, and also manage admin rights
