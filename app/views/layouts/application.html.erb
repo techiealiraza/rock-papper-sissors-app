@@ -13,7 +13,7 @@
     <nav class="flex items-center justify-between flex-wrap bg-gold p-3 m-2 ">
       <%= link_to 'Tournaments' , tournaments_path , class: "mb-4 px-10 py-3 btn-brown" %>
       <%= link_to 'Matches' , matches_all_path , class: "mb-4 px-10 py-3 btn-brown" %>
-      <%= link_to 'LeaderBoard' , leaderbord_index_path , class: "mb-4 px-10 py-3 btn-brown" %>
+      <%= link_to 'LeaderBoard' , leaderboard_index_path , class: "mb-4 px-10 py-3 btn-brown" %>
       <% if user_signed_in? %>
         <%= link_to 'Edit profile' , edit_user_registration_path, :class=> 'mb-4 px-10 py-3 btn-brown' %>
         <%= link_to "Logout" , destroy_user_session_path, method: :delete, :class=> 'mb-4 px-10 py-3 btn-brown' %>

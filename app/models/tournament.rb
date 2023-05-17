@@ -6,11 +6,11 @@ class Tournament < ApplicationRecord
   has_many :users, through: :tournaments_users
   has_many :matches, dependent: :destroy
   has_one_attached :image
-  validates :name, :description, :start_date, :end_date, :registration_deadline, presence: true
-  validate :end_date_is_after_start_date
-  validate :start_date_is_after_end_date
-  validate :start_date_validation
-  validate :deadline_before_start_date
+  validates :name, :description, :start_date, :end_date, :registration_deadline, presence: true, on: :create
+  validate :end_date_is_after_start_date, on: :create
+  validate :start_date_is_after_end_date, on: :create
+  validate :start_date_validation, on: :create
+  validate :deadline_before_start_date, on: :create
 
   def deadline_before_start_date
     return if registration_deadline.nil? || start_date.nil?

@@ -16,8 +16,8 @@
       <tbody class="bg-gold text-lg">
         <% adjusted_index = @matches.current_page * 5 - 4 %>
         <% @matches.each_with_index do |match, index| %>
-          <%= winner_id = match.match_winner_id || '---'%>
-          <% if winner_id == '---' %>
+          <%= winner_id = match.match_winner_id || '--'%>
+          <% if winner_id == '--' %>
             <% winner_name = winner_id %>
           <% else %>
             <% winner_name = User.find(winner_id).name %>
