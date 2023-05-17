@@ -27,7 +27,6 @@ class TournamentsController < ApplicationController
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    # redirect_to tournament_path(tournament_id), notice: 'Nobody registed for this Tournament' if length.zero?
     return unless (length - 8).zero?
 
     MatchCreator.new(@tournament, registered_users).create_match

@@ -48,7 +48,6 @@ class Match < ApplicationRecord
   end
 
   def set_random_choices(user, try_num)
-    # choices = %w[paper rock scissor rock scissor paper]
     choices = %w[paper paper paper paper paper paper]
     random_choice = rand 0..5
     choice = choices[random_choice]

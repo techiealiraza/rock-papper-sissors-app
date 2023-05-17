@@ -6,7 +6,6 @@ class MessagesController < ApplicationController
     @messages = Message.all
   end
 
-  # GET /tournaments/new
   def new
     @message = Message.new
   end

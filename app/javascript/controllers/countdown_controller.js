@@ -1,13 +1,9 @@
-import { Controller } from "@hotwired/stimulus"
-
-// Connects to data-controller="image-preview")
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-
     connect = (format = 'seconds') => {
       const reg_date = this.data.get("time");
       const tournament_id = this.data.get("id");
-      // var total = Date.parse(new Date(reg_date)) - Date.parse(new Date());
       const number = Math.abs(reg_date);
       console.log(number)
       const d = document;
@@ -59,4 +55,5 @@ export default class extends Controller {
       }
     }
 
+	};
 }
