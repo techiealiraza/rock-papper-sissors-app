@@ -6,6 +6,7 @@ import "./try_post";
 import "channels";
 import "../css/application.scss";
 import "../controllers/countdown_controller";
+import "../packs/navigation.js";
 
 Rails.start();
 Turbolinks.start();
