@@ -22,7 +22,7 @@ class MatchesController < ApplicationController
   def playmatch
     @players = @match.users
     @remaining_tries = @match.remaining_tries(@players.first.id)
-    @done_tries = @match.done_tries_num(@players.first.id)
+    @done_tries = @match.selections.by_user(@players.first.id).size
     @is_player = @match.users.include?(current_user)
 
     return if @match.match_winner_id.nil?
@@ -31,11 +31,11 @@ class MatchesController < ApplicationController
   end
 
   def result
-    players = @match.users
+    players = @match.users # pluck
     @player1_name = players.first.name
     @player2_name = players.last.name
-    @player1_selections = @match.user_selections(players.first.id).order(:try_num)
-    @player2_selections = @match.user_selections(players.last.id).order(:try_num)
+    @player1_selections = @match.selections.by_user(players.first.id).order(:try_num)
+    @player2_selections = @match.selections.by_user(players.last.id).order(:try_num)
     @player1_scores = @player1_selections.winner.size
     @player2_scores = @player2_selections.winner.size
     @result_message = @match.result_message(current_user.id)

@@ -22,20 +22,20 @@ document.addEventListener("turbolinks:load", () => {
 			disconnected() {},
 
 			received(data) {
-				if (data.id1 != undefined) {
-					let selection1 = data.selection1;
-					let selection2 = data.selection2;
-					let status1 = data.status1;
+				if (data.user1_id != undefined) {
+					var selection1 = data.selection1;
+					var selection2 = data.selection2;
+					var status = data.status;
 					const user1_selection = document.getElementById(player1_id);
 					const user2_selection = document.getElementById(player2_id);
 					const displayDiv = document.getElementById("second_timer");
 					user1_selection.src = "/assets/" + selection1 + ".png";
 					user2_selection.src = "/assets/" + selection2 + ".png";
-					displayDiv.textContent = status1;
+					displayDiv.textContent = status;
 				} else {
-					let seconds = data.seconds;
-					let try_num = data.try_num;
-					let tries = data.tries;
+					var seconds = data.seconds;
+					var try_num = data.try_num;
+					var tries = data.tries;
 					const displayDiv = document.getElementById("second_timer");
 					const triesDiv = document.getElementById(`tries_${match_id}`);
 					displayDiv.textContent = seconds;

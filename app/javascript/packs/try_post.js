@@ -23,7 +23,7 @@ function try_post() {
 	var data = {
 		selection: {
 			match_id: match_id,
-			user: user_id,
+			user_id: user_id,
 			selection: user_selection_image,
 		},
 	};
