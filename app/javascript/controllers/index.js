@@ -7,4 +7,3 @@ application.load(definitionsFromContext(context));
 
 import CountdownController from "./countdown_controller";
 application.register("countdown", CountdownController);
-
