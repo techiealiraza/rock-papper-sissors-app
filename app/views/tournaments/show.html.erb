@@ -1,6 +1,6 @@
 <div class="bg-background-image min-h-screen flex flex-wrap items-center justify-center">
   <div class="container flex-1 flex flex-col items-center justify-center px-6">
-    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
       <h1 class="mb-8 text-3xl text-center text-white">Tournament</h1>
       <div class=" text-white">
         <div class="">
@@ -10,7 +10,7 @@
           <div class="flex flex-col items-center justify-center py-3">
             <% if Time.current.utc.before?(@tournament.start_date.utc) %>
               <% if can? :edit, Tournament %>
-                <%= link_to 'Edit' , edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown " %>
+                <%= link_to 'Edit' , edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown" %>
               <% end %>
             <% end %>
             <% if Time.current.utc.before?(@tournament.start_date.utc) %>
@@ -33,7 +33,7 @@
             <% end %>
           </div>
         </div>
-        <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
+        <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2" %>
       </div>
     </div>
   </div>

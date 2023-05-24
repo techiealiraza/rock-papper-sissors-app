@@ -2,43 +2,25 @@
 
 module Users
   class SessionsController < Devise::SessionsController
-    before_action :authenticate_2fa!, only: [:create]
+    before_action :authenticate_2fa!, only: %i[create]
     before_action :authenticate_user!, except: %i[new create destroy]
-    before_action :load_and_authorize_resource, except: %i[new create destroy]
+    skip_authorization_check only: %i[new create]
+
     def authenticate_2fa!
-      user = self.resource = find_user
+      user = self.resource = find_user(session[:user_id], user_params[:email])
       return unless user
 
-      if user_params[:otp_attempt].present?
+      byebug
 
-        auth_with_2fa(user)
-
-      elsif user.valid_password?(user_params[:password]) && user.otp_required_for_login
-        session[:user_id] = user.id
-        @code = User.generate_otp(user.otp_secret)
-        CodeMailer.send_code(@code).deliver_now
-        # message = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']).messages.create(
-        #   body: "your OTP is :: #{@code}",
-        #   from: '+15856321481',
-        #   to: '+923212674285'
-        # )
-        # puts message.sid
-        render 'user_otp/two_fa'
-      end
+      TwoFactorAuth.new(user).authenticate_2fa(user_params[:otp_attempt], user_params[:password])
+      render 'user_otp/two_fa'
     end
 
-    def auth_with_2fa(user)
-      return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
-
-      user.save
-      sign_in(:user, user)
-    end
-
-    def find_user
-      if session[:user_id]
-        User.find(session[:user_id])
-      elsif user_params[:email]
-        User.find_by(email: user_params[:email])
+    def find_user(session_user_id, email_address)
+      if session_user_id
+        User.find_by(id: session_user_id)
+      elsif email_address
+        User.find_by(email: email_address)
       end
     end
 
@@ -51,8 +33,7 @@ module Users
       super do |resource|
         if resource.valid? && resource.persisted?
           resource.update(
-            otp_required_for_login: true,
-            encrypted_otp_secret: User.generate_otp_secret
+            otp_required_for_login: true
           )
         end
       end
@@ -61,10 +42,8 @@ module Users
     def create
       super do |resource|
         if resource.valid? && resource.persisted?
-
           resource.update(
-            otp_required_for_login: true,
-            otp_secret: User.generate_otp_secret
+            otp_required_for_login: true
           )
         end
       end

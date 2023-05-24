@@ -8,7 +8,7 @@ class Ability
 
     # Guest users can only read tournaments and messages
     can :show, Devise::ConfirmationsController
-    can :access, :root
+    can :create, Devise::SessionsController
     can :read, [Tournament, Message, Match]
     can %i[create new destroy], [User]
 
