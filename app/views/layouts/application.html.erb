@@ -8,7 +8,6 @@
     <%= javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <script src="app/javascript/packs/navigation.js" defer></script>
   </head>
   <body>
     <nav class="bg-gray-800">
@@ -55,7 +54,7 @@
               <li><%= link_to 'Edit profile', edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
               <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
               <li>
-                <strong class="float-right inline-block px-3 text-lg">
+                <strong class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                   Logged in as: <%= current_user.name %>
                 </strong>
               </li>
@@ -67,21 +66,26 @@
         </div>
       </div>
     </nav>
-    <p class="notice">
-      <%= notice %>
-    </p>
-    <p class="alert">
-      <%= alert %>
-    </p>
+    <% if notice %>
+      <div id="noticeContainer" class="flex flex-row justify-center bg-green-600">
+        <div class="text-black alert alert-info alert-dismissible fade show py-2" role="alert">
+          <%= notice %>
+          <button id="noticeCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div id="alertContainer" class="flex flex-row justify-center bg-red-500">
+        <div class="text-black alert alert-warning alert-dismissible fade show py-2" role="alert">
+          <%= alert %>
+          <button id="alertCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    <% end %>
     <%= yield %>
-    <script>
-      var loadFile = function(event) {
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-          URL.revokeObjectURL(output.src) // free memory
-        }
-      };
-    </script>
   </body>
 </html>

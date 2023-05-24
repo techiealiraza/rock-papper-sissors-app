@@ -9,7 +9,7 @@
             <%= player.name.capitalize %>
           </div>
           <% if i != length %>
-            <div class = "ml-3 text-white">
+            <div class="ml-3 text-white">
               vs
             </div>
           <% end %>
@@ -18,12 +18,12 @@
       <%= render 'match_timer', match: @match %>
       <p class="pt-5">
         <strong class="block font-medium text-white">Match Time</strong>
-        <div class = "block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+        <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
           <%= @match.match_time.strftime("%B %d, %Y %I:%M %p") %>
         </div>
       </p>
       <% players = @match.users.pluck(:id) %>
-      <div class = " my-5 flex flex-row items-center justify-center px-3">
+      <div class=" my-5 flex flex-row items-center justify-center px-3">
         <%= link_to "view", playmatch_tournament_match_path(match_id: @match.id), class: "px-7 py-2 btn-brown " %>
       </div>
       <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>

@@ -58,7 +58,4 @@ function enable_button(id) {
 	document.getElementById(id).classList.add("choice-button2");
 }
 
-export {
-	event_listener_to_buttons,
-	disable_buttons,
-};
+export { event_listener_to_buttons, disable_buttons };
