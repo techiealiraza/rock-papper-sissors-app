@@ -14,8 +14,6 @@ class User < ApplicationRecord
          :trackable, :confirmable,
          otp_secret_encryption_key: ENV['OTP_SECRET_ENCRYPTION_KEY']
 
-  # ROLES = %i[guest member admin super_admin]
-
   def self.generate_otp_secret
     ROTP::Base32.random_base32
   end
@@ -25,14 +23,13 @@ class User < ApplicationRecord
     totp.now
   end
 
+  def self.auth_with_2fa(otp_attempt, user)
+    return unless user.validate_and_consume_otp!(otp_attempt)
+
+    user.save
+  end
+
   def self.leaderboard
-    # User.select('users.name AS Player, COUNT(DISTINCT users_matches.match_id) AS Matches_Played, matches_won_subquery.matches_won_count AS Matches_Won, COUNT(DISTINCT tournaments.id) AS Tournaments_Won')
-    #     .joins(:users_matches)
-    #     .joins('LEFT JOIN matches ON users_matches.match_id = matches.id')
-    #     .joins('LEFT JOIN tournaments ON tournaments.tournament_winner_id = users.id')
-    #     .joins('LEFT JOIN (SELECT matches.match_winner_id, COUNT(*) AS matches_won_count FROM matches GROUP BY matches.match_winner_id) AS matches_won_subquery ON matches_won_subquery.match_winner_id = users.id')
-    #     .group('users.id, users.name, matches_won_subquery.matches_won_count')
-    #     .order('Tournaments_Won DESC')
     User.select('users.name AS Player, COUNT(DISTINCT users_matches.match_id) AS Matches_Played, matches_won_subquery.matches_won_count AS Matches_Won, COUNT(DISTINCT tournaments.id) AS Tournaments_Won, COUNT(DISTINCT users_tournaments.tournament_id) AS Tournaments_Played')
         .joins(:users_matches)
         .joins('LEFT JOIN matches ON users_matches.match_id = matches.id')

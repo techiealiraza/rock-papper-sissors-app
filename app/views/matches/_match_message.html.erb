@@ -1,22 +1,22 @@
-<div id = "match_id", data-match-id = <%= @match.id %>> </div>
-<div id = "current_user", data-current-user-name = <%= current_user.name %>> </div>
-<div class = "flex px-5 flex-col">
-  <div class = "flex-col overflow-y-auto overflow-x-hidden ">
-    <div id="message-list" class = "">
+<div id="match_id" data-match-id="<%= @match.id %>"> </div>
+<div id="current_user" data-current-user-name="<%= current_user.name %>"> </div>
+<div class="flex px-5 flex-col">
+  <div class="flex-col overflow-y-auto overflow-x-hidden ">
+    <div id="message-list" class="">
       <% @match.messages.all.reverse.each do |message| %>
-        <div class = "flex flex-row py-2">
+        <div class="flex flex-row py-2">
           <% if message.user_id == current_user.id %>
-            <div class = "rounded-full bg-white w-7 text-black text-center h-7">
+            <div class="rounded-full bg-white w-7 text-black text-center h-7">
               <%= User.find(message.user_id).name[0,3] %>
             </div>
           <% else %>
-            <div class = "rounded-full bg-gold w-7 text-white text-center h-7">
+            <div class="rounded-full bg-gold w-7 text-white text-center h-7">
               <%= User.find(message.user_id).name[0,3] %>
             </div>
           <% end %>
-          <div class ="flex flex-col space-y-2 text-xs  ml-2  items-start">
-            <div class = "flex flex-row items-end">
-              <div class = "text-white"> <%= (message.created_at + 5.hours).strftime('%H:%M:%S') %></div>
+          <div class="flex flex-col space-y-2 text-xs  ml-2  items-start">
+            <div class="flex flex-row items-end">
+              <div class="text-white"> <%= (message.created_at + 5.hours).strftime('%H:%M:%S') %></div>
             </div>
             <% if message.user_id == current_user.id %>
               <div class=" max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-white">

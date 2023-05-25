@@ -1,5 +1,5 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
-  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
+  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2" %>
   <div class="py-20 flex flex-row items-center">
     <table class="w-full text-sm text-left text-black mx-5">
       <thead class="text-lg bg-gold_shade2 items-center">
@@ -16,29 +16,29 @@
       <tbody class="bg-gold text-lg">
         <% adjusted_index = @matches.current_page * 5 - 4 %>
         <% @matches.each_with_index do |match, index| %>
-          <%= winner_id = match.match_winner_id || '--'%>
+          <%= winner_id = match.match_winner_id || '--' %>
           <% if winner_id == '--' %>
             <% winner_name = winner_id %>
           <% else %>
-            <% winner_name = User.find(winner_id).name %>
+            <% winner_name = match.winner.name %>
           <% end %>
           <tr>
-            <td class = "px-6 py-3" ><%= adjusted_index %></td>
-            <td><%= match.match_time.strftime("%B %d, %Y %I:%M %p")%></td>
-            <td class = "px-6 py-3" ><%= match.users.first.name %></td>
-            <td class = "px-6 py-3" ><%= match.users.last.name %></td>
-            <td class = "px-6 py-3" ><%= match.round %></td>
-            <td class = "px-6 py-3" ><%=  winner_name %></td>
+            <td class="px-6 py-3"><%= adjusted_index %></td>
+            <td><%= match.match_time.strftime("%B %d, %Y %I:%M %p") %></td>
+            <td class="px-6 py-3"><%= match.users.first.name %></td>
+            <td class="px-6 py-3"><%= match.users.last.name %></td>
+            <td class="px-6 py-3"><%= match.round %></td>
+            <td class="px-6 py-3"><%= winner_name %></td>
             <td>
               <%= link_to "show", tournament_match_url(id: match.id), method: :get, class: "mb-4 px-3 py-2 btn-brown" %>
             </td>
           </tr>
-          <% adjusted_index = adjusted_index + 1%>
+          <% adjusted_index = adjusted_index + 1 %>
         <% end %>
       </tbody>
     </table>
   </div>
-  <div class = "pb-20 flex flex-row items-center justify-center">
+  <div class="pb-20 flex flex-row items-center justify-center">
     <div class=" bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
       <div class="btn-group">
         <%= paginate @matches, window: 1,outer_window: 2 %>
