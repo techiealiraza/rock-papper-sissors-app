@@ -5,7 +5,7 @@
     </div>
   </div>
 <% else %>
-  <div class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= tournament.id %>, data-countdown-time=<%= (Time.current.utc - tournament.registration_deadline.utc).to_json.html_safe %>>
+  <div class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= tournament.id %>, data-countdown-time=<%= (tournament.registration_deadline - Time.current).to_json.html_safe %>>
     <div class="days-container text-black">
       <div class="days", data-countdown-id = <%= tournament.id %>></div>
       <div class="days-label">d</div>

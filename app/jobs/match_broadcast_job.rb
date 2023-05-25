@@ -14,7 +14,9 @@ class MatchBroadcastJob < ApplicationJob
   after_perform do |job|
     try_num = job.arguments[1] - 1
     match = Match.find(job.arguments[0])
+    sleep 2
     match.handle_missing_selections(try_num)
+    sleep 2
     UpdateWinner.new(match, try_num).update_winner
     user1_id, user2_id = match.users.ids
     sleep(2)
@@ -70,7 +72,7 @@ class MatchBroadcastJob < ApplicationJob
       broadcast(match.id, user1_id, user2_id, 'Random Picking', selections)
       sleep 2
       match.update(match_winner_id: pick_random(user1_id, user2_id))
-      broadcast(match.id, user1_id, user2_id, "#{match.winner} won", selections)
+      broadcast(match.id, user1_id, user2_id, "#{match.winner.name} won", selections)
     end
     generate_matches(match, selections)
   end
