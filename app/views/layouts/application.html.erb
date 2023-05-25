@@ -44,7 +44,7 @@
               <% if user_signed_in? %>
                 <%= link_to 'Edit profile' , edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
                 <%= link_to "Logout" , destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
-                <strong class="float-right inline-block px-3 text-lg">
+                <strong class="float-right inline-block px-3 text-lg text-white">
                   Logged in as :
                   <%= current_user.name %>
                 </strong>

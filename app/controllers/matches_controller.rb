@@ -31,13 +31,9 @@ class MatchesController < ApplicationController
   end
 
   def result
-    players = @match.users # pluck
-    @player1_name = players.first.name
-    @player2_name = players.last.name
-    @player1_selections = @match.selections.by_user(players.first.id).order(:try_num)
-    @player2_selections = @match.selections.by_user(players.last.id).order(:try_num)
-    @player1_scores = @player1_selections.winner.size
-    @player2_scores = @player2_selections.winner.size
+    @players = @match.users 
+    @player_selections = @match.selections.order(:try_num).group_by(&:user_id)
+    @player_scores = @match.selections.group(:user_id).winner.count
     @result_message = @match.result_message(current_user.id)
   end
 

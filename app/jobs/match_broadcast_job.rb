@@ -99,7 +99,7 @@ class MatchBroadcastJob < ApplicationJob
     if !current_round_remaining_matches.zero?
       tournament.create_matches(match)
     elsif done_matches_size == 1 && matches_by_round_size == 1
-      tournament.update_columns(tournament_winner_id: match.match_winner_id)
+      tournament.update_column(:tournament_winner_id, match.match_winner_id)
       broadcast(match.id, user1_id, user2_id, "Tournament Winner is #{tournament.winner.name}", selections)
     end
   end
