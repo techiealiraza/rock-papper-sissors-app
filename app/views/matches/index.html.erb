@@ -20,7 +20,7 @@
           <% if winner_id == '--' %>
             <% winner_name = winner_id %>
           <% else %>
-            <% winner_name = User.find(winner_id).name %>
+            <% winner_name = match.winner.name %>
           <% end %>
           <tr>
             <td class="px-6 py-3"><%= adjusted_index %></td>

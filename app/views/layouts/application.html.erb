@@ -54,9 +54,9 @@
               <li><%= link_to 'Edit profile', edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
               <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
               <li>
-                <strong class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                <a class="text-gold hover:bg-gray-700 hover:text-gold_shade2 rounded-md px-3 py-2 text-sm font-medium">
                   Logged in as: <%= current_user.name %>
-                </strong>
+                </a>
               </li>
             <% else %>
               <li><%= link_to "Sign up", new_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>

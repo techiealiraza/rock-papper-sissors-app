@@ -2,30 +2,38 @@
 
 module Users
   class SessionsController < Devise::SessionsController
-    before_action :authenticate_2fa!, only: %i[create]
+    # before_action :authenticate_2fa!, only: %i[create]
+    # before_action :authenticate_user!, except: %i[new create destroy]
+    # skip_authorization_check only: %i[new create]
+    before_action :authenticate_2fa!, only: [:create]
     before_action :authenticate_user!, except: %i[new create destroy]
-    skip_authorization_check only: %i[new create]
+    before_action :load_and_authorize_resource, except: %i[new create destroy]
 
     def authenticate_2fa!
-      user = self.resource = find_user(session[:user_id], user_params[:email])
+      user = self.resource = find_user
       return unless user
 
-      byebug
+      if user_params[:otp_attempt].present?
+        User.auth_with_2fa(user_params[:otp_attempt], user)
+        sign_in(:user, user)
 
-      TwoFactorAuth.new(user).authenticate_2fa(user_params[:otp_attempt], user_params[:password])
-      render 'user_otp/two_fa'
+      elsif user.valid_password?(user_params[:password]) && user.otp_required_for_login
+        session[:user_id] = user.id
+        TwoFactorAuth.new(user).send_otp_code
+        render 'user_otp/two_fa'
+      end
     end
 
-    def find_user(session_user_id, email_address)
-      if session_user_id
-        User.find_by(id: session_user_id)
-      elsif email_address
-        User.find_by(email: email_address)
+    def find_user
+      if session[:user_id]
+        User.find_by(id: session[:user_id])
+      elsif user_params[:email]
+        User.find_by(email: user_params[:email])
       end
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :otp_attempt, :remember_me)
+      params.require(:user).permit(:authenticity_token, :email, :password, :otp_attempt, :remember_me)
     end
 
     # GET /resource/sign_in
