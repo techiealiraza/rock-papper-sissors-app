@@ -3,8 +3,8 @@
     <div
       class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 text-black w-full">
       <h1 class="mb-8 text-3xl text-center text-white">Sign in</h1>
+      <%= render "devise/shared/error_messages" , resource: resource %>
       <%= form_for(resource, as: resource_name, url:session_path(resource_name)) do |f| %>
-        <%= render "devise/shared/error_messages" , resource: resource %>
         <div class="field">
           <%= f.label :email, class: "text-white" %> <%= f.email_field :email,
         autofocus: true, autocomplete: "email" , class: "border border-gold w-full rounded pt-3 mb-3" %>
