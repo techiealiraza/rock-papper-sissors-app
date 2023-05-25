@@ -5,8 +5,7 @@ export default class extends Controller {
     connect = (format = 'seconds') => {
       const reg_date = this.data.get("time");
       const tournament_id = this.data.get("id");
-      // var total = Date.parse(new Date(reg_date)) - Date.parse(new Date());
-      const number = Math.abs(reg_date);
+      const number = reg_date;
       console.log(number)
       const d = document;
       const daysElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .days`);

@@ -20,20 +20,18 @@ class MatchesController < ApplicationController
   end
 
   def playmatch
+    redirect_to result_tournament_match_path(match_id: @match) unless @match.match_winner_id.nil?
     @players = @match.users
     @remaining_tries = @match.remaining_tries(@players.first.id)
     @done_tries = @match.selections.by_user(@players.first.id).size
     @is_player = @match.users.include?(current_user)
-
-    return if @match.match_winner_id.nil?
-
-    redirect_to result_tournament_match_path(match_id: @match)
   end
 
   def result
-    @players = @match.users 
-    @player_selections = @match.selections.order(:try_num).group_by(&:user_id)
-    @player_scores = @match.selections.group(:user_id).winner.count
+    @is_player = @match.users.include?(current_user)
+    @players = @match.users
+    @players_selections = @match.selections.order(:try_num).group_by(&:user_id)
+    @players_scores = @match.selections.group(:user_id).winner.count
     @result_message = @match.result_message(current_user.id)
   end
 

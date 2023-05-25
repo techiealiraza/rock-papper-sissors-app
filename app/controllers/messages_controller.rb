@@ -15,7 +15,6 @@ class MessagesController < ApplicationController
     respond_to do |format|
       if @message.save
         format.json { render json: { data: 'Saved' }, status: :ok }
-        broadcast_message(@message)
       else
         format.json { render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity }
       end
@@ -26,14 +25,5 @@ class MessagesController < ApplicationController
 
   def message_params
     params.permit(:user_id, :match_id, :message)
-  end
-
-  def broadcast_message(message)
-    payload = {
-      message: message.message,
-      user_name: message.name,
-      created_at: message.created_at.in_time_zone('Asia/Karachi').strftime('%H:%M:%S')
-    }
-    ActionCable.server.broadcast("room_channel_#{message.match_id}", payload)
   end
 end

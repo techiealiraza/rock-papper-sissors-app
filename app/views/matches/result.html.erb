@@ -1,13 +1,19 @@
-<div class="bg-background-image min-h-screen flex flex-col items-center">
+<div class="bg-background-image min-h-screen flex flex-col">
+  <% if @is_player %>
+    <% player1 = current_user %>
+  <% else %>
+    <% player1 = @players.first %>
+  <% end %>
+  <% player2 = @match.other_user(player1) %>
   <% i = 0 %>
   <div class="mt-10 flex flex-row justify-between w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
     <div class="container-fluid mt-5  rounded-lg py-3 px-10 bg-gold">
       <%= @player1_name %><br>
     <div class = "container-fluid mt-5  rounded-lg py-3 px-10 bg-gold">
-      <%= @players.first.name %><br>
+      <%= player1.name %><br>
       scores
       <div class = "flex row justify-center text-4xl font-bold">
-        <%= @player_scores[@players.first.id] || 0  %>
+        <%= @players_scores[player1.id] || 0  %>
       </div>
     </div>
     <div class="flex flex-col">
@@ -22,22 +28,19 @@
         <%= "#{@player2_scores}" %>
       </div>
     <div class = "container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
-        <%= @players.second.name %><br>scores
+        <%= player2.name %><br>scores
         <div class = "flex row justify-center text-4xl font-bold">
-            <%= @player_scores[@players.second.id] || 0 %>
+            <%= @players_scores[player2.id] || 0 %>
         </div>
     </div>
   </div>
-  <%= player1_selections = @player_selections[@players.first.id] %>
-  <%= player2_selections = @player_selections[@players.second.id] %>
+  <%= player1_selections = @players_selections[player1.id] %>
+  <%= player2_selections = @players_selections[player2.id] %>
   <% player1_selections.each do |player1_selection| %>
     <% player1_choice = player1_selection.selection %>
     <% player1_choice = player1_choice + ".png" %>
     <% opponent_user_choice = player2_selections[i].selection + ".png" %>
-    <% status = player1_selection.status || player2_selections[i].status %>
-    <% if !status %>
-      <% status = "Draw" %>
-    <% end %>
+    <% status = player1_selection.status || player2_selections[i].status || "Draw" %>
     <div class="flex flex-row justify-center">
       <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
       <% if status == "Draw" %>
@@ -53,5 +56,5 @@
     </div>
     <% i += 1 %>
   <% end %>
-  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2" %>
+  <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
 </div>

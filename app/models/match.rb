@@ -12,7 +12,7 @@ class Match < ApplicationRecord
   scope :desc, -> { order(round: :desc) }
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(match_winner_id: nil) }
-  CHOICES = %w[rock paper scissor].freeze
+  CHOICES = %w[rock rock rock].freeze
 
   def remaining_tries(user)
     done_tries = selections.by_user(user).size
@@ -27,7 +27,7 @@ class Match < ApplicationRecord
     end
   end
 
-  def delayed_job(run_at, try_num = 0)
+  def delayed_job(run_at = tournament.start_date + 10.seconds, try_num = 0)
     MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 
@@ -42,5 +42,9 @@ class Match < ApplicationRecord
     return if players_selections.exists?(user_id: second_user_id)
 
     set_random_choices(second_user_id, try_num)
+  end
+
+  def other_user(user1)
+    users.where.not(id: user1.id).first
   end
 end

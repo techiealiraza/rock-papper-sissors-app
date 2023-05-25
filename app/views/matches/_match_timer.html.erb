@@ -1,6 +1,6 @@
 <% if match.match_time.before?(Time.now) %>
 <% else %>
-  <div id="days" class="container-fluid  mt-5 flex row justify-center" data-controller="countdown" data-countdown-id="<%= match.id %>" data-countdown-time="<%= (Time.current - match.match_time).to_json.html_safe %>">
+  <div id="days" class="container-fluid  mt-5 flex row justify-center", data-controller="countdown", data-countdown-id = <%= match.id %>, data-countdown-time=<%= (match.match_time - Time.current).to_json.html_safe %>>
     <div class="days-container">
       <div class="days" data-countdown-id="<%= match.id %>"></div>
       <div class="days-label">d</div>

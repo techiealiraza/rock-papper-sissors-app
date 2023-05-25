@@ -44,7 +44,6 @@ class TournamentsController < ApplicationController
     respond_to do |format|
       if @tournament.save
         format.html { redirect_to tournament_url(@tournament), notice: 'Tournament was successfully created.' }
-
       else
         format.html { render :new, status: :unprocessable_entity }
       end
