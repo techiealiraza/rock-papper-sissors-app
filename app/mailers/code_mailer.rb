@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class CodeMailer < ApplicationMailer
-  def send_code(otpcode)
+  def send_code(otpcode, email)
     @code = otpcode
 
-    mail to: 'razaali15930@gmail.com', subject: 'OTP'
+    mail to: email, subject: 'OTP'
   end
 end

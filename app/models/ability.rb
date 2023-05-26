@@ -8,8 +8,9 @@ class Ability
 
     # Guest users can only read tournaments and messages
     can :show, Devise::ConfirmationsController
-    can :access, :root
+    can %i[create new], Devise::SessionsController
     can :read, [Tournament, Message, Match]
+    can :access, :root
     can %i[create new destroy], [User]
 
     # Logged in users can create messages and register for tournaments
@@ -21,6 +22,7 @@ class Ability
       can :create, Selection, match: { user_id: user.id }
 
       cannot %i[edit update destroy], Selection
+      can :authenticate_2fa, User
 
     # Admin users can create tournaments, generate matches, and manage users
     elsif user.admin?
@@ -28,6 +30,7 @@ class Ability
       can %i[new create create_matches index edit], Tournament
       can %i[playmatch result index show new create all], Match
       cannot %i[edit update destroy], Selection
+      can :authenticate_2fa, User
 
     # Super admins can do everything an admin can do, and also manage admin rights
     elsif user.super_admin?

@@ -1,15 +1,21 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
-  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2"%>
+  <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2" %>
   <div class="flex flex-row items-center justify-evenly ">
     <table class="table-fixed w-full text-sm text-left text-black mx-5">
       <thead class="text-xs bg-gold_shade2 items-center">
         <tr>
-          <th class = "flex-wrap sm:text-xs md:text-base md:px-6 md:py-3 sm:px-1">Player<br>Rank</th>
-          <th class = "md:text-base px-6 py-3">Player<br>Name</th>
-          <th class = "md:text-base py-3">Tournaments<br>Played</th>
-          <th class = "md:text-base px-6 py-3">Matches<br>Played</th>
-          <th class = "md:text-base px-6 py-3">Matches<br>Won</th>
-          <th class = "md:text-base px-6 py-3">Tournaments<br>won</th>
+          <th class="px-6 py-3">Player<br>
+            Rank</th>
+          <th class="px-6 py-3">Player<br>
+            Name</th>
+          <th class="px-6 py-3">Tournaments<br>
+            Played</th>
+          <th class="px-6 py-3">Matches<br>
+            Played</th>
+          <th class="px-6 py-3">Matches<br>
+            Won</th>
+          <th class="px-6 py-3">Tournaments<br>
+            won</th>
         </tr>
       </thead>
       <tbody class="bg-gold text-sm">
@@ -26,5 +32,4 @@
       </tbody>
     </table>
   </div>
-
 </div>

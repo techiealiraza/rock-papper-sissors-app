@@ -7,7 +7,6 @@
         <div class="flex flex-row items-center justify-center">
           <div class="personal-image">
             <label class="label">
-              <!-- <input type="file" /> -->
               <figure class="personal-figure">
                 <%= f.file_field :avatar, onchange: "loadFile(event)" %>
                 <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar" alt="avatar" id="output">
@@ -30,11 +29,11 @@
           <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
         <div class="field">
-          <%= f.label :password, class: "text-white" %> <i class = "text-gold">(leave blank if you don't want to change it)</i><br>
+          <%= f.label :password, class: "text-white" %> <i class="text-gold">(leave blank if you don't want to change it)</i><br>
           <%= f.password_field :password, autocomplete: "new-password", class: "border border-gold w-full rounded" %>
           <% if @minimum_password_length %>
             <br>
-            <em class = "text-gold"><%= @minimum_password_length %> characters minimum</em>
+            <em class="text-gold"><%= @minimum_password_length %> characters minimum</em>
           <% end %>
         </div>
         <div class="field ">
