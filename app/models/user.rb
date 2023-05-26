@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :users_matches
   has_many :matches, through: :users_matches
   has_one_attached :avatar
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  scope :members, -> { where(role: 'member') }
+
   devise :registerable, :two_factor_authenticatable,
          :recoverable, :rememberable, :validatable,
          :trackable, :confirmable,
@@ -29,15 +29,20 @@ class User < ApplicationRecord
     user.save
   end
 
-  def self.leaderboard
-    User.select('users.name AS Player, COUNT(DISTINCT users_matches.match_id) AS Matches_Played, matches_won_subquery.matches_won_count AS Matches_Won, COUNT(DISTINCT tournaments.id) AS Tournaments_Won, COUNT(DISTINCT users_tournaments.tournament_id) AS Tournaments_Played')
-        .joins(:users_matches)
-        .joins('LEFT JOIN matches ON users_matches.match_id = matches.id')
-        .joins('LEFT JOIN tournaments ON tournaments.tournament_winner_id = users.id')
-        .joins('LEFT JOIN (SELECT matches.match_winner_id, COUNT(*) AS matches_won_count FROM matches GROUP BY matches.match_winner_id) AS matches_won_subquery ON matches_won_subquery.match_winner_id = users.id')
-        .joins('LEFT JOIN tournaments_users AS users_tournaments ON users.id = users_tournaments.user_id')
-        .group('users.id, users.name, matches_won_subquery.matches_won_count')
-        .order('Tournaments_Won DESC')
+  def total_matches_played
+    matches.count
+  end
+
+  def total_matches_won
+    matches.where(winner: true).count
+  end
+
+  def total_tournaments_played
+    matches.distinct.count(:tournament_id)
+  end
+
+  def total_tournaments_won
+    matches.distinct.where(winner: true).count(:tournament_id)
   end
 
   def member?

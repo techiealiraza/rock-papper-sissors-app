@@ -1,6 +1,6 @@
 # LeaderBoard Controller
 class LeaderboardController < ApplicationController
   def index
-    @users = User.leaderboard
+    @users = User.members
   end
 end

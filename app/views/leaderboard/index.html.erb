@@ -10,9 +10,9 @@
             Rank</th>
           <th class="px-6 py-3">Player<br>
             Name</th>
-          <th class="px-6 py-3">Tournaments<br>
-            Played</th>
           <th class="px-6 py-3">Matches<br>
+            Played</th>
+          <th class="px-6 py-3">Tournaments<br>
             Played</th>
           <th class="px-6 py-3">Matches<br>
             Won</th>
@@ -21,14 +21,14 @@
         </tr>
       </thead>
       <tbody class="bg-gold text-lg">
-        <% @users.each_with_index do |user, index| %>
+        <% @users.each.with_index(1) do |user, index| %>
           <tr>
-            <td class="px-6 py-3"><%= index+1 %></td>
-            <td class="px-6 py-3"><%= user.player %></td>
-            <td class="px-6 py-3"><%= user.tournaments_played %></td>
-            <td class="px-6 py-3"><%= user.matches_played %></td>
-            <td class="px-6 py-3"><%= user.matches_won %></td>
-            <td class="px-6 py-3"><%= user.tournaments_won %></td>
+            <td class="px-6 py-3"><%= index %></td>
+            <td class="px-6 py-3"><%= user.name %></td>
+            <td class="px-6 py-3"><%= user.total_matches_played %></td>
+            <td class="px-6 py-3"><%= user.total_tournaments_played %></td>
+            <td class="px-6 py-3"><%= user.total_matches_won %></td>
+            <td class="px-6 py-3"><%= user.total_tournaments_won %></td>
           </tr>
         <% end %>
       </tbody>
