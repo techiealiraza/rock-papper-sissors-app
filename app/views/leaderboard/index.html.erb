@@ -1,10 +1,8 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
   <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2" %>
   <div class="flex flex-row items-center justify-evenly ">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg"></div>
-    <h1 class="text-orange-200"> </h1>
     <table class="table-fixed w-full text-sm text-left text-black mx-5">
-      <thead class="text-lg bg-gold_shade2 items-center">
+      <thead class="text-xs bg-gold_shade2 items-center">
         <tr>
           <th class="px-6 py-3">Player<br>
             Rank</th>
@@ -20,15 +18,15 @@
             won</th>
         </tr>
       </thead>
-      <tbody class="bg-gold text-lg">
+      <tbody class="bg-gold text-sm">
         <% @users.each_with_index do |user, index| %>
           <tr>
-            <td class="px-6 py-3"><%= index+1 %></td>
-            <td class="px-6 py-3"><%= user.player %></td>
-            <td class="px-6 py-3"><%= user.tournaments_played %></td>
-            <td class="px-6 py-3"><%= user.matches_played %></td>
-            <td class="px-6 py-3"><%= user.matches_won %></td>
-            <td class="px-6 py-3"><%= user.tournaments_won %></td>
+            <td class="md:text-lg px-6 py-3"><%= index+1 %></td>
+            <td class="md:text-lg px-6 py-3"><%= user.player %></td>
+            <td class="md:text-lg px-6 py-3"><%= user.tournaments_played %></td>
+            <td class="md:text-lg px-6 py-3"><%= user.matches_played %></td>
+            <td class="md:text-lg px-6 py-3"><%= user.matches_won %></td>
+            <td class="md:text-lg px-6 py-3"><%= user.tournaments_won %></td>
           </tr>
         <% end %>
       </tbody>

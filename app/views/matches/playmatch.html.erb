@@ -8,13 +8,18 @@
   <div class="flex flex-col">
     <div class="flex-grow flex-1">
       <div class="flex flex-col items-center">
-        <div class="my-3 bg-gold text-black text-xl py-3 px-3 rounded-lg mr-3" id="<%= "tries_"+@match.id.to_s %>">
+        <div id="<%= "tries_"+@match.id.to_s %>" class="my-3 bg-gold text-black text-xl py-3 px-3 rounded-lg mr-3">
           <%= "Remaining Tries : #{@remaining_tries}" %>
         </div>
         <div class="flex flex-row justify-center">
-          <%= render 'random_images', image_id: @match.users.first.id %>
+          <% if @is_player %>
+            <% player1 = current_user %>
+          <% else %>
+            <% player1 = @match.users.first %>
+          <% end %>
+          <%= render 'random_images', user_id: player1.id %>
           <%= render 'choice_timer', match: @match, remaining_seconds: @end_time %>
-          <%= render 'random_images', image_id: @match.users.last.id %>
+          <%= render 'random_images', user_id: @match.other_user(player1).id %>
         </div>
       </div>
     </div>
