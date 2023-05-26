@@ -28,10 +28,14 @@ class TournamentsController < ApplicationController
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    return unless (length - 8).zero?
+    return unless (length - 8) <= 0
 
-    MatchCreator.new(@tournament, registered_users).create_match
-    redirect_to tournament_path(@tournament), notice: 'Matches Generated'
+    begin
+      MatchCreator.new(@tournament, registered_users).create_match
+      redirect_to tournament_path(@tournament), notice: 'Matches Generated'
+    rescue StandardError => e
+      redirect_to tournament_path(@tournament), alert: "Error generating matches: #{e.message}"
+    end
   end
 
   def create
