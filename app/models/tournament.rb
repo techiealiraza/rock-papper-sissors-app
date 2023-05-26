@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Tournaments:: controller
 class Tournament < ApplicationRecord
   paginates_per 3
   has_many :tournaments_users
