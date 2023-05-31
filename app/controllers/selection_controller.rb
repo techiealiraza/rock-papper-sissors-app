@@ -5,7 +5,7 @@ class SelectionController < ApplicationController
 
   def create
     @selection = Selection.new(selection_params)
-    @selection.add_try_num
+    @selection.add_try_num(@selection.user_id)
     respond_to do |format|
       if @selection.save
         format.json { render json: { data: 'Saved' }, status: :ok }
