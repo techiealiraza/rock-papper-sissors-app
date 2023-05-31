@@ -1,4 +1,4 @@
-<div class="bg-background-image min-h-screen flex flex-col">
+<div class="bg-background-image min-h-screen flex flex-col items-center">
   <% if @is_player %>
     <% player1 = current_user %>
   <% else %>
@@ -10,10 +10,11 @@
     <div class="container-fluid mt-5 rounded-lg py-3 px-10 bg-gold">
       <%= player1.name %><br>
       scores
-      <div class="flex row justify-center text-4xl font-bold">
-        <%= "#{@player1_scores}" %>
+      <div class="justify-center text-4xl font-bold">
+        <%= @player1_scores %>
         <div class="flex row justify-center text-4xl font-bold">
           <%= @players_scores[player1.id] || 0 %>
+        </div>
         </div>
       </div>
       <div class="flex flex-col">
@@ -21,12 +22,6 @@
           <%= @result_message %>
         </h1>
       </div>
-      <div class="container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
-        <%= @player2_name %><br>
-        scores
-        <div class="flex row justify-center text-4xl font-bold">
-          <%= "#{@player2_scores}" %>
-        </div>
         <div class="container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
           <%= player2.name %><br>
           scores
@@ -34,13 +29,13 @@
             <%= @players_scores[player2.id] || 0 %>
           </div>
         </div>
-      </div>
-      <%= player1_selections = @players_selections[player1.id] %>
-      <%= player2_selections = @players_selections[player2.id] %>
+    </div>
+      <% player1_selections = @players_selections[player1.id] %>
+      <% player2_selections = @players_selections[player2.id] %>      
       <% player1_selections.each do |player1_selection| %>
         <% player1_choice = player1_selection.selection + ".png" %>
-        <% opponent_user_choice = @player2_selections[i].selection + ".png" %>
-        <% status = player1_selection.status || @player2_selections[i].status %>
+        <% opponent_user_choice = player2_selections[i].selection + ".png" %>
+        <% status = player1_selection.status || player2_selections[i].status %>
         <% status = !status ? "Draw" : status %>
         <div class="flex flex-row justify-center">
           <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
