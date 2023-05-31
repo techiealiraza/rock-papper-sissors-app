@@ -14,34 +14,34 @@
 <% end %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Registration deadline</strong>
-  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
     <%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
 <%= render 'registration_deadline', tournament: tournament %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
-  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
     <%= @tournament.users.length %>
   </div>
 </p>
 <% if @tournament.tournament_winner_id %>
   <p class="pt-5">
     <strong class="block font-medium text-white">Tournament Winner</strong>
-    <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+    <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
       <%= User.find(@tournament.tournament_winner_id).name %>
     </div>
   </p>
 <% end %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Start date</strong>
-  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
     <%= tournament.start_date.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
 <p class="pt-5">
   <strong class="block font-medium text-white">End date</strong>
-  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
     <%= tournament.end_date.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
@@ -61,7 +61,7 @@
   </div>
 <% end %>
 <% if action_name != "show" %>
-  <div class=" my-5 flex flex-row items-center justify-center px-3">
-    <%= link_to "Show", tournament, class: "actions mb-4 mr-3  px-10 py-3 btn-brown" %>
+  <div class="my-5 flex flex-row items-center justify-center px-3">
+    <%= link_to "Show", tournament, class: "actions mb-4 mr-3 px-10 py-3 btn-brown" %>
   </div>
 <% end %>

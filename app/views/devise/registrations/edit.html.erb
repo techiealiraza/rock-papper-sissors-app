@@ -19,7 +19,7 @@
         </div>
         <div class="field block pt-3">
           <%= f.label :email, class: "text-white" %>
-          <%= f.email_field :email, autocomplete: "email" , class: "border border-gold w-full rounded" %>
+          <%= f.email_field :email, autocomplete: "email", class: "border border-gold w-full rounded" %>
         </div>
         <div class="field">
           <%= f.label :name, class: "text-white" %>
@@ -36,19 +36,19 @@
             <em class="text-gold"><%= @minimum_password_length %> characters minimum</em>
           <% end %>
         </div>
-        <div class="field ">
-          <%= f.label :password_confirmation , class: "text-white" %><br>
+        <div class="field">
+          <%= f.label :password_confirmation, class: "text-white" %><br>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border border-gold w-full rounded" %>
         </div>
-        <div class="field ">
+        <div class="field">
           <%= f.label :current_password, class: "text-white" %><br>
           <%= f.password_field :current_password, autocomplete: "current-password", class: "border border-gold w-full rounded" %>
         </div>
         <div class="actions py-2 flex flex-row justify-center">
-          <%= f.submit "Update" , class: "px-7 py-2 btn-brown" %>
+          <%= f.submit "Update", class: "px-7 py-2 btn-brown" %>
         </div>
       <% end %>
-      <%= link_to 'Back', request.referer || root_path , class: "text-gold font-black hover:text-gold_shade2 " %>
+      <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
     </div>
   </div>
 </div>

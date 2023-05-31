@@ -20,6 +20,7 @@ class MatchesController < ApplicationController
   end
 
   def playmatch
+    @match = Match.includes(:users, :messages).find(params[:match_id])
     redirect_to result_tournament_match_path(match_id: @match) unless @match.match_winner_id.nil?
     @players = @match.users
     @remaining_tries = @match.remaining_tries(@players.first.id)
