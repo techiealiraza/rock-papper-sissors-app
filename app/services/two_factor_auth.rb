@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# two factor authentication
 class TwoFactorAuth
   def initialize(user)
     @user = user
