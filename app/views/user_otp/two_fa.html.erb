@@ -1,6 +1,6 @@
 <div class="bg-background-image min-h-screen flex flex-col justify-between">
   <div class="container flex-1 flex flex-col items-center justify-center px-6">
-    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8  ">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
       <h1 class="flex flex-row justify-center text-white text-2xl font-bold">OTP Verification</h1>
       <div id="otp" class="flex flex-row justify-center text-center px-2 mt-5">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| %>
@@ -12,7 +12,7 @@
           </div>
           <div class="pt-3 flex flex-row justify-center">
             <div class="px-7 py-2 btn-brown">
-              <%= f.submit  "Submit" %>
+              <%= f.submit "Submit" %>
             </div>
           </div>
         <% end %>

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbolinks:load", function () {
 	var mobileMenuButton = document.querySelector(
 		"[aria-controls='mobile-menu']"
 	);

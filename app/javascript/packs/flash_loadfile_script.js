@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbolinks:load", function () {
 	var noticeContainer = document.getElementById("noticeContainer");
 	if (noticeContainer) {
 		setTimeout(function () {
