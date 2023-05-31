@@ -19,9 +19,9 @@ class MatchCreator
   def group_by_two
     user_matches = []
     matches = []
-    match_start_time = @tournament.current_match_time
+    match_time = @tournament.current_match_time
     @registered_users.each_slice(2) do |user1, user2|
-      match = Match.create(tournament_id: @tournament.id, match_time: match_start_time, round: @round)
+      match = Match.create(tournament_id: @tournament.id, match_time:, round: @round)
       matches << match
       user_matches << user_match_obj(match, user1)
       user_matches << user_match_obj(match, user2)

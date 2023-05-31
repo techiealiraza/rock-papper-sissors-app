@@ -54,7 +54,7 @@ class Tournament < ApplicationRecord
     if matches.empty?
       start_date + 30.seconds
     else
-      Time.zone.now + 90.seconds
+      Time.now + 90.seconds
     end
   end
 
