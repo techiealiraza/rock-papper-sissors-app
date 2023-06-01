@@ -3,14 +3,15 @@
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
       <h1 class="mb-8 text-6xl text-center text-white">Match</h1>
       <div class="text-4xl text-white mr-5 flex flex-row items-center justify-center">
-        <% @match.users.each_with_index do |player, i| %>
           <div class="ml-3 text-gold">
-            <%= player.name.capitalize %>
+            <%= @match.users.first.name.capitalize %>
           </div>
           <div class="ml-3 text-white">
             vs
           </div>
-        <% end %>
+          <div class="ml-3 text-gold">
+            <%= @match.users.last.name.capitalize %>
+          </div>
       </div>
       <%= render 'match_timer', match: @match %>
       <p class="pt-5">

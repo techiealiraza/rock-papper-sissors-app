@@ -2,7 +2,7 @@
 <% else %>
   <div id="days" class="container-fluid mt-5 flex row justify-center" data-controller="countdown" data-countdown-id="<%= match.id %>" data-countdown-time="<%= (Time.zone.now - match.match_time).to_json.html_safe %>">
     <div class="days-container">
-      <div class="days" data-countdown-id="<%= match.id %>"></div>
+      <div id="days" data-countdown-id="<%= match.id %>"></div>
       <div class="days-label">d</div>
     </div>
     <div id="hours" class="hours-container ml-2">

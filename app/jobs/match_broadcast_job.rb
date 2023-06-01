@@ -14,12 +14,10 @@ class MatchBroadcastJob < ApplicationJob
   after_perform do |job|
     try_num = job.arguments[1] - 1
     match = Match.find(job.arguments[0])
-    sleep 2
+    sleep 3
     match.handle_missing_selections(try_num)
-    sleep 2
     UpdateWinner.new(match, try_num).update_winner
     user1_id, user2_id = match.users.ids
-    sleep(2)
     selection1, selection2 = match.selections.by_try_num(try_num).group_by(&:user_id).values_at(user1_id, user2_id)
     selection1 = selection1.first
     selection2 = selection2.first
@@ -41,12 +39,6 @@ class MatchBroadcastJob < ApplicationJob
     else
       selections.size
     end
-  end
-
-  def pick_random(id1, id2)
-    ids = [id1, id2]
-    random_id = rand 0..1
-    ids[random_id]
   end
 
   def monitor_tries(match, try_num, score1, score2, selections)
@@ -71,10 +63,10 @@ class MatchBroadcastJob < ApplicationJob
     elsif try_num == 5
       broadcast(match.id, user1_id, user2_id, 'Random Picking', selections)
       sleep 2
-      match.update(match_winner_id: pick_random(user1_id, user2_id))
+      match.update(match_winner_id: [user1_id, user2_id].sample)
       broadcast(match.id, user1_id, user2_id, "#{match.winner.name} won", selections)
+      generate_matches(match, selections)
     end
-    generate_matches(match, selections)
   end
 
   def add_tries_and_broadcast(match, try_num, selections)
@@ -98,11 +90,11 @@ class MatchBroadcastJob < ApplicationJob
     current_round_remaining_matches = tournament.remaining_matches_by_round_size(match.round)
     done_matches_size = tournament.done_matches_size(match.round)
     matches_by_round_size = tournament.matches_by_round_size(match.round)
-    if !current_round_remaining_matches.zero?
-      tournament.create_matches(match)
-    elsif done_matches_size == 1 && matches_by_round_size == 1
+    if done_matches_size == 1 && matches_by_round_size == 1
       tournament.update_column(:tournament_winner_id, match.match_winner_id)
       broadcast(match.id, user1_id, user2_id, "Tournament Winner is #{tournament.winner.name}", selections)
+    elsif current_round_remaining_matches.zero?
+      tournament.create_matches(match)
     end
   end
 end
