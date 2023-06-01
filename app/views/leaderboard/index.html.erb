@@ -1,32 +1,32 @@
-<div class="bg-background-image min-h-screen flex flex-col justify-between">
+<div class="bg-background-image min-h-screen flex flex-col justify-center">
   <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
-  <div class="flex flex-row items-center justify-evenly">
+  <div class="overflow-x-auto flex flex-row items-center justify-evenly pt-5">
     <table class="table-fixed w-full text-sm text-left text-black mx-5">
       <thead class="text-xs bg-gold_shade2 items-center">
         <tr>
-          <th class="px-6 py-3">Player<br>
+          <th class="md:px-6 px-2 py-3">Player<br>
             Rank</th>
-          <th class="px-6 py-3">Player<br>
+          <th class="md:px-6 px-2 py-3">Player<br>
             Name</th>
-          <th class="px-6 py-3">Matches<br>
+          <th class="hidden md:table-cell md:px-6 px-2 py-3">Matches<br>
             Played</th>
-          <th class="px-6 py-3">Tournaments<br>
+          <th class="md:px-6 px-2 py-3">Tournaments<br>
             Played</th>
-          <th class="px-6 py-3">Matches<br>
+          <th class="md:px-6 px-2 py-3">Matches<br>
             Won</th>
-          <th class="px-6 py-3">Tournaments<br>
+          <th class="md:px-6 px-2 py-3">Tournaments<br>
             won</th>
         </tr>
       </thead>
       <tbody class="bg-gold text-lg">
-        <% @users.each.with_index(1) do |user, index| %>
+        <% current_user.leader_board_records.each_with_index do |user_data, index| %>
           <tr>
-            <td class="px-6 py-3"><%= index %></td>
-            <td class="px-6 py-3"><%= user.name %></td>
-            <td class="px-6 py-3"><%= user.total_matches_played %></td>
-            <td class="px-6 py-3"><%= user.total_tournaments_played %></td>
-            <td class="px-6 py-3"><%= user.total_matches_won %></td>
-            <td class="px-6 py-3"><%= user.total_tournaments_won %></td>
+            <td class="md:px-6 px-2 py-3"><%= index %></td>
+            <td class="md:px-6 px-2 py-3"><%= user_data[:user].name %></td>
+            <td class="hidden md:table-cell md:px-6 px-2 py-3"><%= user_data[:matches_played] %></td>
+            <td class="md:px-6 px-2 py-3"><%= user_data[:tournaments_played] %></td>
+            <td class="md:px-6 px-2 py-3"><%= user_data[:matches_won] %></td>
+            <td class="md:px-6 px-2 py-3"><%= user_data[:tournaments_won] %></td>
           </tr>
         <% end %>
       </tbody>

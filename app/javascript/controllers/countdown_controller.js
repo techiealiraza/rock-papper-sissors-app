@@ -7,10 +7,10 @@ export default class extends Controller {
       const number = reg_date;
       console.log(number)
       const d = document;
-      const daysElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .days`);
-      const hoursElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .hours`);
-      const minutesElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .minutes`);
-      const secondsElement = d.querySelector(`[data-countdown-id="${tournament_id}"] .seconds`);
+      const daysElement = document.getElementById('days');
+      const hoursElement = document.getElementById('hours');
+      const minutesElement = document.getElementById('minutes');
+      const secondsElement = document.getElementById('seconds');
       let countdown;
       convertFormat(format);
       function convertFormat(format) {
@@ -34,10 +34,10 @@ export default class extends Controller {
           const secondsLeft = Math.round((then - Date.now()) / 1000);
     
           if(secondsLeft <= 0) {
-            document.getElementById("days").style.display = "none";
-            document.getElementById("hours").style.display = "none";
-            document.getElementById("minutes").style.display = "none";
-            document.getElementById("seconds").style.display = "none";
+            daysElement.style.display = "none";
+            hoursElement.style.display = "none";
+            minutesElement.style.display = "none";
+            secondsElement.style.display = "none";
             clearInterval(countdown);
             return;
           };
@@ -48,10 +48,10 @@ export default class extends Controller {
       }
     
       function displayTimeLeft(seconds) {
-        daysElement.textContent = Math.floor(seconds / 86400);
-        hoursElement.textContent = Math.floor((seconds % 86400) / 3600);
-        minutesElement.textContent = Math.floor((seconds % 86400) % 3600 / 60);
-        secondsElement.textContent = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
+        daysElement.innerHTML = Math.floor(seconds / 86400);
+        hoursElement.innerHTML = Math.floor((seconds % 86400) / 3600);
+        minutesElement.innerHTML = Math.floor((seconds % 86400) % 3600 / 60);
+        secondsElement.innerHTML = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
       }
     }
 

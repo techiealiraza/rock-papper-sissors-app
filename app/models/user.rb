@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :matches, through: :users_matches
   has_one_attached :avatar
   scope :members, -> { where(role: 'member') }
+  # scope :desc, -> { order(count: :desc) }
 
   devise :registerable, :two_factor_authenticatable,
          :recoverable, :rememberable, :validatable,
@@ -30,11 +31,11 @@ class User < ApplicationRecord
   end
 
   def total_matches_played
-    matches.count
+    matches.size
   end
 
   def total_matches_won
-    matches.where(winner: true).count
+    matches.where(match_winner_id: id).size
   end
 
   def total_tournaments_played
@@ -42,7 +43,23 @@ class User < ApplicationRecord
   end
 
   def total_tournaments_won
-    matches.distinct.where(winner: true).count(:tournament_id)
+    tournaments.distinct.where(tournament_winner_id: id).size
+  end
+
+  def leader_board_records
+    data = []
+    User.all.each do |user|
+      tournaments_won = user.total_tournaments_won
+      data << { user:, tournaments_won: }
+    end
+    top_tournaments_winners = data.sort_by! { |record| record[:tournaments_won] }.reverse!.take(10)
+    top_tournaments_winners.each do |record|
+      matches_played = record[:user].total_matches_played
+      tournaments_played = record[:user].total_tournaments_played
+      matches_won = record[:user].total_matches_won
+      record.merge!({ matches_played:, tournaments_played:, matches_won: })
+    end
+    top_tournaments_winners
   end
 
   def member?
