@@ -5,17 +5,7 @@ module Users
     before_action :authenticate_2fa!, only: [:create]
     before_action :authenticate_user!, except: %i[new create destroy]
     before_action :load_and_authorize_resource, except: %i[new create destroy]
-
-    def new
-      super do |resource|
-        if resource.valid? && resource.persisted?
-          resource.update(
-            otp_required_for_login: true
-          )
-        end
-      end
-    end
-
+ 
     def create
       super do |resource|
         if resource.valid? && resource.persisted?

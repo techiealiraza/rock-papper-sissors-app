@@ -22,37 +22,36 @@ export default class extends Controller {
             case 'hours':
             return timer(number * 60 * 60);
           case 'days':
-            return timer(number * 60 * 60 * 24);             
-        }
-      }
-    
-      function timer(seconds) {
-        const now = Date.now();
-        const then = now + seconds * 1000;
-    
-        countdown = setInterval(() => {
-          const secondsLeft = Math.round((then - Date.now()) / 1000);
-    
-          if(secondsLeft <= 0) {
-            daysElement.style.display = "none";
-            hoursElement.style.display = "none";
-            minutesElement.style.display = "none";
-            secondsElement.style.display = "none";
-            clearInterval(countdown);
-            return;
-          };
-    
-          displayTimeLeft(secondsLeft);
-    
-        },1000);
-      }
-    
-      function displayTimeLeft(seconds) {
-        daysElement.innerHTML = Math.floor(seconds / 86400);
-        hoursElement.innerHTML = Math.floor((seconds % 86400) / 3600);
-        minutesElement.innerHTML = Math.floor((seconds % 86400) % 3600 / 60);
-        secondsElement.innerHTML = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
+            return timer(number * 60 * 60 * 24);
       }
     }
 
-	};
+    function timer(seconds) {
+      const now = Date.now();
+      const then = now + seconds * 1000;
+
+      countdown = setInterval(() => {
+        const secondsLeft = Math.round((then - Date.now()) / 1000);
+
+        if (secondsLeft <= 0) {
+          document.getElementById("days").style.display = "none";
+          document.getElementById("hours").style.display = "none";
+          document.getElementById("minutes").style.display = "none";
+          document.getElementById("seconds").style.display = "none";
+          clearInterval(countdown);
+          return;
+        }
+
+        displayTimeLeft(secondsLeft);
+      }, 1000);
+    }
+
+    function displayTimeLeft(seconds) {
+      daysElement.textContent = Math.floor(seconds / 86400);
+      hoursElement.textContent = Math.floor((seconds % 86400) / 3600);
+      minutesElement.textContent = Math.floor(((seconds % 86400) % 3600) / 60);
+      secondsElement.textContent =
+        seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
+    }
+  };
+}

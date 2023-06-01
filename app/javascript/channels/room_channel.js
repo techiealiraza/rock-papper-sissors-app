@@ -1,27 +1,27 @@
 import consumer from "./consumer";
 
 document.addEventListener("turbolinks:load", () => {
-	const element = document.getElementById("match_id");
-	const match_id = element.getAttribute("data-match-id");
-	consumer.subscriptions.create(
-		{ channel: "RoomChannel", match_id: match_id },
-		{
-			connected() {},
+  const element = document.getElementById("match_id");
+  const match_id = element.getAttribute("data-match-id");
+  consumer.subscriptions.create(
+    { channel: "RoomChannel", match_id: match_id },
+    {
+      connected() {},
 
-			disconnected() {},
+      disconnected() {},
 
-			received(data) {
-				const msgs = document.getElementById("message-list");
-				const current_user = document.getElementById("current_user");
-				const current_user_name = current_user.getAttribute(
-					"data-current-user-name"
-				);
-				const msg_element = document.getElementById(
-					`msg_field_${data.user_name}`
-				);
-				let messageHTML;
-				if (data.user_name === current_user_name) {
-					messageHTML = `<div class = "my-1 flex flex-row">
+      received(data) {
+        const msgs = document.getElementById("message-list");
+        const current_user = document.getElementById("current_user");
+        const current_user_name = current_user.getAttribute(
+          "data-current-user-name"
+        );
+        const msg_element = document.getElementById(
+          `msg_field_${data.user_name}`
+        );
+        let messageHTML;
+        if (data.user_name === current_user_name) {
+          messageHTML = `<div class = "my-1 flex flex-row">
       <div class = "rounded-full bg-white w-7 text-black text-center h-7">
       ${data.user_name.substring(0, 3)}
       </div>
@@ -34,8 +34,8 @@ document.addEventListener("turbolinks:load", () => {
         </div>
       </div>
    </div>`;
-				} else {
-					messageHTML = `<div class = "my-1 flex flex-row">
+        } else {
+          messageHTML = `<div class = "my-1 flex flex-row">
       <div class = "rounded-full bg-gold_shade2 w-7 text-white text-center h-7">
       ${data.user_name.substring(0, 3)}
       </div>
@@ -48,15 +48,15 @@ document.addEventListener("turbolinks:load", () => {
       </div>
       </div>
    </div>`;
-				}
+        }
 
-				msgs.insertAdjacentHTML("afterbegin", messageHTML);
-				const last_elem = msgs.firstChild;
-				last_elem.scrollIntoView({ behavior: "smooth", block: "end" });
-				if (msg_element) {
-					msg_element.value = "";
-				}
-			},
-		}
-	);
+        msgs.insertAdjacentHTML("afterbegin", messageHTML);
+        const last_elem = msgs.firstChild;
+        last_elem.scrollIntoView({ behavior: "smooth", block: "end" });
+        if (msg_element) {
+          msg_element.value = "";
+        }
+      },
+    }
+  );
 });

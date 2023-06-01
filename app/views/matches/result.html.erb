@@ -17,10 +17,17 @@
         </div>
         </div>
       </div>
-      <div class="flex flex-col">
-        <h1 class="container-fluid mb-8 text-6xl text-center text-white">
-          <%= @result_message %>
-        </h1>
+    </div>
+    <div class="flex flex-col">
+      <h1 class="container-fluid mb-8 text-6xl text-center text-white">
+        <%= @result_message %>
+      </h1>
+    </div>
+    <div class="container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
+      <%= player2.name %><br>
+      scores
+      <div class="flex row justify-center text-4xl font-bold">
+        <%= @players_scores[player2.id] || 0 %>
       </div>
         <div class="container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
           <%= player2.name %><br>
@@ -48,3 +55,7 @@
       <% end %>
       <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
     </div>
+    <% i += 1 %>
+  <% end %>
+  <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
+</div>

@@ -1,4 +1,4 @@
-<% if Time.now.utc.after?(tournament.registration_deadline) %>
+<% if Time.zone.now.after?(tournament.registration_deadline) %>
   <div class="p-5 mt-5 h-40 bg-gold rounded-xl flex flex-col items-center justify-center">
     <div class="flex flex-row items-center text-2xl">
       Registration Closed
