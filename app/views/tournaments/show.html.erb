@@ -7,19 +7,19 @@
         </div>
         <%= render @tournament %>
         <div class="flex flex-col items-center justify-center py-3">
-          <% if Time.current.utc.before?(@tournament.start_date.utc) %>
+          <% if Time.zone.now.before?(@tournament.start_date) %>
             <% if can? :edit, Tournament %>
               <%= link_to 'Edit', edit_tournament_path(@tournament), class: "mb-4 px-10 py-3 btn-brown" %>
             <% end %>
           <% end %>
-          <% if Time.current.utc.before?(@tournament.start_date.utc) %>
+          <% if Time.zone.now.before?(@tournament.start_date) %>
             <div class="inline-block mx-2">
               <% if can? :delete, Tournament %>
                 <%= button_to 'Delete', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown", data: {confirm: "Are you sure?" } %>
               </div>
             <% end %>
           <% end %>
-          <% if Time.current.utc.after?(@tournament.registration_deadline.utc) %>
+          <% if Time.zone.now.after?(@tournament.registration_deadline) %>
             <% if @tournament.matches.size==0 %>
               <% if can? :create_matches, Tournament %>
                 <%= link_to 'Generate Matches', create_matches_tournament_path(@tournament.id), method: :post, class: "mb-4 px-10 py-3 btn-brown" %>

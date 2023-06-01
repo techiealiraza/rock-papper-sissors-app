@@ -3,7 +3,7 @@
 <div class="flex px-5 flex-col">
   <div class="flex-col overflow-y-auto overflow-x-hidden">
     <div id="message-list">
-      <% @match.messages.all.reverse.each do |message| %>
+      <% @messages.each do |message| %>
         <div class="flex flex-row py-2">
           <div class="rounded-full w-7 text-center h-7 <%= message.user_id == current_user.id ? 'bg-white text-black' : 'bg-gold text-white' %>">
             <%= message.user.name[0,3] %>
@@ -14,7 +14,7 @@
             </div>
             <div class="flex flex-row items-end">
               <div class="text-white">
-                <%= (message.created_at + 5.hours).strftime('%H:%M:%S') %>
+                <%= (message.created_at.in_time_zone).strftime('%H:%M:%S') %>
               </div>
             </div>
           </div>

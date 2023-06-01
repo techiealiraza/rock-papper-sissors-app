@@ -2,9 +2,7 @@
 
 class MessagesController < ApplicationController
   load_and_authorize_resource
-  def index
-    @messages = Message.includes(:users).all
-  end
+  def index; end
 
   def new
     @message = Message.new
