@@ -5,8 +5,6 @@ export default class extends Controller {
       const reg_date = this.data.get("time");
       const tournament_id = this.data.get("id");
       const number = reg_date;
-      console.log(number)
-      const d = document;
       const daysElement = document.getElementById('days');
       const hoursElement = document.getElementById('hours');
       const minutesElement = document.getElementById('minutes');
