@@ -1,26 +1,26 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    connect = (format = 'seconds') => {
-      const reg_date = this.data.get("time");
-      const tournament_id = this.data.get("id");
-      const number = reg_date;
-      const daysElement = document.getElementById('days');
-      const hoursElement = document.getElementById('hours');
-      const minutesElement = document.getElementById('minutes');
-      const secondsElement = document.getElementById('seconds');
-      let countdown;
-      convertFormat(format);
-      function convertFormat(format) {
-        switch(format) {
-          case 'seconds':
-            return timer(number);
-          case 'minutes':
-            return timer(number * 60);
-            case 'hours':
-            return timer(number * 60 * 60);
-          case 'days':
-            return timer(number * 60 * 60 * 24);
+  connect = (format = "seconds") => {
+    const reg_date = this.data.get("time");
+    const tournament_id = this.data.get("id");
+    const number = reg_date;
+    const daysElement = document.getElementById("days");
+    const hoursElement = document.getElementById("hours");
+    const minutesElement = document.getElementById("minutes");
+    const secondsElement = document.getElementById("seconds");
+    let countdown;
+    convertFormat(format);
+    function convertFormat(format) {
+      switch (format) {
+        case "seconds":
+          return timer(number);
+        case "minutes":
+          return timer(number * 60);
+        case "hours":
+          return timer(number * 60 * 60);
+        case "days":
+          return timer(number * 60 * 60 * 24);
       }
     }
 
