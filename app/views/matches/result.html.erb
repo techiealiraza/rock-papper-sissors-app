@@ -17,17 +17,10 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="flex flex-col">
-    <h1 class="container-fluid mb-8 text-6xl text-center text-white">
-      <%= @result_message %>
-    </h1>
-  </div>
-  <div class="container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
-    <%= player2.name %><br>
-    scores
-    <div class="flex row justify-center text-4xl font-bold">
-      <%= @players_scores[player2.id] || 0 %>
+    <div class="flex flex-col">
+      <h1 class="container-fluid mb-8 text-6xl text-center text-white">
+        <%= @result_message %>
+      </h1>
     </div>
     <div class="container-fluid mt-5 py-3 rounded-lg px-10 bg-gold">
       <%= player2.name %><br>
@@ -45,7 +38,7 @@
     <% status = player1_selection.status || player2_selections[i].status %>
     <% status = !status ? "Draw" : status %>
     <div class="flex flex-row justify-center">
-      <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+      <%= image_tag(player1_choice, width: "100", class:"m-5 mt-5 p-2 rounded-lg bg-gold") %>
       <div class="m-5 mt-5 p-2 flex flex-col justify-center rounded-lg bg-gold text-xl <%= status == 'Draw' ? '' : 'text-black' %>">
         <%= status %>
       </div>
@@ -54,8 +47,4 @@
     <% i += 1 %>
   <% end %>
   <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
-</div>
-<% i += 1 %>
-<% end %>
-<%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
 </div>
