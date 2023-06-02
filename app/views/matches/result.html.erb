@@ -45,7 +45,7 @@
     <% status = player1_selection.status || player2_selections[i].status %>
     <% status = !status ? "Draw" : status %>
     <div class="flex flex-row justify-center">
-      <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+      <%= image_tag(player1_choice, width: "100", class:"m-5 mt-5 p-2 rounded-lg bg-gold") %>
       <div class="m-5 mt-5 p-2 flex flex-col justify-center rounded-lg bg-gold text-xl <%= status == 'Draw' ? '' : 'text-black' %>">
         <%= status %>
       </div>

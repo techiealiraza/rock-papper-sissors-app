@@ -7,3 +7,6 @@ application.load(definitionsFromContext(context));
 
 import CountdownController from "./countdown_controller";
 application.register("countdown", CountdownController);
+
+import LoadController from "./load_controller"
+application.register("load", LoadController)
