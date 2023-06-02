@@ -23,7 +23,7 @@
               <td class="px-6 py-3"><%= match.users.first.name %></td>
               <td class="px-6 py-3"><%= match.users.last.name %></td>
               <td class="hidden md:table-cell px-6 py-3"><%= match.round %></td>
-              <td class="px-6 py-3"><%= match.winner.nil? ? '--' : match.winner %></td>
+              <td class="px-6 py-3"><%= match.winner.nil? ? '--' : match.winner.name %></td>
               <td>
                 <%= link_to "show", tournament_match_url(tournament_id: match.tournament_id, id: match.id), method: :get, class: "mb-4 px-3 py-2 btn-brown" %>
               </td>

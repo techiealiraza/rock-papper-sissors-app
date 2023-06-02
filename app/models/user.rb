@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :matches, through: :users_matches
   has_one_attached :avatar
   scope :members, -> { where(role: 'member') }
-  enum role: %w[member admin]
+  # enum role: %w[member admin]
 
   devise :registerable, :two_factor_authenticatable,
          :recoverable, :rememberable, :validatable,
