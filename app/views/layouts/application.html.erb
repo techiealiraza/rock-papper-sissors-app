@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RockPaperScissorsApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <nav class="bg-gray-800">
+      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+          <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+              <span class="sr-only">Open main menu</span>
+              <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+              <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+              <%= link_to 'Tournaments', tournaments_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+              <%= link_to 'Matches', matches_all_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+              <%= link_to 'LeaderBoard', leaderboard_index_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+              <% if user_signed_in? %>
+                <%= link_to 'Edit profile', edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+                <p class="float-right inline-block px-3 py-2 text-sm text-white">
+                  Logged in as :
+                  <%= current_user.name %>
+                </p>
+              <% else %>
+                <%= link_to "Sign up", new_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+                <%= link_to "Login", new_user_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sm:hidden hidden" id="mobile-menu">
+        <div class="space-y-1 px-2 pb-3 pt-2">
+          <ul>
+            <li><%= link_to 'Tournaments', tournaments_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+            <li><%= link_to 'Matches', matches_all_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+            <li><%= link_to 'LeaderBoard', leaderboard_index_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+            <% if user_signed_in? %>
+              <li><%= link_to 'Edit profile', edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+              <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+              <li>
+                <a class="text-gray-300 px-3 py-2 text-sm">
+                  Logged in as: <%= current_user.name %>
+                </a>
+              </li>
+            <% else %>
+              <li><%= link_to "Sign up", new_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+              <li><%= link_to "Login", new_user_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <% if notice %>
+      <div id="noticeContainer" class="flex flex-row justify-center bg-green-600">
+        <div class="text-black alert alert-info alert-dismissible fade show py-2" role="alert">
+          <%= notice %>
+          <button id="noticeCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div id="alertContainer" class="flex flex-row justify-center bg-red-500">
+        <div class="text-black alert alert-warning alert-dismissible fade show py-2" role="alert">
+          <%= alert %>
+          <button id="alertCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

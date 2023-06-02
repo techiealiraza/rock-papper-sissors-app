@@ -1,0 +1,54 @@
+<div class="bg-background-image min-h-screen flex flex-col">
+  <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-6">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full ">
+      <h1 class="mb-8 text-3xl text-center text-white">Edit <%= resource_name.to_s.humanize %></h1>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="flex flex-row items-center justify-center">
+          <div class="personal-image">
+            <label class="label">
+              <figure class="personal-figure">
+                <%= f.file_field :avatar, onchange: "loadFile(event)" %>
+                <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar" alt="avatar" id="output">
+                <figcaption class="personal-figcaption">
+                  <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                </figcaption>
+              </figure>
+            </label>
+          </div>
+        </div>
+        <div class="field block pt-3">
+          <%= f.label :email, class: "text-white" %>
+          <%= f.email_field :email, autocomplete: "email", class: "border border-gold w-full rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :name, class: "text-white" %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "email", class: "border border-gold w-full rounded" %>
+        </div>
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+        <div class="field">
+          <%= f.label :password, class: "text-white" %> <i class="text-gold">(leave blank if you don't want to change it)</i><br>
+          <%= f.password_field :password, autocomplete: "new-password", class: "border border-gold w-full rounded" %>
+          <% if @minimum_password_length %>
+            <br>
+            <em class="text-gold"><%= @minimum_password_length %> characters minimum</em>
+          <% end %>
+        </div>
+        <div class="field">
+          <%= f.label :password_confirmation, class: "text-white" %><br>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border border-gold w-full rounded" %>
+        </div>
+        <div class="field">
+          <%= f.label :current_password, class: "text-white" %><br>
+          <%= f.password_field :current_password, autocomplete: "current-password", class: "border border-gold w-full rounded" %>
+        </div>
+        <div class="actions py-2 flex flex-row justify-center">
+          <%= f.submit "Update", class: "px-7 py-2 btn-brown" %>
+        </div>
+      <% end %>
+      <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
+    </div>
+  </div>
+</div>

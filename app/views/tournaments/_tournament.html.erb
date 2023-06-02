@@ -1,0 +1,67 @@
+<p class="pt-5">
+  <strong class="block font-medium text-white">Name</strong>
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2   bg-white text-black">
+    <%= tournament.name %>
+  </div>
+</p>
+<div class="mt-5">
+  <% if tournament.image.attached? %>
+    <%= image_tag(tournament.image, class: "rounded-xl h-72 w-full") %>
+  <% end %>
+</div>
+<% if action_name != "index" %>
+  <%= render 'description', tournament: tournament %>
+<% end %>
+<p class="pt-5">
+  <strong class="block font-medium text-white">Registration deadline</strong>
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
+    <%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %>
+  </div>
+</p>
+<%= render 'registration_deadline', tournament: tournament %>
+<p class="pt-5">
+  <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
+    <%= @tournament.users.length %>
+  </div>
+</p>
+<% if @tournament.tournament_winner_id %>
+  <p class="pt-5">
+    <strong class="block font-medium text-white">Tournament Winner</strong>
+    <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
+      <%= User.find(@tournament.tournament_winner_id).name %>
+    </div>
+  </p>
+<% end %>
+<p class="pt-5">
+  <strong class="block font-medium text-white">Start date</strong>
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
+    <%= tournament.start_date.strftime("%B %d, %Y %I:%M %p") %>
+  </div>
+</p>
+<p class="pt-5">
+  <strong class="block font-medium text-white">End date</strong>
+  <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
+    <%= tournament.end_date.strftime("%B %d, %Y %I:%M %p") %>
+  </div>
+</p>
+<% if can? :register, Tournament %>
+  <% if Time.zone.now.before?(tournament.registration_deadline) %>
+    <div class="flex flex-row items-center justify-center pt-4">
+      <%= form_with url: register_tournament_path(tournament.id), method: :post do |form| %>
+        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.hidden_field :tournament_id, value: tournament.id %>
+        <%= form.submit "Register", class: "actions my-4 px-10 py-3 btn-brown" %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="flex flex-row items-center justify-center pt-4">
+    <h1 class="text-white">Admins can't Register for Tournament</h1>
+  </div>
+<% end %>
+<% if action_name != "show" %>
+  <div class="my-5 flex flex-row items-center justify-center px-3">
+    <%= link_to "Show", tournament, class: "actions mb-4 mr-3 px-10 py-3 btn-brown" %>
+  </div>
+<% end %>
