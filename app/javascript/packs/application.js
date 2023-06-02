@@ -7,7 +7,7 @@ import "channels";
 import "../css/application.scss";
 import "../controllers/countdown_controller";
 import "../packs/navigation.js";
-import "../packs/flash_loadfile_script.js";
+import "./flash.js";
 
 Rails.start();
 Turbolinks.start();

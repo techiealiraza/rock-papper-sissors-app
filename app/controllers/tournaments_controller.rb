@@ -28,7 +28,7 @@ class TournamentsController < ApplicationController
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    return unless (length - 8) <= 0
+    return unless (length - 8) != 0
 
     begin
       MatchCreator.new(@tournament, registered_users).create_match

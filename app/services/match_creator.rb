@@ -1,4 +1,4 @@
-# app/services/book_creator.rb
+# match_creator service
 class MatchCreator
   def initialize(tournament, registered_users, round = 0)
     @tournament = tournament

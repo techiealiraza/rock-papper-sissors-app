@@ -36,6 +36,7 @@
         <%= @players_scores[player2.id] || 0 %>
       </div>
     </div>
+
   </div>
   <% player1_selections = @players_selections[player1.id] %>
   <% player2_selections = @players_selections[player2.id] %>
@@ -50,6 +51,7 @@
         <%= status %>
       </div>
       <%= image_tag(opponent_user_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
+
     </div>
     <% i += 1 %>
   <% end %>
