@@ -1,6 +1,11 @@
 require 'delayed_job_web'
 Rails.application.routes.draw do
+<<<<<<< HEAD
   match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
+=======
+  patch 'user_otp/enable'
+  get 'user_otp/disable'
+>>>>>>> f6fda3f (OTP Mail Finalized)
   resources :selection
   resources :matches
   resources :messages
