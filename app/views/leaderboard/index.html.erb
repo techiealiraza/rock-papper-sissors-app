@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody class="bg-gold text-lg">
-        <% current_user.leader_board_records.each_with_index do |user_data, index| %>
+        <% @players.each.with_index(1) do |user_data, index| %>
           <tr>
             <td class="md:px-6 px-2 py-3"><%= index %></td>
             <td class="md:px-6 px-2 py-3"><%= user_data[:user].name %></td>

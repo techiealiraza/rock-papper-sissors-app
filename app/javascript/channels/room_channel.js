@@ -26,12 +26,12 @@ document.addEventListener("turbolinks:load", () => {
       ${data.user_name.substring(0, 3)}
       </div>
       <div class ="flex flex-col space-y-2 text-xs  ml-2 items-start">
+			<div class="line-clamp-10 max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-white text-black">
+        ${data.message}
+        </div>
       <div class = "flex flex-row items-end">
         <div class = "text-white">${data.created_at}</div>
       </div>
-        <div class="line-clamp-10 max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none bg-white text-black">
-        ${data.message}
-        </div>
       </div>
    </div>`;
         } else {

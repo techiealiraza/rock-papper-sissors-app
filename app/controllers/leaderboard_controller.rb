@@ -1,4 +1,6 @@
 # LeaderBoard Controller
 class LeaderboardController < ApplicationController
-  def index; end
+  def index
+    @players = LeaderBoard.new.result
+  end
 end
