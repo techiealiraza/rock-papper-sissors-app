@@ -8,8 +8,7 @@ class Selection < ApplicationRecord
   scope :by_try_num, ->(try_num) { where(try_num:) }
 
   def add_try_num
-    done_tries_size = match.selections.by_user(user_id).size
-    self.try_num = match.tries - (match.tries - done_tries_size)
+    self.try_num = match.selections.by_user(user_id).size
   end
 
   def status

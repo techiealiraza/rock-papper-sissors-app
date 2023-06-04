@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :users_matches
   has_many :matches, through: :users_matches
   has_one_attached :avatar
+  scope :by_id, ->(user_id) { where(user_id:) }
   scope :members, -> { where(role: 'member') }
   # enum role: %w[member admin]
 

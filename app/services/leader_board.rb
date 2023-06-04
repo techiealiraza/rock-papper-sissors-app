@@ -1,24 +1,21 @@
 # match_creator service
 class LeaderBoard
   def result
-    data = []
-    User.all.each do |user|
-      tournaments_won = user.total_tournaments_won
-      data << { user:, tournaments_won: }
-    end
+    data = User.all.sort_by(&:total_tournaments_won).reverse.first(10)
     top_players(data)
   end
 
   private
 
-  def top_players(data)
-    top_tournaments_winners = data.sort_by! { |record| record[:tournaments_won] }.reverse!.take(10)
-    top_tournaments_winners.each do |record|
-      matches_played = record[:user].total_matches_played
-      tournaments_played = record[:user].total_tournaments_played
-      matches_won = record[:user].total_matches_won
-      record.merge!({ matches_played:, tournaments_played:, matches_won: })
+  def top_players(top_tournaments_winners)
+    top_tournaments_winners.map do |player|
+      {
+        name: player.name,
+        tournaments_won: player.total_tournaments_won,
+        matches_played: player.total_matches_played,
+        tournaments_played: player.total_tournaments_played,
+        matches_won: player.total_matches_won
+      }
     end
-    top_tournaments_winners
   end
 end

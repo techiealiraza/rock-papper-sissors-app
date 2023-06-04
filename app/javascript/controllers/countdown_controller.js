@@ -3,24 +3,28 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
     connect = (format = 'seconds') => {
       const reg_date = this.data.get("time");
-      const tournament_id = this.data.get("id");
-      const number = reg_date;
+      const time_in_seconds = reg_date;
       const daysElement = document.getElementById('days');
       const hoursElement = document.getElementById('hours');
       const minutesElement = document.getElementById('minutes');
       const secondsElement = document.getElementById('seconds');
       let countdown;
+      console.log(time_in_seconds);
+      if (time_in_seconds < 0) {
+        clearDivs();
+        return;
+      }
       convertFormat(format);
       function convertFormat(format) {
         switch(format) {
           case 'seconds':
-            return timer(number);
+            return timer(time_in_seconds);
           case 'minutes':
-            return timer(number * 60);
+            return timer(time_in_seconds * 60);
             case 'hours':
-            return timer(number * 60 * 60);
+            return timer(time_in_seconds * 60 * 60);
           case 'days':
-            return timer(number * 60 * 60 * 24);
+            return timer(time_in_seconds * 60 * 60 * 24);
       }
     }
 
@@ -32,18 +36,21 @@ export default class extends Controller {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
 
         if (secondsLeft <= 0) {
-          document.getElementById("days").style.display = "none";
-          document.getElementById("hours").style.display = "none";
-          document.getElementById("minutes").style.display = "none";
-          document.getElementById("seconds").style.display = "none";
+          clearDivs();
           clearInterval(countdown);
+          location.reload;
           return;
         }
 
         displayTimeLeft(secondsLeft);
       }, 1000);
     }
-
+    function clearDivs(){
+      daysElement.style.display = "none";
+      hoursElement.style.display = "none";
+      minutesElement.style.display = "none";
+      secondsElement.style.display = "none";
+    }
     function displayTimeLeft(seconds) {
       daysElement.textContent = Math.floor(seconds / 86400);
       hoursElement.textContent = Math.floor((seconds % 86400) / 3600);

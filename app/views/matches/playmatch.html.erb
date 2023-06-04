@@ -17,9 +17,10 @@
           <% else %>
             <% player1 = @match.users.first %>
           <% end %>
-          <%= render 'random_images', user_id: player1.id %>
+          <% player2 = @match.other_user(player1) %>
+          <%= render 'random_images', name: player1.name, user_id: player1.id %>
           <%= render 'choice_timer', match: @match, remaining_seconds: @end_time %>
-          <%= render 'random_images', user_id: @match.other_user(player1).id %>
+          <%= render 'random_images', name: player2.name, user_id: player2.id %>
         </div>
       </div>
     </div>

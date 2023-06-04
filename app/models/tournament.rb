@@ -52,7 +52,7 @@ class Tournament < ApplicationRecord
 
   def current_match_time
     if matches.empty?
-      start_date + 30.seconds
+      start_date + 60.seconds
     else
       Time.zone.now + 90.seconds
     end
@@ -60,6 +60,6 @@ class Tournament < ApplicationRecord
 
   def create_matches(match)
     MatchCreator.new(self, current_round_winners(match.round),
-                     match.round + 1).create_match
+                     match.round + 1).call
   end
 end
