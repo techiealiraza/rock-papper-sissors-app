@@ -3,7 +3,7 @@
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-8">
       <h1 class="flex flex-row justify-center text-white text-2xl font-bold">OTP Verification</h1>
       <div id="otp" class="flex flex-row justify-center text-center px-2 mt-5">
-        <%= form_for(resource, as: resource_name, url: otp_redirect_path(resource_name), method: :get) do |f| %>
+        <%= form_for(resource, as: resource_name, url: verify_otp_path(resource_name), method: :get) do |f| %>
           <div class="form-group">
             <div class="flex flex-row justify-start text-white pt-3">
               <%= f.label "OTP" %>

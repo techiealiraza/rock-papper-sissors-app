@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
-    get '/otp_redirect', to: 'users/sessions#otp_redirect', as: :otp_redirect
+    get '/verify_otp', to: 'users/sessions#verify_otp', as: :verify_otp
   end
   root 'tournaments#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
