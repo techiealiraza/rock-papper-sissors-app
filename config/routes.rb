@@ -29,9 +29,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     confirmations: 'users/confirmations'
   }
-  get '/otp_redirect', to: 'users/sessions#otp_redirect', as: :otp_redirect
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
+    get '/otp_redirect', to: 'users/sessions#otp_redirect', as: :otp_redirect
   end
   root 'tournaments#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
