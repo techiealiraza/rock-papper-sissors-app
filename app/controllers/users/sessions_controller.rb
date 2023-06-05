@@ -1,8 +1,8 @@
 module Users
   class SessionsController < Devise::SessionsController
     before_action :otp_generate_and_send, only: [:create]
-    before_action :authenticate_user!, except: %i[new create destroy otp_redirect]
-    def verify_otp
+    before_action :authenticate_user!, except: %i[new create destroy]
+    def otp_redirect
       authenticate_2fa!
     end
 

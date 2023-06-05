@@ -20,7 +20,7 @@ class TournamentsTest < ApplicationSystemTestCase
     fill_in 'End date', with: @tournament.end_date
     fill_in 'Name', with: @tournament.name
     fill_in 'Start date', with: @tournament.start_date
-    fill_in 'Tournament winner', with: @tournament.tournament_winner_id
+    fill_in 'Tournament winner', with: @tournament.winner_id
     click_on 'Create Tournament'
 
     assert_text 'Tournament was successfully created'

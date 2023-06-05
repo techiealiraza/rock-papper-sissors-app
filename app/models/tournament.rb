@@ -6,7 +6,7 @@ class Tournament < ApplicationRecord
   has_many :tournaments_users
   has_many :users
   has_many :users, through: :tournaments_users
-  belongs_to :winner, class_name: 'User', foreign_key: 'tournament_winner_id', optional: true
+  belongs_to :winner, class_name: 'User', foreign_key: 'winner_id', optional: true
   has_many :matches, dependent: :destroy
   has_one_attached :image
   validates :name, :description, :start_date, :end_date, :registration_deadline, presence: true
@@ -36,11 +36,11 @@ class Tournament < ApplicationRecord
   end
 
   def done_matches_size(round)
-    matches.by_round(round).where.not(match_winner_id: nil).size
+    matches.by_round(round).where.not(winner_id: nil).size
   end
 
   def remaining_matches_by_round_size(round)
-    matches.by_round(round).where(match_winner_id: nil).size
+    matches.by_round(round).where(winner_id: nil).size
   end
 
   def matches_by_round_size(round)
@@ -48,7 +48,7 @@ class Tournament < ApplicationRecord
   end
 
   def current_round_winners(round)
-    users.where(id: matches.select(:match_winner_id).by_round(round))
+    users.where(id: matches.select(:winner_id).by_round(round))
   end
 
   def current_match_time

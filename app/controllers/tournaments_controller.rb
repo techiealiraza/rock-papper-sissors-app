@@ -4,7 +4,7 @@ class TournamentsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    @tournaments = Tournament.includes(:users).all
+    @tournaments = Tournament.includes(%i[users winner]).all
     @tournaments = @tournaments.order(:registration_deadline).page(params[:page])
   end
 
@@ -76,7 +76,7 @@ class TournamentsController < ApplicationController
                                        :description,
                                        :start_date,
                                        :end_date,
-                                       :tournament_winner_id,
+                                       :winner_id,
                                        :image,
                                        :registration_deadline)
   end

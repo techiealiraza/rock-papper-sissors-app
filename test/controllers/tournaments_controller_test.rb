@@ -21,7 +21,7 @@ class TournamentsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Tournament.count') do
       post tournaments_url,
            params: { tournament: { description: @tournament.description, end_date: @tournament.end_date, name: @tournament.name,
-                                   start_date: @tournament.start_date, tournament_winner_id: @tournament.tournament_winner_id } }
+                                   start_date: @tournament.start_date, winner_id: @tournament.winner_id } }
     end
 
     assert_redirected_to tournament_url(Tournament.last)
@@ -40,7 +40,7 @@ class TournamentsControllerTest < ActionDispatch::IntegrationTest
   test 'should update tournament' do
     patch tournament_url(@tournament),
           params: { tournament: { description: @tournament.description, end_date: @tournament.end_date, name: @tournament.name,
-                                  start_date: @tournament.start_date, tournament_winner_id: @tournament.tournament_winner_id } }
+                                  start_date: @tournament.start_date, winner_id: @tournament.winner_id } }
     assert_redirected_to tournament_url(@tournament)
   end
 

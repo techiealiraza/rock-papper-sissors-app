@@ -16,8 +16,8 @@ class MatchesTest < ApplicationSystemTestCase
     visit matches_url
     click_on 'New Match'
 
-    fill_in 'Match time', with: @match.match_time
-    fill_in 'Match winner', with: @match.match_winner_id
+    fill_in 'Match time', with: @match.time
+    fill_in 'Match winner', with: @match.winner_id
     fill_in 'Tournament', with: @match.tournament_id
     fill_in 'Winner score', with: @match.winner_score
     click_on 'Create Match'
@@ -30,8 +30,8 @@ class MatchesTest < ApplicationSystemTestCase
     visit matches_url
     click_on 'Edit', match: :first
 
-    fill_in 'Match time', with: @match.match_time
-    fill_in 'Match winner', with: @match.match_winner_id
+    fill_in 'Match time', with: @match.time
+    fill_in 'Match winner', with: @match.winner_id
     fill_in 'Tournament', with: @match.tournament_id
     fill_in 'Winner score', with: @match.winner_score
     click_on 'Update Match'

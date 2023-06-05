@@ -4,7 +4,7 @@
 class MatchesController < ApplicationController
   load_and_authorize_resource :tournament
   load_and_authorize_resource through: :tournament
-  skip_load_and_authorize_resource only: :all
+  skip_load_and_authorize_resource only: %i[all playmatch]
 
   def index
     @matches = @matches.includes([:winner]).desc.page(params[:page])
@@ -22,7 +22,7 @@ class MatchesController < ApplicationController
 
   def playmatch
     @match = @tournament.matches.includes([:users]).find(params[:match_id])
-    redirect_to result_tournament_match_path(match_id: @match) unless @match.match_winner_id.nil?
+    redirect_to result_tournament_match_path(match_id: @match) unless @match.winner_id.nil?
     @players = @match.users
     @remaining_tries = @match.remaining_tries(@players.first.id)
     @done_tries = @match.selections.by_user(@players.first.id).size
@@ -41,6 +41,6 @@ class MatchesController < ApplicationController
   private
 
   def match_params
-    params.require(:match).permit(:match_winner_id, :winner_score, :match_time, :tournament_id)
+    params.require(:match).permit(:winner_id, :winner_score, :time, :tournament_id)
   end
 end
