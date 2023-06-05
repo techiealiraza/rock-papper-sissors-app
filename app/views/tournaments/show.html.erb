@@ -15,7 +15,7 @@
           <% if Time.zone.now.before?(@tournament.start_date) %>
             <div class="inline-block mx-2">
               <% if can? :delete, Tournament %>
-                <%= button_to 'Delete', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown", data: {confirm: "Are you sure?" } %>
+                <%= button_to 'Delete', tournament_path(@tournament), method: :delete, class: "actions mb-4 px-10 py-3 btn-brown", data: { confirm: "Are you sure?" } %>
               </div>
             <% end %>
           <% end %>
