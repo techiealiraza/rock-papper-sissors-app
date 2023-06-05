@@ -6,7 +6,7 @@ class Tournament < ApplicationRecord
   has_many :tournaments_users
   has_many :users
   has_many :users, through: :tournaments_users
-  belongs_to :winner, class_name: 'User', foreign_key: 'tournament_winner_id', optional: true
+  belongs_to :winner, class_name: 'User', foreign_key: 'winner_id', optional: true
   has_many :matches, dependent: :destroy
   has_one_attached :image
   validates :name, :description, :start_date, :end_date, :registration_deadline, presence: true

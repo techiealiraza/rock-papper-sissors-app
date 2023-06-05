@@ -42,6 +42,6 @@ class User < ApplicationRecord
   end
 
   def total_tournaments_won
-    tournaments.distinct.where(tournament_winner_id: id).size
+    tournaments.distinct.where(winner_id: id).size
   end
 end

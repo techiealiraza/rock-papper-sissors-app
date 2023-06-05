@@ -76,7 +76,7 @@ class TournamentsController < ApplicationController
                                        :description,
                                        :start_date,
                                        :end_date,
-                                       :tournament_winner_id,
+                                       :winner_id,
                                        :image,
                                        :registration_deadline)
   end
