@@ -10,7 +10,7 @@ module Users
 
     def authenticate_2fa!
       user = User.find_by(id: session[:user_id])
-      authenticate_with_2fa(user)
+      User.auth_with_2fa(user_params[:otp_attempt], user)
       sign_in(:user, user)
       redirect_to root_path, notice: 'OTP consumed Successfully.'
     end
@@ -24,10 +24,6 @@ module Users
       session[:user_id] = user.id
       send_otp_code(user)
       render 'user_otp/two_fa'
-    end
-
-    def authenticate_with_2fa(user)
-      User.auth_with_2fa(user_params[:otp_attempt], user)
     end
 
     def valid_password_and_otp_required?(user)
