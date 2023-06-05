@@ -8,7 +8,9 @@ class User < ApplicationRecord
   has_many :matches, through: :users_matches
   has_one_attached :avatar
   enum role: %w[member admin]
-
+  validates :phone_number, presence: true,
+                           numericality: true,
+                           length: { minimum: 10, maximum: 15 }
   devise :registerable, :two_factor_authenticatable,
          :recoverable, :rememberable, :validatable,
          :trackable, :confirmable,
