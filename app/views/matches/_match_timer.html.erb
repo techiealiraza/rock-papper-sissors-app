@@ -1,5 +1,5 @@
-<% if match.match_time.after?(Time.zone.now) %>
-  <div class="container-fluid mt-5 flex row justify-center" data-controller="countdown" data-countdown-time="<%= (match.match_time - Time.zone.now).to_json.html_safe %>">
+<% if match.time.after?(Time.zone.now) %>
+  <div class="container-fluid mt-5 flex row justify-center" data-controller="countdown" data-countdown-time="<%= (match.time - Time.zone.now).to_json.html_safe %>">
     <div class="days-container">
       <div id="days" class="text-xl"></div>
       <div class="days-label">d</div>

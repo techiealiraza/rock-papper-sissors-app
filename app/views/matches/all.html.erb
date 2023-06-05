@@ -18,7 +18,7 @@
           <% @matches.each_with_index do |match, index| %>
             <tr>
               <td class="hidden md:table-cell px-6 py-3"><%= custom_index(@matches, index) %></td>
-              <td class="hidden md:table-cell"><%= match.match_time.strftime("%B %d, %Y %I:%M %p") %></td>
+              <td class="hidden md:table-cell"><%= match.time.strftime("%B %d, %Y %I:%M %p") %></td>
               <td class="px-6 py-3"><%= match.users.first.name %></td>
               <td class="px-6 py-3"><%= match.users.last.name %></td>
               <td class="hidden md:table-cell px-6 py-3"><%= match.round %></td>

@@ -7,9 +7,9 @@ class MatchCreator
   end
 
   def call
-    match_time = @tournament.current_match_time
+    time = @tournament.current_match_time
     @registered_users.each_slice(2) do |user1, user2|
-      Match.create!(tournament_id: @tournament.id, match_time:, round: @round,
+      Match.create!(tournament_id: @tournament.id, time:, round: @round,
                     user_ids: [user1.id, user2.id])
     end
   end

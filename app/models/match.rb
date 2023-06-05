@@ -29,7 +29,7 @@ class Match < ApplicationRecord
     end
   end
 
-  def schedule(run_at = tournament.start_date + 10.seconds, try_num = 1)
+  def schedule(run_at = time + 10.seconds, try_num = 1)
     MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 

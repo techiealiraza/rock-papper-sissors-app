@@ -4,7 +4,7 @@
 class MatchesController < ApplicationController
   load_and_authorize_resource :tournament
   load_and_authorize_resource through: :tournament
-  skip_load_and_authorize_resource only: :all
+  skip_load_and_authorize_resource only: %i[all playmatch]
 
   def index
     @matches = @matches.includes([:winner]).desc.page(params[:page])
@@ -41,6 +41,6 @@ class MatchesController < ApplicationController
   private
 
   def match_params
-    params.require(:match).permit(:match_winner_id, :winner_score, :match_time, :tournament_id)
+    params.require(:match).permit(:match_winner_id, :winner_score, :time, :tournament_id)
   end
 end

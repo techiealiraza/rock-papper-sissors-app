@@ -17,7 +17,7 @@
       <p class="pt-5">
         <strong class="block font-medium text-white">Match Time</strong>
         <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
-          <%= @match.match_time.strftime("%B %d, %Y %I:%M %p") %>
+          <%= @match.time.strftime("%B %d, %Y %I:%M %p") %>
         </div>
       </p>
       <% players = @match.users.pluck(:id) %>
