@@ -12,9 +12,8 @@ class Match < ApplicationRecord
   scope :desc, -> { order(round: :desc) }
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(winner_id: nil) }
-  CHOICES = %w[rock rock rock].freeze
+  CHOICES = %w[rock paper scissor].freeze
   after_create :schedule
-  # accepts_nested_attributes_for :users
 
   def remaining_tries(user)
     done_tries = selections.by_user(user).size
