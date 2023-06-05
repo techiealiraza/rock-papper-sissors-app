@@ -19,7 +19,7 @@
         <%= form.label :image, class: "text-white" %>
         <div class="personal-image">
           <label class="label ml-0">
-            <%= form.file_field :image, accept:'image/*', data: { controller: "load", action: "load#connect" }%>
+            <%= form.file_field :image, accept:'image/*', data: { controller: "load", action: "load#connect" } %>
             <% if @tournament.image.attached? %>
               <%= image_tag(@tournament.image, class: "h-40 w-full rounded-lg", id: "output") %>
             <% else %>
