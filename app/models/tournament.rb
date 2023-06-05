@@ -4,6 +4,7 @@
 class Tournament < ApplicationRecord
   paginates_per 3
   has_many :tournaments_users
+  has_many :users
   has_many :users, through: :tournaments_users
   belongs_to :winner, class_name: 'User', foreign_key: 'tournament_winner_id', optional: true
   has_many :matches, dependent: :destroy
