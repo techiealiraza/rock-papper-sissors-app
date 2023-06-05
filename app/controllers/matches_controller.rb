@@ -33,7 +33,7 @@ class MatchesController < ApplicationController
   def result
     @is_player = @match.users.include?(current_user)
     @players = @match.users
-    @players_selections = @match.selections.order(:try_num).group_by(&:user_id)
+    @players_selections = @match.selections.includes(:user).order(:try_num).group_by(&:user_id)
     @players_scores = @match.selections.group(:user_id).winner.count
     @result_message = @match.result_message(current_user.id)
   end
