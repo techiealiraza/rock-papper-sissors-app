@@ -21,6 +21,6 @@ class SelectionController < ApplicationController
   private
 
   def selection_params
-    params.require(:selection).permit(:match_id, :user_id, :selection)
+    params.require(:selection).permit(:match_id, :user_id, :choice)
   end
 end

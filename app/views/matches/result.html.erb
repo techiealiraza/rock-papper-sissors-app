@@ -30,8 +30,8 @@
   <% player2_selections = @players_selections[player2.id] %>
   <% i = 0 %>
   <% player1_selections.each do |player1_selection| %>
-    <% player1_choice = player1_selection.selection + ".png" %>
-    <% opponent_user_choice = player2_selections[i].selection + ".png" %>
+    <% player1_choice = player1_selection.choice + ".png" %>
+    <% opponent_user_choice = player2_selections[i].choice + ".png" %>
     <% status = player1_selection.status || player2_selections[i].status || 'Draw Try' %>
     <div class="flex flex-row justify-center">
       <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>

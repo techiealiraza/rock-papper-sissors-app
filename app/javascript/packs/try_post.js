@@ -20,7 +20,7 @@ function try_post() {
       selection: {
         match_id: match_id,
         user_id: user_id,
-        selection: user_selection_image,
+        choice: user_selection_image,
       },
     };
     var xhr = new XMLHttpRequest();

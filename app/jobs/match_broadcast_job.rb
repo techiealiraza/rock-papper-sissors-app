@@ -81,8 +81,8 @@ class MatchBroadcastJob < ApplicationJob
   def broadcast(match_id, user1_id, user2_id, status, selections)
     ActionCable.server.broadcast("timer_channel_#{match_id}",
                                  { user1_id:, user2_id:, status:,
-                                   selection1: selections.first.selection,
-                                   selection2: selections.last.selection })
+                                   selection1: selections.first.choice,
+                                   selection2: selections.last.choice })
   end
 
   def generate_matches(match, selections)

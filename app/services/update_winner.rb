@@ -6,7 +6,7 @@ class UpdateWinner
 
   def call
     selections = @match.selections.by_try_num(@try_num)
-    choice1, choice2 = selections.pluck(:selection).first(2)
+    choice1, choice2 = selections.pluck(:choice).first(2)
     return if choice1 == choice2
 
     if winning_combination?(choice1, choice2)

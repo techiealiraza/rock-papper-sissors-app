@@ -34,7 +34,7 @@ class Match < ApplicationRecord
   end
 
   def set_random_choices(user_id, try_num)
-    selections.create(user_id:, selection: CHOICES.sample, try_num:)
+    selections.create(user_id:, choice: CHOICES.sample, try_num:)
   end
 
   def handle_missing_selections(try_num)
