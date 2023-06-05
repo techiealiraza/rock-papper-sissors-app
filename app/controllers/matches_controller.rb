@@ -37,10 +37,4 @@ class MatchesController < ApplicationController
     @players_scores = @match.selections.group(:user_id).winner.count
     @result_message = @match.result_message(current_user.id)
   end
-
-  private
-
-  def match_params
-    params.require(:match).permit(:winner_id, :winner_score, :time, :tournament_id)
-  end
 end
