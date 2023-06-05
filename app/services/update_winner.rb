@@ -4,8 +4,8 @@ class UpdateWinner
     @try_num = try_num
   end
 
-  def update_winner
-    selections = @match.selections.where(try_num: @try_num)
+  def call
+    selections = @match.selections.by_try_num(@try_num)
     choice1, choice2 = selections.pluck(:selection).first(2)
     return if choice1 == choice2
 

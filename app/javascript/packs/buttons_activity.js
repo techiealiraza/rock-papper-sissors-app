@@ -9,14 +9,8 @@ function event_listener_to_buttons() {
   var user_image;
   var flag = false;
 
-  if (player1_id === user_id) {
-    user_image = document.getElementById(player1_id);
-    flag = true;
-  } else if (player2_id === user_id) {
-    user_image = document.getElementById(player2_id);
-    flag = true;
-  }
-  if (flag) {
+  if(player1_id === user_id || player2_id === user_id){
+    user_image = document.getElementById(user_id);
     document
       .getElementById("rock_button")
       .addEventListener("click", function () {

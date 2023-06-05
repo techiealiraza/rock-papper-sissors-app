@@ -8,7 +8,7 @@
           <div class="personal-image">
             <label class="label">
               <figure class="personal-figure">
-                <%= f.file_field :avatar, accept:'image/*', onchange: "loadFile(event)" %>
+                <%= f.file_field :avatar, accept:'image/*', data: { controller: "load", action: "load#connect" } %>
                 <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar" alt="avatar" id="output">
                 <figcaption class="personal-figcaption">
                   <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">

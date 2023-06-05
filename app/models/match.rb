@@ -13,6 +13,8 @@ class Match < ApplicationRecord
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(match_winner_id: nil) }
   CHOICES = %w[rock rock rock].freeze
+  after_create :schedule
+  # accepts_nested_attributes_for :users
 
   def remaining_tries(user)
     done_tries = selections.by_user(user).size
@@ -27,7 +29,7 @@ class Match < ApplicationRecord
     end
   end
 
-  def delayed_job(run_at = tournament.start_date + 10.seconds, try_num = 1)
+  def schedule(run_at = tournament.start_date + 10.seconds, try_num = 1)
     MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 

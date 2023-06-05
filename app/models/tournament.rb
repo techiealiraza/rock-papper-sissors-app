@@ -4,6 +4,7 @@
 class Tournament < ApplicationRecord
   paginates_per 3
   has_many :tournaments_users
+  has_many :users
   has_many :users, through: :tournaments_users
   belongs_to :winner, class_name: 'User', foreign_key: 'tournament_winner_id', optional: true
   has_many :matches, dependent: :destroy
@@ -52,7 +53,7 @@ class Tournament < ApplicationRecord
 
   def current_match_time
     if matches.empty?
-      start_date + 30.seconds
+      start_date + 60.seconds
     else
       Time.zone.now + 90.seconds
     end
@@ -60,6 +61,6 @@ class Tournament < ApplicationRecord
 
   def create_matches(match)
     MatchCreator.new(self, current_round_winners(match.round),
-                     match.round + 1).create_match
+                     match.round + 1).call
   end
 end

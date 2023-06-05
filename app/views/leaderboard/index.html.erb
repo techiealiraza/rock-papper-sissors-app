@@ -19,14 +19,14 @@
         </tr>
       </thead>
       <tbody class="bg-gold text-lg">
-        <% @players.each.with_index(1) do |user_data, index| %>
+        <% @players.each.with_index(1) do |player, index| %>
           <tr>
             <td class="md:px-6 px-2 py-3"><%= index %></td>
-            <td class="md:px-6 px-2 py-3"><%= user_data[:user].name %></td>
-            <td class="hidden md:table-cell md:px-6 px-2 py-3"><%= user_data[:matches_played] %></td>
-            <td class="md:px-6 px-2 py-3"><%= user_data[:tournaments_played] %></td>
-            <td class="md:px-6 px-2 py-3"><%= user_data[:matches_won] %></td>
-            <td class="md:px-6 px-2 py-3"><%= user_data[:tournaments_won] %></td>
+            <td class="md:px-6 px-2 py-3"><%= player.name %></td>
+            <td class="hidden md:table-cell md:px-6 px-2 py-3"><%= player.total_matches_played %></td>
+            <td class="md:px-6 px-2 py-3"><%= player.total_tournaments_played %></td>
+            <td class="md:px-6 px-2 py-3"><%= player.total_matches_won %></td>
+            <td class="md:px-6 px-2 py-3"><%= player.total_tournaments_won %></td>
           </tr>
         <% end %>
       </tbody>

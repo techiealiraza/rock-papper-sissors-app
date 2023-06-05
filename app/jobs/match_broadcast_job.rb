@@ -16,7 +16,8 @@ class MatchBroadcastJob < ApplicationJob
     match = Match.find(job.arguments[0])
     sleep 3
     match.handle_missing_selections(try_num)
-    UpdateWinner.new(match, try_num).update_winner
+    sleep 2
+    UpdateWinner.new(match, try_num).call
     user1_id, user2_id = match.users.ids
     selection1, selection2 = match.selections.by_try_num(try_num).group_by(&:user_id).values_at(user1_id, user2_id)
     selection1 = selection1.first
@@ -44,7 +45,7 @@ class MatchBroadcastJob < ApplicationJob
   def monitor_tries(match, try_num, score1, score2, selections)
     user1_id, user2_id = match.users.ids
     if try_num < 3 || try_num == 4
-      match.delayed_job(Time.zone.now + 5.seconds, try_num + 1)
+      match.schedule(Time.zone.now + 5.seconds, try_num + 1)
     elsif score1 == score2
       handle_equal_scores(match, try_num, selections)
     elsif [3, 5].include?(try_num)
