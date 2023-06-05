@@ -50,7 +50,7 @@ class MatchBroadcastJob < ApplicationJob
       handle_equal_scores(match, try_num, selections)
     elsif [3, 5].include?(try_num)
       winner_id = score1 > score2 ? user1_id : user2_id
-      match.update(match_winner_id: winner_id)
+      match.update(winner_id:)
       broadcast(match.id, user1_id, user2_id, "#{match.winner.name} won", selections)
       sleep 2
       generate_matches(match, selections)
@@ -64,7 +64,7 @@ class MatchBroadcastJob < ApplicationJob
     elsif try_num == 5
       broadcast(match.id, user1_id, user2_id, 'Random Picking', selections)
       sleep 2
-      match.update(match_winner_id: [user1_id, user2_id].sample)
+      match.update(winner_id: [user1_id, user2_id].sample)
       broadcast(match.id, user1_id, user2_id, "#{match.winner.name} won", selections)
       generate_matches(match, selections)
     end
@@ -92,7 +92,7 @@ class MatchBroadcastJob < ApplicationJob
     done_matches_size = tournament.done_matches_size(match.round)
     matches_by_round_size = tournament.matches_by_round_size(match.round)
     if done_matches_size == 1 && matches_by_round_size == 1
-      tournament.update_column(:tournament_winner_id, match.match_winner_id)
+      tournament.update_column(:tournament_winner_id, match.winner_id)
       broadcast(match.id, user1_id, user2_id, "Tournament Winner is #{tournament.winner.name}", selections)
     elsif current_round_remaining_matches.zero?
       tournament.create_matches(match)

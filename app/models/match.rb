@@ -4,14 +4,14 @@
 class Match < ApplicationRecord
   paginates_per 5
   belongs_to :tournament
-  belongs_to :winner, class_name: 'User', foreign_key: 'match_winner_id', optional: true
+  belongs_to :winner, class_name: 'User', foreign_key: 'winner_id', optional: true
   has_many :messages
   has_many :users_matches
   has_many :users, through: :users_matches
   has_many :selections
   scope :desc, -> { order(round: :desc) }
   scope :by_round, ->(round) { where(round:) }
-  scope :done, -> { where.not(match_winner_id: nil) }
+  scope :done, -> { where.not(winner_id: nil) }
   CHOICES = %w[rock rock rock].freeze
   after_create :schedule
   # accepts_nested_attributes_for :users
@@ -22,7 +22,7 @@ class Match < ApplicationRecord
   end
 
   def result_message(current_user_id)
-    if match_winner_id == current_user_id
+    if winner_id == current_user_id
       'You Won'
     else
       "#{winner.name} won"
