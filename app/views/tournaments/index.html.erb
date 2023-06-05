@@ -23,7 +23,7 @@
           <strong class="block font-medium text-white">Tournament Winner</strong>
           <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
             <% if tournament.tournament_winner_id %>
-              <%= User.find(tournament.tournament_winner_id).name %>
+              <%= tournament.winner.name %>
             <% else %>
               <%= 'Winner not decide yet' %>
             <% end %>

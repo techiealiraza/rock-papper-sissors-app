@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_30_120913) do
+ActiveRecord::Schema.define(version: 2023_06_05_083742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2023_05_30_120913) do
     t.string "name"
     t.string "phone_number"
     t.boolean "banned"
-    t.string "role"
+    t.integer "role"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
