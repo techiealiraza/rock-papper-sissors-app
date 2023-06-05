@@ -3,7 +3,6 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   connect = (format = "seconds") => {
     const reg_date = this.data.get("time");
-    const tournament_id = this.data.get("id");
     const number = reg_date;
     const daysElement = document.getElementById("days");
     const hoursElement = document.getElementById("hours");
@@ -32,10 +31,10 @@ export default class extends Controller {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
 
         if (secondsLeft <= 0) {
-          document.getElementById("days").style.display = "none";
-          document.getElementById("hours").style.display = "none";
-          document.getElementById("minutes").style.display = "none";
-          document.getElementById("seconds").style.display = "none";
+          daysElement.style.display = "none";
+          hoursElement.style.display = "none";
+          minutesElement.style.display = "none";
+          secondsElement.style.display = "none";
           clearInterval(countdown);
           return;
         }

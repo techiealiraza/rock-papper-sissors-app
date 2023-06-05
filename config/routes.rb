@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     confirmations: 'users/confirmations'
   }
+  get '/otp_redirect', to: 'users/sessions#otp_redirect', as: :otp_redirect
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
