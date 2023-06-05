@@ -1,32 +1,33 @@
-# frozen_string_literal: true
-
 module Users
   class SessionsController < Devise::SessionsController
-    before_action :otp_generate_and_send, only: [:create]
+    before_action :authenticate_2fa!, only: [:create]
     before_action :authenticate_user!, except: %i[new create destroy]
     before_action :load_and_authorize_resource, except: %i[new create destroy]
-
-    def otp_redirect
-      authenticate_2fa!
+ 
+    def create
+      super do |resource|
+        if resource.valid? && resource.persisted?
+          resource.update(
+            otp_required_for_login: true
+          )
+        end
+      end
     end
 
     private
 
     def authenticate_2fa!
-      return unless otp_attempt_present?
-
-      authenticate_with_2fa(user)
-      sign_in(:user, user)
-    end
-
-    def otp_generate_and_send
       user = self.resource = find_user
       return unless user
 
-      valid_password_and_otp_required?(user)
-      session[:user_id] = user.id
-      send_otp_code(user)
-      render 'user_otp/two_fa'
+      if otp_attempt_present?
+        authenticate_with_2fa(user)
+        sign_in(:user, user)
+      elsif valid_password_and_otp_required?(user)
+        session[:user_id] = user.id
+        send_otp_code(user)
+        render 'user_otp/two_fa'
+      end
     end
 
     def otp_attempt_present?
