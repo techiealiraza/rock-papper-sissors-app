@@ -36,14 +36,14 @@ class User < ApplicationRecord
   end
 
   def total_matches_won
-    matches.where(winner_id: id).size
+    matches.winner_count(id)
   end
 
   def total_tournaments_played
-    matches.distinct.count(:tournament_id)
+    matches.tournament_count(id)
   end
 
   def total_tournaments_won
-    tournaments.distinct.where(winner_id: id).size
+    tournaments.winner_count(id)
   end
 end

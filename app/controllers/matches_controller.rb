@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Matches_Controller
 class MatchesController < ApplicationController
   load_and_authorize_resource :tournament
   load_and_authorize_resource through: :tournament
@@ -15,10 +14,6 @@ class MatchesController < ApplicationController
   end
 
   def show; end
-
-  def new
-    @match = Match.new
-  end
 
   def playmatch
     @match = @tournament.matches.includes([:users]).find(params[:match_id])

@@ -1,4 +1,5 @@
 # Tournamnets Controller
+
 class TournamentsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index]
@@ -10,41 +11,38 @@ class TournamentsController < ApplicationController
 
   def show; end
 
-  def new
-    @tournament = Tournament.new
-  end
+  def new; end
 
   def edit; end
 
   def register
     @tournaments_user = TournamentsUser.new(user: current_user, tournament: @tournament)
     if @tournaments_user.save
-      redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!'
+      format.html { redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!.' }
     else
-      redirect_to tournament_url(@tournament), notice: 'Already Registered'
+      format.html { redirect_to tournament_url(@tournament), errors: @tournament.errors.full_messages }
     end
   end
 
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    return if (length - 8) != 0
+    return unless (length & (length - 1).zero?) && (length != 0)
 
     begin
       MatchCreator.new(@tournament, registered_users).call
-      redirect_to tournament_path(@tournament), notice: 'Matches Generated'
+      format.html { redirect_to tournament_path(@tournament), notice: 'Matches Generated' }
     rescue StandardError => e
-      redirect_to tournament_path(@tournament), alert: "Error generating matches: #{e.message}"
+      format.html { redirect_to tournament_path(@tournament), alert: "Error generating matches: #{e.message}" }
     end
   end
 
   def create
-    @tournament = Tournament.new(tournament_params)
     respond_to do |format|
       if @tournament.save
         format.html { redirect_to tournament_url(@tournament), notice: 'Tournament was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, { errors: @tournament.errors.full_messages } }
       end
     end
   end
@@ -54,7 +52,7 @@ class TournamentsController < ApplicationController
       if @tournament.update(tournament_params)
         format.html { redirect_to tournament_url(@tournament), notice: 'Tournament was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, { errors: @tournament.errors.full_messages } }
       end
     end
   end
@@ -64,7 +62,7 @@ class TournamentsController < ApplicationController
       if @tournament.destroy
         format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, { errors: @tournament.errors.full_messages } }
       end
     end
   end

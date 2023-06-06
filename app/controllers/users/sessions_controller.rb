@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Users
   class SessionsController < Devise::SessionsController
-    before_action :otp_generate_and_send, only: [:create]
+    before_action :generate_and_send_otp, only: [:create]
     before_action :authenticate_user!, except: %i[new create destroy]
     def verify_otp
       authenticate_2fa!
@@ -10,20 +12,26 @@ module Users
 
     def authenticate_2fa!
       user = User.find_by(id: session[:user_id])
-      User.auth_with_2fa(user_params[:otp_attempt], user)
-      sign_in(:user, user)
-      redirect_to root_path, notice: 'OTP consumed Successfully.'
+      if User.auth_with_2fa(user_params[:otp_attempt], user)
+        sign_in(:user, user)
+        redirect_to root_path, notice: 'OTP consumed Successfully.'
+      else
+        redirect_to new_user_session_path, notice: 'invalid otp code entered'
+      end
     end
 
-    def otp_generate_and_send
+    def generate_and_send_otp
       user = self.resource = User.find_by(email: user_params[:email])
 
       return unless user
 
-      valid_password_and_otp_required?(user)
-      session[:user_id] = user.id
-      send_otp_code(user)
-      render 'user_otp/two_fa'
+      if valid_password_and_otp_required?(user)
+        session[:user_id] = user.id
+        send_otp_code(user)
+        render 'user_otp/two_fa'
+      else
+        redirect_to new_user_session_path, notice: 'invalid password'
+      end
     end
 
     def valid_password_and_otp_required?(user)
