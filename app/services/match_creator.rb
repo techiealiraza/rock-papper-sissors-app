@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # match_creator service
 class MatchCreator
   def initialize(tournament, registered_users, round = 0)

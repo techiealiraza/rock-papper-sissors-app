@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody class="bg-gold text-lg">
-          <% index = @matches.offset_value+1 %>
+          <% index = @matches.offset_value + 1 %>
           <% @matches.each.with_index(index) do |match, index| %>
             <tr>
               <td class="hidden md:table-cell px-6 py-3"><%= index %></td>
@@ -35,9 +35,7 @@
   </div>
   <div class="pt-10 flex flex-row justify-center">
     <div class="bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
-      <div class="btn-group">
         <%= paginate @matches, window: 1, outer_window: 2 %>
-      </div>
     </div>
   </div>
 </div>

@@ -8,9 +8,9 @@ module PlayersHelper
                   player[:id] == current_user.id
                 end
               else
-                @players_data.first
+                players.first
               end
-    player2 = @players_data.find { |player| player != player1 }
+    player2 = players.find { |player| player != player1 }
     [player1, player2]
   end
 end

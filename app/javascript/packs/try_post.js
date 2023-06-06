@@ -9,7 +9,7 @@ function try_post() {
   const user_id = user.getAttribute("data-user-id");
   const match_element = document.getElementById("match_id");
   const match_id = match_element.getAttribute("data-match-id");
-  if (player1_id == user_id || player2_id == user_id ) {
+  if ([player1_id, player2_id].includes(user_id)) {
     const imageElement = document.getElementById(user_id);
     var src = imageElement.src;
     var fileName = src.substring(src.lastIndexOf("/") + 1);
@@ -34,26 +34,6 @@ function try_post() {
         console.error('Error:', error);
       }
     });
-        // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "/selection", true);
-    // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // var csrf_token = document.getElementsByName("csrf-token")[0].content;
-    // xhr.setRequestHeader("X-CSRF-Token", csrf_token);
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.readyState === XMLHttpRequest.DONE) {
-    //     if (xhr.status === 200 || xhr.status === 201) {
-    //       var response = JSON.parse(xhr.responseText);
-    //       console.log(response.data);
-    //     } else if (xhr.status === 422) {
-    //       console.error("Error:", xhr.responseText);
-    //     } else {
-    //       console.error("Error:", xhr.responseText);
-    //     }
-    //   }
-    // };
-    // if (data != undefined && data != "string") {
-    //   xhr.send(JSON.stringify(data));
-    // }
   }
 }
 

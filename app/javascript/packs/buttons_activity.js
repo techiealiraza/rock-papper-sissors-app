@@ -7,7 +7,7 @@ function event_listener_to_buttons() {
   const player2_id = user2Element.getAttribute("data-player2-id");
   const user_id = user.getAttribute("data-user-id");
 
-  if([player1_id, player2_id].includes(user_id)){
+  if ([player1_id, player2_id].includes(user_id)) {
     var user_image = document.getElementById(user_id);
     document
       .getElementById("rock_button")

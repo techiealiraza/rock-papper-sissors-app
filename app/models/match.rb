@@ -46,8 +46,4 @@ class Match < ApplicationRecord
 
     set_random_choices(second_user_id, try_num)
   end
-
-  def user_names_and_ids
-    users.names_and_ids
-  end
 end
