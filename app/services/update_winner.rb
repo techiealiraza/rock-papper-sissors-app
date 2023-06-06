@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateWinner
   def initialize(match, try_num)
     @match = match

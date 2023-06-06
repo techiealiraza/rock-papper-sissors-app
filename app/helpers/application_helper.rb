@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def custom_index(collection, index)
     per_page = collection.limit_value
