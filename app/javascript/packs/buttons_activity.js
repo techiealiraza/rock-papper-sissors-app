@@ -6,11 +6,9 @@ function event_listener_to_buttons() {
   const player1_id = user1Element.getAttribute("data-player1-id");
   const player2_id = user2Element.getAttribute("data-player2-id");
   const user_id = user.getAttribute("data-user-id");
-  var user_image;
-  var flag = false;
 
-  if(player1_id === user_id || player2_id === user_id){
-    user_image = document.getElementById(user_id);
+  if([player1_id, player2_id].includes(user_id)){
+    var user_image = document.getElementById(user_id);
     document
       .getElementById("rock_button")
       .addEventListener("click", function () {
@@ -26,9 +24,7 @@ function event_listener_to_buttons() {
       .addEventListener("click", function () {
         user_image.src = "/assets/scissor.png";
       });
-    enable_button("rock_button");
-    enable_button("paper_button");
-    enable_button("scissor_button");
+      enable_buttons();
   }
 }
 function disable_buttons() {

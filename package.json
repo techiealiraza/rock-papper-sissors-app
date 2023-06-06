@@ -5,7 +5,7 @@
     "@popperjs/core": "^2.11.7",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
+    "@rails/ujs": "^7.0.5",
     "@rails/webpacker": "5.4.4",
     "@tailwindcss/line-clamp": "^0.4.4",
     "stimulus": "^3.2.1",

@@ -12,11 +12,12 @@ class Match < ApplicationRecord
   scope :desc, -> { order(round: :desc) }
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(winner_id: nil) }
+  scope :winner_count, ->(user_id) { where(winner_id: user_id).size }
   CHOICES = %w[rock paper scissor].freeze
   after_create :schedule
 
-  def remaining_tries(user)
-    done_tries = selections.by_user(user).size
+  def remaining_tries
+    done_tries = selections.by_user(users.first.id).size
     tries - done_tries
   end
 
@@ -24,7 +25,7 @@ class Match < ApplicationRecord
     if winner_id == current_user_id
       'You Won'
     else
-      "#{winner.name} won"
+      "#{winner&.name} won"
     end
   end
 
@@ -45,7 +46,7 @@ class Match < ApplicationRecord
     set_random_choices(second_user_id, try_num)
   end
 
-  def other_user(user1)
-    users.where.not(id: user1.id).first
+  def user_names_and_ids
+    users.names_and_ids
   end
 end

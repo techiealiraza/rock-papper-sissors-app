@@ -7,6 +7,7 @@ class Message < ApplicationRecord
   after_save :broadcast
 
   def broadcast
-    BroadcastMessage.call(content, name, created_at.strftime('%H:%M:%S'), match_id)
+    data = { message: content, user_name: name, created_at: }
+    BroadcastMessage.call("room_channel_#{match_id}", data)
   end
 end
