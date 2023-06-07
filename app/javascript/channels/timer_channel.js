@@ -9,11 +9,11 @@ document.addEventListener("turbolinks:load", () => {
   const element = document.getElementById("match_id");
   const user1Element = document.getElementById("player1_id");
   const user2Element = document.getElementById("player2_id");
-  const playerElement = document.getElementById("player_check");
+  const userElement = document.getElementById("user_id");
   const match_id = element.getAttribute("data-match-id");
   const player1_id = user1Element.getAttribute("data-player1-id");
   const player2_id = user2Element.getAttribute("data-player2-id");
-  const is_player = playerElement.getAttribute("data-player-check");
+  const user_id = userElement.getAttribute("data-user-id");
   consumer.subscriptions.create(
     { channel: "TimerChannel", match_id: match_id },
     {
@@ -50,7 +50,7 @@ document.addEventListener("turbolinks:load", () => {
             }
           } else {
             disable_buttons();
-            if (is_player) {
+            if ([player1_id, player2_id].includes(user_id)) {
               try_post();
             }
           }
