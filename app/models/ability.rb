@@ -11,7 +11,7 @@ class Ability
       can %i[create new index], Message
       can :register, Tournament
       can %i[playmatch index show result all], Match
-      can :create, Selection, match: { user_id: user.id }
+      can :create, Selection, match: { users: { id: user.id } }
       can :authenticate_2fa, User
     elsif user.admin?
       can %i[create new index], Message
