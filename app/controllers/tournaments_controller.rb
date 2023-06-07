@@ -27,13 +27,19 @@ class TournamentsController < ApplicationController
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    return unless (length & (length - 1).zero?) && (length != 0)
+    respond_to do |format|
+      if (length & (length - 1)).zero?
+        format.html do
+          redirect_to tournament_path(@tournament), alert: 'Users must be 8'
+        end
+      end
 
-    begin
-      MatchCreator.new(@tournament, registered_users).call
-      format.html { redirect_to tournament_path(@tournament), notice: 'Matches Generated' }
-    rescue StandardError => e
-      format.html { redirect_to tournament_path(@tournament), alert: "Error generating matches: #{e.message}" }
+      begin
+        MatchCreator.new(@tournament, registered_users).call
+        format.html { redirect_to tournament_path(@tournament), notice: 'Matches Generated' }
+      rescue StandardError => e
+        format.html { redirect_to tournament_path(@tournament), alert: "Error generating matches: #{e.message}" }
+      end
     end
   end
 

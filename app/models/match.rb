@@ -12,7 +12,6 @@ class Match < ApplicationRecord
   scope :desc, -> { order(round: :desc) }
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(winner_id: nil) }
-  scope :tournament_count, ->(id) { distinct.count(tournament_id: id) }
   CHOICES = %w[rock paper scissor].freeze
   after_create :schedule
 
