@@ -21,7 +21,7 @@
         </p>
         <p class="pt-5">
           <strong class="block font-medium text-white">Tournament Winner</strong>
-          <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
+          <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
             <% if tournament.winner_id %>
               <%= tournament.winner.name %>
             <% else %>
@@ -43,7 +43,7 @@
   </div>
   <div class="pb-20 flex flex-row items-center justify-center">
     <div class="bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
-      <%= paginate @tournaments, window: 1,outer_window: 2 %>
+      <%= paginate @tournaments, window: 1, outer_window: 2 %>
     </div>
   </div>
 </div>

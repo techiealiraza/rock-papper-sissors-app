@@ -27,7 +27,7 @@
   <% player1_selections.each do |player1_selection| %>
     <% player1_choice = player1_selection.choice + ".png" %>
     <% opponent_user_choice = player2_selections[i].choice + ".png" %>
-    <% status = player1_selection.status || player2_selections[i].status || 'Draw Try' %>
+    <% status = player1_selection.status || player2_selections[i].status || "Draw Try" %>
     <div class="flex flex-row justify-center">
       <%= image_tag(player1_choice, width: "100", class: "m-5 mt-5 p-2 rounded-lg bg-gold") %>
       <div class="m-5 mt-5 p-2 flex flex-col justify-center rounded-lg bg-gold text-xl">
@@ -37,5 +37,5 @@
     </div>
     <% i += 1 %>
   <% end %>
-  <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
+  <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
 </div>

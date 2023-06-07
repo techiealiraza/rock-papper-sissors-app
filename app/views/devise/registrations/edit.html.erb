@@ -8,7 +8,7 @@
           <div class="personal-image">
             <label class="label">
               <figure class="personal-figure">
-                <%= f.file_field :avatar, accept:'image/*', data: { controller: "load", action: "load#connect" } %>
+                <%= f.file_field :avatar, accept:"image/*", data: { controller: "load", action: "load#connect" } %>
                 <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar" alt="avatar" id="output">
                 <figcaption class="personal-figcaption">
                   <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -48,7 +48,7 @@
           <%= f.submit "Update", class: "px-7 py-2 btn-brown" %>
         </div>
       <% end %>
-      <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
+      <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
     </div>
   </div>
 </div>
