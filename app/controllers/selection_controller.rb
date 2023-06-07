@@ -15,8 +15,6 @@ class SelectionController < ApplicationController
     end
   end
 
-  def new; end
-
   private
 
   def selection_params
