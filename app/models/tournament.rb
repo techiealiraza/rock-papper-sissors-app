@@ -37,11 +37,11 @@ class Tournament < ApplicationRecord
   end
 
   def done_matches_size(round)
-    matches.by_round(round).where.not(winner_id: nil).size
+    matches.by_round(round).done.size
   end
 
   def remaining_matches_by_round_size(round)
-    matches.by_round(round).where(winner_id: nil).size
+    matches.by_round(round).un_done.size
   end
 
   def matches_by_round_size(round)
