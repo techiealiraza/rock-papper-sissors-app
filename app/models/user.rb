@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :users_matches
   has_many :matches, through: :users_matches
   has_one_attached :avatar
+  scope :names_and_ids, -> { pluck(:id, :name).map { |id, name| { id:, name: } } }
   enum role: %w[member admin]
   validates :phone_number, presence: true,
                            numericality: true,

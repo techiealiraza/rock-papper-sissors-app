@@ -43,9 +43,7 @@
   </div>
   <div class="pb-20 flex flex-row items-center justify-center">
     <div class="bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
-      <div class="btn-group">
-        <%= paginate @tournaments, window: 1,outer_window: 2 %>
-      </div>
+      <%= paginate @tournaments, window: 1,outer_window: 2 %>
     </div>
   </div>
 </div>

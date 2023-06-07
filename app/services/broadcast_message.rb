@@ -1,11 +1,8 @@
+# frozen_string_literal: true
+
 # broad_cast_message_service
 class BroadcastMessage
-  def self.call(message, user_name, created_at, match_id)
-    data = {
-      message:,
-      user_name:,
-      created_at:
-    }
-    ActionCable.server.broadcast("room_channel_#{match_id}", data)
+  def self.call(channel, data)
+    ActionCable.server.broadcast(channel, data)
   end
 end

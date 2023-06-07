@@ -14,10 +14,11 @@
             <th>View</th>
           </tr>
         </thead>
+        <% index = @matches.offset_value+1 %>
         <tbody class="bg-gold text-lg">
-          <% @matches.each_with_index do |match, index| %>
+          <% @matches.each.with_index(index) do |match, index| %>
             <tr>
-              <td class="hidden md:table-cell px-6 py-3"><%= custom_index(@matches, index) %></td>
+              <td class="hidden md:table-cell px-6 py-3"><%= index %></td>
               <td class="hidden md:table-cell px-6 py-3"><%= match.time.strftime("%B %d, %Y %I:%M %p") %></td>
               <td class="px-6 py-3"><%= match.users.first.name %></td>
               <td class="px-6 py-3"><%= match.users.last.name %></td>
@@ -34,9 +35,7 @@
   </div>
   <div class="pb-20 flex flex-row items-center justify-center">
     <div class="bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
-      <div class="btn-group">
-        <%= paginate @matches, window: 1,outer_window: 2 %>
-      </div>
+      <%= paginate @matches, window: 1,outer_window: 2 %>
     </div>
   </div>
 </div>
