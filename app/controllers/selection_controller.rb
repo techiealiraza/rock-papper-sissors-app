@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SelectionController < ApplicationController
-  load_and_authorize_resource
-  before_action :authenticate_user!
+  # load_and_authorize_resource
+  # before_action :authenticate_user!
   def create
     @selection = Selection.new(selection_params)
     @selection.add_try_num
@@ -14,8 +14,6 @@ class SelectionController < ApplicationController
       end
     end
   end
-
-  def new; end
 
   private
 
