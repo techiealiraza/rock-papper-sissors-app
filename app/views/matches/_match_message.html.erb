@@ -5,16 +5,16 @@
     <div id="message-list">
       <% @messages.each do |message| %>
         <div class="flex flex-row py-2">
-          <div class="rounded-full w-7 text-center h-7 <%= message.user_id == current_user.id ? 'bg-white text-black' : 'bg-gold text-white' %>">
+          <div class="rounded-full w-7 text-center h-7 <%= message.user_id == current_user.id ? "bg-white text-black" : "bg-gold text-white" %>">
             <%= message.name[0,3] %>
           </div>
           <div class="flex flex-col space-y-2 text-xs ml-2 items-start">
-            <div class="max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none <%= message.user_id == current_user.id ? 'bg-white' : 'bg-gold text-black' %>">
+            <div class="max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none <%= message.user_id == current_user.id ? "bg-white" : "bg-gold text-black" %>">
               <%= message.content %>
             </div>
             <div class="flex flex-row items-end">
               <div class="text-white">
-                <%= (message.created_at.in_time_zone).strftime('%H:%M:%S') %>
+                <%= (message.created_at.in_time_zone).strftime("%H:%M:%S") %>
               </div>
             </div>
           </div>

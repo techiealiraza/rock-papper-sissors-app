@@ -10,7 +10,7 @@
   <% end %>
 </div>
 <% if action_name != "index" %>
-  <%= render 'description', tournament: tournament %>
+  <%= render "description", tournament: tournament %>
 <% end %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Registration deadline</strong>
@@ -18,7 +18,7 @@
     <%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
-<%= render 'registration_deadline', tournament: tournament %>
+<%= render "registration_deadline", tournament: tournament %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
