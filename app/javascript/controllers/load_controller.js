@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="laod-file"
 export default class extends Controller {
   connect() {
     var loadFile = function (event) {
