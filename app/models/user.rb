@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def total_tournaments_played
-    matches.tournament_count(id)
+    tournaments.size
   end
 
   def total_tournaments_won
