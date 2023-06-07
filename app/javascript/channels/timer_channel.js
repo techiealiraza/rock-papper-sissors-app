@@ -6,22 +6,14 @@ import {
 import { try_post } from "../packs/try_post";
 
 document.addEventListener("turbolinks:load", () => {
-  const element = document.getElementById("match_id");
-  const user1Element = document.getElementById("player1_id");
-  const user2Element = document.getElementById("player2_id");
-  const userElement = document.getElementById("user_id");
-  const match_id = element.getAttribute("data-match-id");
-  const player1_id = user1Element.getAttribute("data-player1-id");
-  const player2_id = user2Element.getAttribute("data-player2-id");
-  const user_id = userElement.getAttribute("data-user-id");
+  const match_id = document.getElementById("match_id").getAttribute("data-match-id");
   consumer.subscriptions.create(
     { channel: "TimerChannel", match_id: match_id },
     {
-      connected() {},
-
-      disconnected() {},
-
       received(data) {
+        const player1_id = document.getElementById("player1_id").getAttribute("data-player1-id");
+        const player2_id = document.getElementById("player2_id").getAttribute("data-player2-id");
+        const user_id = document.getElementById("user_id").getAttribute("data-user-id");
         if (data.user1_id != undefined) {
           var selection1 = data.selection1;
           var selection2 = data.selection2;
@@ -32,6 +24,13 @@ document.addEventListener("turbolinks:load", () => {
           user1_selection.src = "/assets/" + selection1 + ".png";
           user2_selection.src = "/assets/" + selection2 + ".png";
           displayDiv.textContent = status;
+          if (status[0] === 'M') {
+            setTimeout(function() {
+              location.reload(true);
+            }, 2000);
+            return;
+          }
+          
         } else {
           var seconds = data.seconds;
           var try_num = data.try_num;

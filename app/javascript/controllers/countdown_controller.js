@@ -14,7 +14,7 @@ export default class extends Controller {
       countdown = setInterval(() => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         if (secondsLeft <= 0) {
-          location.reload;
+          location.reload(true);
           return;
         }
         displayTimeLeft(secondsLeft);

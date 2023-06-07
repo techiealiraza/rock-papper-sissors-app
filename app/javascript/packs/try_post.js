@@ -25,8 +25,11 @@ function try_post() {
     Rails.ajax({
       url: '/selection',
       type: 'post',
-      data: JSON.stringify(data),
-      processData: false,
+      beforeSend(xhr, options) {
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+        options.data = JSON.stringify(data)
+        return true
+      },
     });
   }
 }

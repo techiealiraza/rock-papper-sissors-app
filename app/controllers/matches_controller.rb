@@ -16,12 +16,15 @@ class MatchesController < ApplicationController
   def show; end
 
   def playmatch
-    @players_data = @match.users.pluck(:id, :name).to_h
-    @remaining_tries = @match.remaining_tries
     @messages = @match.messages.includes([:user]).all.reverse
+    return unless @match.winner.nil?
+
+    @players_data = @match.users.pluck(:id, :name).to_h
   end
 
   def result
+    return if @match.winner.nil?
+
     @players_data = @match.users.pluck(:id, :name).to_h
     @players_selections = @match.selections.includes(:user).order(:try_num).group_by(&:user_id)
     @players_scores = @match.selections.group(:user_id).winner.count
