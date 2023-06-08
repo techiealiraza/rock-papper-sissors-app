@@ -61,7 +61,7 @@ class Tournament < ApplicationRecord
   end
 
   def create_matches(match)
-    MatchCreator.new(self, current_round_winners(match.round),
-                     match.round + 1).call
+    TournamentMatchesCreator.new(self, current_round_winners(match.round),
+                                 match.round + 1).call
   end
 end

@@ -18,58 +18,59 @@ class TournamentsController < ApplicationController
   def register
     @tournaments_user = TournamentsUser.new(user: current_user, tournament: @tournament)
     if @tournaments_user.save
-      format.html { redirect_to tournament_url(@tournament), notice: 'You have registered for the tournament!.' }
+      flash[:notice] = 'You have registered for the tournament!.'
     else
-      format.html { redirect_to tournament_url(@tournament), errors: @tournament.errors.full_messages }
+      flash[:errors] = @tournament.errors.full_messages.join(', ')
     end
+    redirect_to tournament_url(@tournament)
   end
 
   def create_matches
     registered_users = @tournament.users
     length = registered_users.length
-    respond_to do |format|
-      if (length & (length - 1)).zero?
-        format.html do
-          redirect_to tournament_path(@tournament), alert: 'Users must be 8'
-        end
-      end
 
-      begin
-        MatchCreator.new(@tournament, registered_users).call
-        format.html { redirect_to tournament_path(@tournament), notice: 'Matches Generated' }
-      rescue StandardError => e
-        format.html { redirect_to tournament_path(@tournament), alert: "Error generating matches: #{e.message}" }
-      end
+    if (length & (length - 1)).zero?
+      redirect_to tournament_path(@tournament)
+      flash[:alert] = 'Users must be 8'
+    end
+
+    begin
+      TournamentMatchesCreator.new(@tournament, registered_users).call
+      redirect_to tournament_path(@tournament)
+      flash[:notice] = 'Matches Generated.'
+    rescue StandardError => e
+      redirect_to tournament_path(@tournament)
+      flash[:alert] = "Error generating matches: #{e.message}"
     end
   end
 
   def create
-    respond_to do |format|
-      if @tournament.save
-        format.html { redirect_to tournament_url(@tournament), notice: 'Tournament was successfully created.' }
-      else
-        format.html { render :new, { errors: @tournament.errors.full_messages } }
-      end
+    if @tournament.save
+      redirect_to tournament_url(@tournament)
+      flash[:notice] = 'Tournament was successfully created.'
+    else
+      render :new
+      flash[:errors] = @tournament.errors.full_messages.join(', ')
     end
   end
 
   def update
-    respond_to do |format|
-      if @tournament.update(tournament_params)
-        format.html { redirect_to tournament_url(@tournament), notice: 'Tournament was successfully updated.' }
-      else
-        format.html { render :edit, { errors: @tournament.errors.full_messages } }
-      end
+    if @tournament.update(tournament_params)
+      redirect_to tournament_url(@tournament)
+      flash[:notice] = 'Tournament was successfully updated.'
+    else
+      flash[:errors] = @tournament.errors.full_messages.join(', ')
+      render :edit
     end
   end
 
   def destroy
-    respond_to do |format|
-      if @tournament.destroy
-        format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
-      else
-        format.html { render :edit, { errors: @tournament.errors.full_messages } }
-      end
+    if @tournament.destroy
+      redirect_to tournaments_url
+      flash[:notice] = 'Tournament was successfully deleted.'
+    else
+      flash[:errors] = @tournament.errors.full_messages.join(', ')
+      render :index
     end
   end
 
