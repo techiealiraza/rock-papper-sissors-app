@@ -16,7 +16,7 @@ module Users
         sign_in(:user, user)
         redirect_to root_path, notice: 'OTP consumed Successfully.'
       else
-        redirect_to new_user_session_path, notice: 'invalid otp code entered'
+        redirect_to new_user_session_path, notice: 'Invalid OTP code entered.'
       end
     end
 
@@ -30,7 +30,7 @@ module Users
         send_otp_code(user)
         render 'user_otp/two_fa'
       else
-        redirect_to new_user_session_path, notice: 'invalid password'
+        redirect_to new_user_session_path, notice: 'Invalid password entered'
       end
     end
 

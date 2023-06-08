@@ -1,36 +1,24 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  connect = () => {
+  connect() {
     const time_in_seconds = this.data.get("time");
     const daysElement = document.getElementById("days");
     const hoursElement = document.getElementById("hours");
     const minutesElement = document.getElementById("minutes");
     const secondsElement = document.getElementById("seconds");
     let countdown;
-    if (time_in_seconds < 0) {
-      clearDivs();
-      return;
-    }
     return timer(time_in_seconds);
     function timer(seconds) {
       const then = Date.now() + seconds * 1000;
       countdown = setInterval(() => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         if (secondsLeft <= 0) {
-          clearDivs();
-          clearInterval(countdown);
-          location.reload;
+          location.reload(true);
           return;
         }
         displayTimeLeft(secondsLeft);
       }, 1000);
-    }
-    function clearDivs() {
-      daysElement.style.display = "none";
-      hoursElement.style.display = "none";
-      minutesElement.style.display = "none";
-      secondsElement.style.display = "none";
     }
     function displayTimeLeft(seconds) {
       daysElement.textContent = Math.floor(seconds / 86400);

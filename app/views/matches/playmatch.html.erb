@@ -1,48 +1,61 @@
-<% player1, player2 = players(@players_data, @is_player) %>
 <div id="match_id" data-match-id="<%= @match.id %>"></div>
-<div id="player1_id" data-player1-id="<%= player1[:id] %>"></div>
-<div id="player2_id" data-player2-id="<%= player2[:id] %>"></div>
-<div id="user_id" data-user-id="<%= current_user.id %>"></div>
-<div id="player_check" data-player-check="<%= @is_player %>"></div>
 <div class="bg-background-image flex flex-col h-screen">
   <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
   <div class="flex flex-col">
     <div class="flex-grow flex-1">
       <div class="flex flex-col items-center">
-        <div id="<%= "tries_#{@match.id}" %>" class="my-3 bg-gold text-black text-xl py-3 px-3 rounded-lg mr-3">
-          <%= "Remaining Tries : #{@remaining_tries}" %>
+        <% unless @match.winner.nil? %>
+          <div class="mt-10">
+            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Match Ended</h5>
+              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Please go to Result Screen<br>to check winner and their selections</p>
+              <%= link_to "Result", result_tournament_match_path(id: @match, tournament_id: @tournament), method: :get, class: "mb-4 px-3 py-2 btn-brown" %>
+            </div>
         </div>
-        <div class="flex flex-row justify-center">
-          <%= render "choice_image", player: player1 %>
-          <%= render "choice_timer" %>
-          <%= render "choice_image", player: player2 %>
-        </div>
+        <% else %>
+          <% player1_id, player2_id = players(@players_data) %>
+          <div id="player1_id" data-player1-id="<%= player1_id %>"></div>
+          <div id="player2_id" data-player2-id="<%= player2_id %>"></div>
+          <div id="user_id" data-user-id="<%= current_user.id %>"></div>
+          <div id="<%= "tries_#{@match.id}" %>" class="my-3 bg-gold text-black text-xl py-3 px-3 rounded-lg mr-3">
+            Please Wait for the match to Start
+          </div>
+          <div class="flex flex-row justify-center">
+            <%= render "choice_image", player_name: @players_data[player1_id], player_id: player1_id %>
+            <%= render "choice_timer" %>
+            <%= render "choice_image", player_name: @players_data[player2_id], player_id: player2_id %>
+          </div>
+        <% end %>
       </div>
     </div>
-    <% if (can? :create, Selection) && @is_player %>
-      <div class="mt-3 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5 max-w-1/2">
-        <div class="text-white text-xl flex flex-row justify-center">Please select</div>
-        <div class="flex flex-row justify-center">
-          <%= render "choice_button", id: "rock_button", image: "rock.png" %>
-          <%= render "choice_button", id: "paper_button", image: "paper.png" %>
-          <%= render "choice_button", id: "scissor_button", image: "scissor.png" %>
+    <% if (can? :create, Selection) && @match.winner.nil? %>
+      <% if @players_data.keys.include?(current_user.id) %>
+        <div class="mt-3 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5 max-w-1/2">
+          <div class="text-white text-xl flex flex-row justify-center">Please select</div>
+          <div class="flex flex-row justify-center">
+            <%= render "choice_button", id: "rock_button", image: "rock.png" %>
+            <%= render "choice_button", id: "paper_button", image: "paper.png" %>
+            <%= render "choice_button", id: "scissor_button", image: "scissor.png" %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
-  <h2 class="text-white w-96 text-2xl sm:text-xl mb-2">Messages</h2>
-  <div class="my-3">
-    <%= form_with(url: tournament_match_messages_path(match_id: @match), remote: true, local: false) do |form| %>
-      <div>
-        <%= form.hidden_field :match_id, value: @match.id %>
-        <%= form.text_field :content, autocomplete: :off, required: :"required", placeholder: "type message", class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4", id:"msg_field_" + current_user.name %>
-        <%= form.hidden_field :user_id, value: current_user.id %>
+  <h2 class="pt-5 text-white w-96 text-2xl sm:text-xl mb-2">Messages</h2>
+  <% if @match.winner.nil? %>
+    <div class="my-3">
+      <%= form_with(url: tournament_match_messages_path(match_id: @match), remote: true, local: false) do |form| %>
         <div>
-          <%= form.submit %>
+          <%= form.hidden_field :match_id, value: @match.id %>
+          <%= form.text_field :content, autocomplete: :off, required: :"required", placeholder: "type message", class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4", id:"msg_field_" + current_user.name %>
+          <%= form.hidden_field :user_id, value: current_user.id %>
+          <div>
+            <%= form.submit %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
   <div class="flex-1 h-20 overflow-auto">
     <%= render partial: "matches/match_message", locals: { messages: @messages, match: @match } %>
   </div>

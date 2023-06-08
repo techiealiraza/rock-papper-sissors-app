@@ -18,21 +18,18 @@ function try_post() {
       return;
     }
     var data = {
-        match_id: match_id,
-        user_id: user_id,
-        choice: user_selection_image,
+      match_id: match_id,
+      user_id: user_id,
+      choice: user_selection_image,
     };
     Rails.ajax({
       url: '/selection',
       type: 'post',
-      data: JSON.stringify(data),
-      processData: false,
-      success: function(response) {
-        console.log('Success:', response);
+      beforeSend(xhr, options) {
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+        options.data = JSON.stringify(data)
+        return true
       },
-      error: function(error) {
-        console.error('Error:', error);
-      }
     });
   }
 }

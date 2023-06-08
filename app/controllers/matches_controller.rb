@@ -16,17 +16,16 @@ class MatchesController < ApplicationController
   def show; end
 
   def playmatch
-    redirect_to result_tournament_match_path unless @match.winner_id.nil?
-    @players_data = @match.users.names_and_ids
-    @remaining_tries = @match.remaining_tries
-    @is_player = @match.users.include?(current_user)
     @messages = @match.messages.includes([:user]).all.reverse
+    return unless @match.winner.nil?
+
+    @players_data = @match.users.pluck(:id, :name).to_h
   end
 
   def result
-    redirect_to playmatch_tournament_match_path if @match.winner_id.nil?
-    @is_player = @match.users.include?(current_user)
-    @players_data = @match.users.names_and_ids
+    return if @match.winner.nil?
+
+    @players_data = @match.users.pluck(:id, :name).to_h
     @players_selections = @match.selections.includes(:user).order(:try_num).group_by(&:user_id)
     @players_scores = @match.selections.group(:user_id).winner.count
     @result_message = @match.result_message(current_user.id)

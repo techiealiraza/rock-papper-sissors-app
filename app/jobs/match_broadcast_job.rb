@@ -49,7 +49,7 @@ class MatchBroadcastJob < ApplicationJob
       winner_id = score1 > score2 ? user1_id : user2_id
       match.update(winner_id:)
       broadcast(match.id, user1_id, user2_id, "Match Winner is #{match.winner.name}", selections)
-      generate_matches(match, selections)
+      generate_matches(match)
     end
   end
 
@@ -61,7 +61,7 @@ class MatchBroadcastJob < ApplicationJob
       broadcast(match.id, user1_id, user2_id, 'Random Picking', selections)
       match.update(winner_id: [user1_id, user2_id].sample)
       broadcast(match.id, user1_id, user2_id, "Match Winner is #{match.winner.name}", selections)
-      generate_matches(match, selections)
+      generate_matches(match)
     end
   end
 
@@ -83,15 +83,13 @@ class MatchBroadcastJob < ApplicationJob
     { user1_id:, user2_id:, status:, selection1: choice1, selection2: choice2 }
   end
 
-  def generate_matches(match, selections)
-    user1_id, user2_id = match.users.ids
+  def generate_matches(match)
     tournament = match.tournament
     current_round_remaining_matches = tournament.remaining_matches_by_round_size(match.round)
     done_matches_size = tournament.done_matches_size(match.round)
     matches_by_round_size = tournament.matches_by_round_size(match.round)
     if done_matches_size == 1 && matches_by_round_size == 1
       tournament.update_column(:winner_id, match.winner_id)
-      broadcast(match.id, user1_id, user2_id, "Tournament Winner is #{tournament.winner.name}", selections)
     elsif current_round_remaining_matches.zero?
       tournament.create_matches(match)
     end

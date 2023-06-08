@@ -18,8 +18,6 @@ class SelectionController < ApplicationController
   private
 
   def selection_params
-    raw_data = params.keys.first
-    data = JSON.parse(raw_data)
-    { match_id: data['match_id'].to_i, user_id: data['user_id'].to_i, choice: data['choice'] }
+    params.require(:selection).permit(:match_id, :user_id, :choice)
   end
 end
