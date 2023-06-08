@@ -35,16 +35,17 @@ document.addEventListener("turbolinks:load", () => {
                               : "bg-gold text-black"
                           }">
                             ${data.message}
-                        </div>
+                          </div>
                           <div class="flex flex-row items-end">
                             <div class="${
                               data.user_name === current_user_name
                                 ? "text-white"
                                 : "text-black"
-                            }">${data.created_at}</div>
+                            }">${data.created_at}
+                            </div>
                           </div>
                         </div>
-                       </div>`;
+                      </div>`;
         msgs.insertAdjacentHTML("afterbegin", messageHTML);
         const last_elem = msgs.firstChild;
         last_elem.scrollIntoView({ behavior: "smooth", block: "end" });
