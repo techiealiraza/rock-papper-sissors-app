@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # match_creator service
-class TournamentMatchCreator
+class TournamentMatchesCreator
   def initialize(tournament, registered_users, round = 0)
     @tournament = tournament
     @registered_users = registered_users.shuffle

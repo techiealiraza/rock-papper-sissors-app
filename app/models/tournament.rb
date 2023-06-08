@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Tournaments:: controller
 class Tournament < ApplicationRecord
   paginates_per 3
   has_many :tournaments_users
@@ -36,18 +35,6 @@ class Tournament < ApplicationRecord
     errors.add(:start_date, 'Start Date is in Past')
   end
 
-  def done_matches_size(round)
-    matches.by_round(round).done.size
-  end
-
-  def remaining_matches_by_round_size(round)
-    matches.by_round(round).un_done.size
-  end
-
-  def matches_by_round_size(round)
-    matches.by_round(round).size
-  end
-
   def current_round_winners(round)
     users.where(id: matches.select(:winner_id).by_round(round))
   end
@@ -61,11 +48,7 @@ class Tournament < ApplicationRecord
   end
 
   def create_matches(match)
-    TournamentMatchCreator.new(self, current_round_winners(match.round),
+    TournamentMatchesCreator.new(self, current_round_winners(match.round),
                                match.round + 1).call
-  end
-
-  def winner_count(user_id)
-    where(winner_id: user_id).count
   end
 end
