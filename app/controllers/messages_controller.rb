@@ -8,12 +8,10 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    respond_to do |format|
-      if @message.save
-        format.json { render json: { data: 'Saved' }, status: :ok }
-      else
-        format.json { render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity }
-      end
+    if @message.save
+      flash[:notice] = 'Message Sent.'
+    else
+      flash[:alert] = @message.errors.full_messages.join(', ')
     end
   end
 
