@@ -13,7 +13,7 @@ class Tournament < ApplicationRecord
   validate :end_date_is_after_start_date
   validate :start_date_validation
   validate :deadline_before_start_date
-  scope :winner_count, ->(user_id) { where(winner_id: user_id).size }
+  scope :won, ->(user_id) { where(winner_id: user_id) }
 
   def deadline_before_start_date
     return if registration_deadline.nil? || start_date.nil?
@@ -61,7 +61,11 @@ class Tournament < ApplicationRecord
   end
 
   def create_matches(match)
-    TournamentMatchesCreator.new(self, current_round_winners(match.round),
-                                 match.round + 1).call
+    TournamentMatchCreator.new(self, current_round_winners(match.round),
+                               match.round + 1).call
+  end
+
+  def winner_count(user_id)
+    where(winner_id: user_id).count
   end
 end

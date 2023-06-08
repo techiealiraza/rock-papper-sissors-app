@@ -25,11 +25,10 @@ class User < ApplicationRecord
     totp.now
   end
 
-  def self.auth_with_2fa(_otp_attempt, user)
-    # return unless user.validate_and_consume_otp!(otp_attempt)
+  def self.auth_with_2fa(otp_attempt, user)
+    return unless user.validate_and_consume_otp!(otp_attempt)
 
     user.save
-    true
   end
 
   def total_matches_played
@@ -37,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def total_matches_won
-    matches.winner_count(id)
+    matches.won(id).count
   end
 
   def total_tournaments_played
@@ -45,10 +44,6 @@ class User < ApplicationRecord
   end
 
   def total_tournaments_won
-    tournaments.winner_count(id)
-  end
-
-  def id_and_name
-    pluck(:id, :name).to_h
+    tournaments.won(id).count
   end
 end

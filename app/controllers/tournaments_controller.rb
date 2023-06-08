@@ -26,22 +26,12 @@ class TournamentsController < ApplicationController
   end
 
   def create_matches
-    registered_users = @tournament.users
-    length = registered_users.length
-
-    if (length & (length - 1)).zero?
-      redirect_to tournament_path(@tournament)
-      flash[:alert] = 'Users must be 8'
-    end
-
-    begin
-      TournamentMatchesCreator.new(@tournament, registered_users).call
-      redirect_to tournament_path(@tournament)
-      flash[:notice] = 'Matches Generated.'
-    rescue StandardError => e
-      redirect_to tournament_path(@tournament)
-      flash[:alert] = "Error generating matches: #{e.message}"
-    end
+    TournamentMatchCreator.new(@tournament, @tournament.users).call
+    redirect_to tournament_path(@tournament)
+    flash[:notice] = 'Matches Generated.'
+  rescue StandardError => e
+    redirect_to tournament_path(@tournament)
+    flash[:alert] = "Error generating matches: #{e.message}"
   end
 
   def create

@@ -8,12 +8,12 @@ class Selection < ApplicationRecord
   scope :by_try_num, ->(try_num) { where(try_num:) }
 
   def add_try_num
-    self.try_num = match.selections.by_user(user_id).size
+    self.try_num = match.selections.by_user(user_id).size + 1
   end
 
   def status
     return unless winner
 
-    "Try #{try_num + 1} winner #{user.name}"
+    "Try #{try_num} winner #{user.name}"
   end
 end

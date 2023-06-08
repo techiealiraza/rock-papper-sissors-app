@@ -12,7 +12,7 @@ class MatchBroadcastJob < ApplicationJob
   end
 
   after_perform do |job|
-    try_num = job.arguments[1] - 1
+    try_num = job.arguments[1]
     match = Match.find(job.arguments[0])
     match.handle_missing_selections(try_num)
     UpdateWinner.new(match, try_num).call
@@ -27,7 +27,6 @@ class MatchBroadcastJob < ApplicationJob
     )
     score1 = score(user1_winning_selections)
     score2 = score(user2_winning_selections)
-    try_num += 1
     monitor_tries(match, try_num, score1, score2, [selection1, selection2])
   end
 
@@ -74,7 +73,7 @@ class MatchBroadcastJob < ApplicationJob
 
   def broadcast(match_id, user1_id, user2_id, status, selections)
     data = data_for_broadcast(user1_id, user2_id, status, selections)
-    BroadcastMessage.call("timer_channel_#{match_id}", data)
+    Broadcaster.call("timer_channel_#{match_id}", data)
     sleep 1
   end
 
@@ -85,12 +84,12 @@ class MatchBroadcastJob < ApplicationJob
 
   def generate_matches(match)
     tournament = match.tournament
-    current_round_remaining_matches = tournament.remaining_matches_by_round_size(match.round)
-    done_matches_size = tournament.done_matches_size(match.round)
-    matches_by_round_size = tournament.matches_by_round_size(match.round)
-    if done_matches_size == 1 && matches_by_round_size == 1
+    current_round_pending_matches_count = tournament.matches.un_done.count
+    current_round_done_matches_count = tournament.matches.by_round(match.round).done.count
+    current_round_matches_count = tournament.matches.by_round(match.round).count
+    if current_round_done_matches_count == 1 && current_round_matches_count == 1
       tournament.update_column(:winner_id, match.winner_id)
-    elsif current_round_remaining_matches.zero?
+    elsif current_round_pending_matches_count.zero?
       tournament.create_matches(match)
     end
   end
