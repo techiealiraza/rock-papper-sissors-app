@@ -46,4 +46,12 @@ class Match < ApplicationRecord
 
     set_random_choices(second_user_id, try_num)
   end
+
+  def done?
+    !winner_id.nil?
+  end
+
+  def un_done?
+    winner_id.nil?
+  end
 end

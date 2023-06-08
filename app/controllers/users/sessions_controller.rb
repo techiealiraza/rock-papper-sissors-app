@@ -25,17 +25,17 @@ module Users
 
       return unless user
 
-      if valid_password_and_otp_required?(user)
+      if check_valid_password(user)
         session[:user_id] = user.id
         send_otp_code(user)
         render 'user_otp/two_fa'
       else
-        redirect_to new_user_session_path, notice: 'Invalid password entered'
+        redirect_to new_user_session_path, notice: 'Invalid Password entered'
       end
     end
 
-    def valid_password_and_otp_required?(user)
-      user.valid_password?(user_params[:password]) && user.otp_required_for_login
+    def check_valid_password(user)
+      user.valid_password?(user_params[:password])
     end
 
     def send_otp_code(user)
