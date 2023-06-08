@@ -2,10 +2,10 @@
 <div class="bg-background-image min-h-screen flex flex-col items-center">
   <% if @match.winner.nil? %>
     <div class="mt-10">
-      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Winner Not Decided Yet</h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Please wait<br>or go to</p>
-        <%= link_to "Live Match", playmatch_tournament_match_path(id: @match, tournament_id: @tournament), method: :get, class: "mb-4 px-3 py-2 btn-brown" %>
+      <div class="max-w-sm p-6 bg-gold rounded-lg">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight">Winner Not Decided Yet</h5>
+        <p class="mb-3 font-normal">Please wait<br>or go to</p>
+        <%= link_to "Live Match", playmatch_tournament_match_path(id: @match, tournament_id: @tournament), method: :get, class: "text-white hover:text-black" %>
       </div>
     </div>
   <% else %>
