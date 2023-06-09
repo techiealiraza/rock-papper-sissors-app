@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include AvatarValidatable
   has_many :tournaments_users
   has_many :messages
   has_many :tournaments, through: :tournaments_users
