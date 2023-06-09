@@ -8,9 +8,9 @@ class SelectionController < ApplicationController
     @selection.add_try_num
 
     if @selection.save
-      flash[:notice] = 'Selection Saved.'
+      render json: { flash_message: flash.now[:notice] = 'Choice Saved.' }
     else
-      flash[:alert] = @selection.errors.full_messages.join(', ')
+      render json: { flash_message: flash.now[:alert] = @selection.errors.full_messages.join(', ') }
     end
   end
 

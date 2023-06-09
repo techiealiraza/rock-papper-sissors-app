@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
-      flash[:notice] = 'Message Sent.'
+      flash[:notice] = 'Message created successfully.'
     else
       flash[:alert] = @message.errors.full_messages.join(', ')
     end

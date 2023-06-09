@@ -1,3 +1,4 @@
+<div id="flash-container" data-flash-message="<%= flash[:notice] || flash[:alert] %>"></div>
 <div id="match_id" data-match-id="<%= @match.id %>"></div>
 <div class="bg-background-image flex flex-col h-screen">
   <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
@@ -8,10 +9,11 @@
           <div class="mt-10">
             <div class="max-w-sm p-6 bg-gold rounded-lg">
               <h5 class="mb-2 text-2xl font-bold tracking-tight">Match Ended</h5>
-              <p class="mb-3 font-normal">Please go to Result Screen<br>to check winner and their selections</p>
+              <p class="mb-3 font-normal">Please go to Result Screen<br>
+                to check winner and their selections</p>
               <%= link_to "Result", result_tournament_match_path(id: @match, tournament_id: @tournament), method: :get, class: "text-white hover:text-black" %>
             </div>
-        </div>
+          </div>
         <% else %>
           <% player1_id, player2_id = players(@players_data) %>
           <div id="player1_id" data-player1-id="<%= player1_id %>"></div>

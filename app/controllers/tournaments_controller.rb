@@ -30,34 +30,35 @@ class TournamentsController < ApplicationController
     length = registered_users.length
 
     if (length & (length - 1)).zero?
-      redirect_to tournament_path(@tournament)
       flash[:alert] = 'Users must be 8'
+      redirect_to tournament_path(@tournament)
     end
 
     begin
       TournamentMatchesCreator.new(@tournament, registered_users).call
-      redirect_to tournament_path(@tournament)
       flash[:notice] = 'Matches Generated.'
-    rescue StandardError => e
       redirect_to tournament_path(@tournament)
-      flash[:alert] = "Error generating matches: #{e.message}"
+    rescue StandardError => e
+            flash[:alert] = "Error generating matches: #{e.message}"
+
+      redirect_to tournament_path(@tournament)
     end
   end
 
   def create
     if @tournament.save
-      redirect_to tournament_url(@tournament)
       flash[:notice] = 'Tournament was successfully created.'
+      redirect_to tournament_url(@tournament)
     else
-      render :new
       flash[:errors] = @tournament.errors.full_messages.join(', ')
+      render :new
     end
   end
 
   def update
     if @tournament.update(tournament_params)
-      redirect_to tournament_url(@tournament)
       flash[:notice] = 'Tournament was successfully updated.'
+      redirect_to tournament_url(@tournament)
     else
       flash[:errors] = @tournament.errors.full_messages.join(', ')
       render :edit
@@ -66,8 +67,8 @@ class TournamentsController < ApplicationController
 
   def destroy
     if @tournament.destroy
-      redirect_to tournaments_url
       flash[:notice] = 'Tournament was successfully deleted.'
+      redirect_to tournaments_url
     else
       flash[:errors] = @tournament.errors.full_messages.join(', ')
       render :index
