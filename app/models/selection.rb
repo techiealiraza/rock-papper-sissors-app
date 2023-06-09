@@ -14,6 +14,6 @@ class Selection < ApplicationRecord
   def status
     return unless winner
 
-    "Try #{try_num} winner #{user.name}"
+    "#{user.name} won"
   end
 end

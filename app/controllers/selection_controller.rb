@@ -6,11 +6,10 @@ class SelectionController < ApplicationController
   def create
     @selection = Selection.new(selection_params)
     @selection.add_try_num
-
     if @selection.save
-      flash[:notice] = 'Selection Saved.'
+      flash[:notice] = 'Choice Saved'
     else
-      flash[:alert] = @selection.errors.full_messages.join(', ')
+      flash[:error] = @selection.errors.full_messages.join(', ')
     end
   end
 

@@ -32,7 +32,7 @@ class Match < ApplicationRecord
   end
 
   def schedule(run_at = time + 10.seconds, try_num = 1)
-    MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
+    PlayMatchJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 
   def set_random_choices(user_id, try_num)
@@ -49,7 +49,7 @@ class Match < ApplicationRecord
   end
 
   def done?
-    !winner_id.nil?
+    winner_id.present?
   end
 
   def un_done?

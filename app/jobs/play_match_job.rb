@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# Match_Broadcast_Job
-class MatchBroadcastJob < ApplicationJob
+class PlayMatchJob < ApplicationJob
   queue_as :default
 
   def perform(match_id, try_num, tries)
@@ -15,7 +14,7 @@ class MatchBroadcastJob < ApplicationJob
     try_num = job.arguments[1]
     match = Match.find(job.arguments[0])
     match.handle_missing_selections(try_num)
-    UpdateWinner.new(match, try_num).call
+    SelectionUpdateWinner.new(match, try_num).call
     user1_id, user2_id = match.users.ids
     selection1, selection2 = match.selections.by_try_num(try_num).group_by(&:user_id).values_at(user1_id, user2_id)
     selection1 = selection1.first
@@ -68,7 +67,7 @@ class MatchBroadcastJob < ApplicationJob
     user1_id, user2_id = match.users.ids
     match.update(tries: 5)
     broadcast(match.id, user1_id, user2_id, '2 tries added', selections)
-    MatchBroadcastJob.perform_later(match.id, try_num + 1, match.tries)
+    PlayMatchJob.perform_later(match.id, try_num + 1, match.tries)
   end
 
   def broadcast(match_id, user1_id, user2_id, status, selections)
@@ -79,7 +78,9 @@ class MatchBroadcastJob < ApplicationJob
 
   def data_for_broadcast(user1_id, user2_id, status, selections)
     choice1, choice2 = selections.pluck(:choice).first(2)
-    { user1_id:, user2_id:, status:, selection1: choice1, selection2: choice2 }
+    data = { user1_id:, user2_id:, status:, selection1: choice1, selection2: choice2 }
+    data.merge!(done: true) if selections.first.match.done?
+    data
   end
 
   def generate_matches(match)

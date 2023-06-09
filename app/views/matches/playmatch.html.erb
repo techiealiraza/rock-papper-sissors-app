@@ -1,10 +1,12 @@
+<div id="message-flash-container" class="bg-green-600 text-center"></div>
+<div id="selection-flash-container" class="bg-green-600 text-center"></div>
 <div id="match_id" data-match-id="<%= @match.id %>"></div>
 <div class="bg-background-image flex flex-col h-screen">
   <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
   <div class="flex flex-col">
     <div class="flex-grow flex-1">
       <div class="flex flex-col items-center">
-        <% unless @match.winner.nil? %>
+        <% if @match.done? %>
           <div class="mt-10">
             <div class="max-w-sm p-6 bg-gold rounded-lg">
               <h5 class="mb-2 text-2xl font-bold tracking-tight">Match Ended</h5>
@@ -28,7 +30,7 @@
         <% end %>
       </div>
     </div>
-    <% if (can? :create, Selection) && @match.winner.nil? %>
+    <% if (can? :create, Selection) && @match.un_done? %>
       <% if @players_data.keys.include?(current_user.id) %>
         <div class="mt-3 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg mb-4 py-5 max-w-1/2">
           <div class="text-white text-xl flex flex-row justify-center">Please select</div>
@@ -42,12 +44,12 @@
     <% end %>
   </div>
   <h2 class="pt-5 text-white w-96 text-2xl sm:text-xl mb-2">Messages</h2>
-  <% if @match.winner.nil? %>
+  <% if @match.un_done? %>
     <div class="my-3">
       <%= form_with(url: tournament_match_messages_path(match_id: @match), remote: true, local: false) do |form| %>
         <div>
           <%= form.hidden_field :match_id, value: @match.id %>
-          <%= form.text_field :content, autocomplete: :off, required: :"required", placeholder: "type message", class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4", id:"msg_field_" + current_user.name %>
+          <%= form.text_field :content, autocomplete: :off, required: :"required", placeholder: "type message", class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4", id:"msg_field_#{current_user.id}" %>
           <%= form.hidden_field :user_id, value: current_user.id %>
           <div>
             <%= form.submit %>
