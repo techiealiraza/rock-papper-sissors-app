@@ -30,7 +30,7 @@ module Users
         send_otp_code(user)
         render 'user_otp/two_fa'
       else
-        redirect_to new_user_session_path, notice: 'Invalid Password entered'
+        redirect_to new_user_session_path, notice: 'Invalid Password entered.'
       end
     end
 

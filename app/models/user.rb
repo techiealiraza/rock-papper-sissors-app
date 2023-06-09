@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include AvatarValidatable
   has_many :tournaments_users
   has_many :messages
   has_many :tournaments, through: :tournaments_users
@@ -28,7 +29,7 @@ class User < ApplicationRecord
   def self.auth_with_2fa(otp_attempt, user)
     return unless user.validate_and_consume_otp!(otp_attempt)
 
-    user.save
+    user.save(validate: false)
   end
 
   def total_matches_played

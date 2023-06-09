@@ -1,0 +1,20 @@
+const flashContainer = document.getElementById("flash-container");
+const flashNotice = "<%= escape_javascript(flash.now[:notice]) %>";
+const flashAlert = "<%= escape_javascript(flash.now[:alert]) %>";
+
+if (flashContainer) {
+  if (flashNotice) {
+    flashContainer.innerHTML = flashNotice;
+    flashContainer.classList.add("flash-notice");
+    flashContainer.style.display = "block";
+  } else if (flashAlert) {
+    flashContainer.innerHTML = flashAlert;
+    flashContainer.classList.add("flash-alert");
+    flashContainer.style.display = "block";
+  }
+
+  setTimeout(() => {
+    flashContainer.style.display = "none";
+    flashContainer.innerHTML = "";
+  }, 4000); // 4000 milliseconds = 4 seconds
+}
