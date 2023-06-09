@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Tournament < ApplicationRecord
-
   include ImageValidatable
   paginates_per 3
   has_many :tournaments_users
@@ -51,6 +50,6 @@ class Tournament < ApplicationRecord
 
   def create_matches(match)
     TournamentMatchesCreator.new(self, current_round_winners(match.round),
-                               match.round + 1).call
+                                 match.round + 1).call
   end
 end
