@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# Match_Broadcast_Job
-class MatchBroadcastJob < ApplicationJob
+class PlayMatchJob < ApplicationJob
   queue_as :default
 
   def perform(match_id, try_num, tries)
@@ -12,10 +11,10 @@ class MatchBroadcastJob < ApplicationJob
   end
 
   after_perform do |job|
-    try_num = job.arguments[1] - 1
+    try_num = job.arguments[1]
     match = Match.find(job.arguments[0])
     match.handle_missing_selections(try_num)
-    UpdateWinner.new(match, try_num).call
+    SelectionUpdateWinner.new(match, try_num).call
     user1_id, user2_id = match.users.ids
     selection1, selection2 = match.selections.by_try_num(try_num).group_by(&:user_id).values_at(user1_id, user2_id)
     selection1 = selection1.first
@@ -27,7 +26,6 @@ class MatchBroadcastJob < ApplicationJob
     )
     score1 = score(user1_winning_selections)
     score2 = score(user2_winning_selections)
-    try_num += 1
     monitor_tries(match, try_num, score1, score2, [selection1, selection2])
   end
 
@@ -69,28 +67,30 @@ class MatchBroadcastJob < ApplicationJob
     user1_id, user2_id = match.users.ids
     match.update(tries: 5)
     broadcast(match.id, user1_id, user2_id, '2 tries added', selections)
-    MatchBroadcastJob.perform_later(match.id, try_num + 1, match.tries)
+    PlayMatchJob.perform_later(match.id, try_num + 1, match.tries)
   end
 
   def broadcast(match_id, user1_id, user2_id, status, selections)
     data = data_for_broadcast(user1_id, user2_id, status, selections)
-    BroadcastMessage.call("timer_channel_#{match_id}", data)
+    Broadcaster.call("timer_channel_#{match_id}", data)
     sleep 1
   end
 
   def data_for_broadcast(user1_id, user2_id, status, selections)
     choice1, choice2 = selections.pluck(:choice).first(2)
-    { user1_id:, user2_id:, status:, selection1: choice1, selection2: choice2 }
+    data = { user1_id:, user2_id:, status:, selection1: choice1, selection2: choice2 }
+    data.merge!(done: true) if selections.first.match.done?
+    data
   end
 
   def generate_matches(match)
     tournament = match.tournament
-    current_round_remaining_matches = tournament.remaining_matches_by_round_size(match.round)
-    done_matches_size = tournament.done_matches_size(match.round)
-    matches_by_round_size = tournament.matches_by_round_size(match.round)
-    if done_matches_size == 1 && matches_by_round_size == 1
+    current_round_pending_matches_count = tournament.matches.un_done.count
+    current_round_done_matches_count = tournament.matches.by_round(match.round).done.count
+    current_round_matches_count = tournament.matches.by_round(match.round).count
+    if current_round_done_matches_count == 1 && current_round_matches_count == 1
       tournament.update_column(:winner_id, match.winner_id)
-    elsif current_round_remaining_matches.zero?
+    elsif current_round_pending_matches_count.zero?
       tournament.create_matches(match)
     end
   end

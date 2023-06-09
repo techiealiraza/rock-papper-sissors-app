@@ -24,7 +24,7 @@ document.addEventListener("turbolinks:load", () => {
           user1_selection.src = "/assets/" + selection1 + ".png";
           user2_selection.src = "/assets/" + selection2 + ".png";
           displayDiv.textContent = status;
-          if (status[0] === 'M') {
+          if (data.done != undefined) {
             setTimeout(function() {
               location.reload(true);
             }, 2000);

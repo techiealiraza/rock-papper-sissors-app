@@ -15,7 +15,7 @@ class Ability
       can :authenticate_2fa, User
     elsif user.admin?
       can %i[create new index], Message
-      can %i[new create create_matches index edit], Tournament
+      can %i[new create create_matches index update], Tournament
       can %i[playmatch result index show new create all], Match
       can :authenticate_2fa, User
     end

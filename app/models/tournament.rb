@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Tournaments:: controller
 class Tournament < ApplicationRecord
 
   include ImageValidatable
@@ -15,7 +14,7 @@ class Tournament < ApplicationRecord
   validate :end_date_is_after_start_date
   validate :start_date_validation
   validate :deadline_before_start_date
-  scope :winner_count, ->(user_id) { where(winner_id: user_id).size }
+  scope :won, ->(user_id) { where(winner_id: user_id) }
 
   def deadline_before_start_date
     return if registration_deadline.nil? || start_date.nil?
@@ -38,18 +37,6 @@ class Tournament < ApplicationRecord
     errors.add(:start_date, 'Start Date is in Past')
   end
 
-  def done_matches_size(round)
-    matches.by_round(round).done.size
-  end
-
-  def remaining_matches_by_round_size(round)
-    matches.by_round(round).un_done.size
-  end
-
-  def matches_by_round_size(round)
-    matches.by_round(round).size
-  end
-
   def current_round_winners(round)
     users.where(id: matches.select(:winner_id).by_round(round))
   end
@@ -64,6 +51,6 @@ class Tournament < ApplicationRecord
 
   def create_matches(match)
     TournamentMatchesCreator.new(self, current_round_winners(match.round),
-                                 match.round + 1).call
+                               match.round + 1).call
   end
 end

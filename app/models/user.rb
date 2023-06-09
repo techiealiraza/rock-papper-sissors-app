@@ -37,7 +37,7 @@ class User < ApplicationRecord
   end
 
   def total_matches_won
-    matches.winner_count(id)
+    matches.won(id).count
   end
 
   def total_tournaments_played
@@ -45,10 +45,6 @@ class User < ApplicationRecord
   end
 
   def total_tournaments_won
-    tournaments.winner_count(id)
-  end
-
-  def id_and_name
-    pluck(:id, :name).to_h
+    tournaments.won(id).count
   end
 end

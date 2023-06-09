@@ -12,12 +12,12 @@ document.addEventListener("turbolinks:load", () => {
 
       received(data) {
         const msgs = document.getElementById("message-list");
-        const current_user = document.getElementById("current_user");
-        const current_user_name = current_user.getAttribute(
-          "data-current-user-name"
-        );
+        const user_id = document.getElementById("user_id").getAttribute("data-user-id");
         const msg_element = document.getElementById(
-          `msg_field_${data.user_name}`
+          `msg_field_${user_id}`
+        );
+        const current_user_name = document.getElementById("current_user").getAttribute(
+          "data-current-user-name"
         );
         let messageHTML;
         messageHTML = `<div class="my-1 flex flex-row">
@@ -49,7 +49,7 @@ document.addEventListener("turbolinks:load", () => {
         msgs.insertAdjacentHTML("afterbegin", messageHTML);
         const last_elem = msgs.firstChild;
         last_elem.scrollIntoView({ behavior: "smooth", block: "end" });
-        if (msg_element) {
+        if (user_id == data.user_id) {
           msg_element.value = "";
         }
       },

@@ -13,9 +13,10 @@ class Match < ApplicationRecord
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(winner_id: nil) }
   scope :un_done, -> { where(winner_id: nil) }
-  scope :winner_count, ->(user_id) { where(winner_id: user_id).size }
+  scope :won, ->(user_id) { where(winner_id: user_id) }
   CHOICES = %w[rock paper scissor].freeze
   after_create :schedule
+  accepts_nested_attributes_for :users_matches
 
   def remaining_tries
     done_tries = selections.by_user(users.first.id).size
@@ -31,7 +32,7 @@ class Match < ApplicationRecord
   end
 
   def schedule(run_at = time + 10.seconds, try_num = 1)
-    MatchBroadcastJob.delay(run_at:).perform_later(id, try_num, tries)
+    PlayMatchJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 
   def set_random_choices(user_id, try_num)
@@ -48,7 +49,7 @@ class Match < ApplicationRecord
   end
 
   def done?
-    !winner_id.nil?
+    winner_id.present?
   end
 
   def un_done?
