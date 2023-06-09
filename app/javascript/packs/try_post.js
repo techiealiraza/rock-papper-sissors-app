@@ -13,14 +13,14 @@ function try_post() {
     const imageElement = document.getElementById(user_id);
     var src = imageElement.src;
     var fileName = src.substring(src.lastIndexOf("/") + 1);
-    const user_selection_image = fileName.substring(0, fileName.lastIndexOf("."));
+    const user_selected_choice = fileName.substring(0, fileName.lastIndexOf("."));
     if (fileName[0] == "q") {
       return;
     }
     var data = {
       match_id: match_id,
       user_id: user_id,
-      choice: user_selection_image,
+      choice: user_selected_choice,
     };
     Rails.ajax({
       url: '/selection',

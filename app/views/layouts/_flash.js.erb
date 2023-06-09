@@ -1,4 +1,4 @@
-var noticeElement = document.getElementById('flash-container');
+var noticeElement = document.getElementById('flash-response-container');
 var newContent = "<%= flash[:notice] || flash[:error] %>";
 <% if flash[:error].present? %>
   noticeElement.classList.add('bg-red-600');

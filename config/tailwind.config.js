@@ -9,9 +9,13 @@ module.exports = {
   ],
   theme: {
     extend: {
-
+      screens: {
+        'mini': '200px',
+        'sm': '400px',
+        'md': '768px',
+        'lg': '1024px',
+      },
       backgroundImage: {
-
         'background-image': "url('background1.jpeg')",
         'default_avatar': "url('default_avatar.png')",
         'default_image': "url('image_icon.png')",

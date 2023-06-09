@@ -22,15 +22,15 @@ document.addEventListener("turbolinks:load", () => {
         let messageHTML;
         messageHTML = `<div class="my-1 flex flex-row">
                         <div class="rounded-full ${
-                          data.user_name === current_user_name
+                          data.sender_name === current_user_name
                             ? "bg-white text-black"
                             : "bg-gold_shade2 text-white"
                         } w-7 text-center h-7">
-                          ${data.user_name.substring(0, 3)}
+                          ${data.sender_name.substring(0, 3)}
                         </div>
                         <div class="flex flex-col space-y-2 text-xs ml-2 items-start">
                           <div class="line-clamp-10 max-w-sm text-lg px-3 py-2 my-1 rounded-lg rounded-br-none rounded-tl-none ${
-                            data.user_name === current_user_name
+                            data.sender_name === current_user_name
                               ? "bg-white text-black"
                               : "bg-gold text-black"
                           }">
@@ -38,7 +38,7 @@ document.addEventListener("turbolinks:load", () => {
                           </div>
                           <div class="flex flex-row items-end">
                             <div class="${
-                              data.user_name === current_user_name
+                              data.sender_name === current_user_name
                                 ? "text-white"
                                 : "text-black"
                             }">${data.created_at}

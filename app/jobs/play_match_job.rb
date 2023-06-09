@@ -52,7 +52,7 @@ class PlayMatchJob < ApplicationJob
   def add_tries_and_broadcast(match, try_num, selections)
     match.update(tries: 5)
     broadcast('2 tries added', selections)
-    PlayMatchJob.perform_later(match.id, try_num + 1, match.tries)
+    match.schedule(Time.zone.now, try_num + 1)
   end
 
   def broadcast(status, selections)

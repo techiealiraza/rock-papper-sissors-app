@@ -1,4 +1,4 @@
-# Tournamnets Controller
+# frozen_string_literal: true
 
 class TournamentsController < ApplicationController
   load_and_authorize_resource

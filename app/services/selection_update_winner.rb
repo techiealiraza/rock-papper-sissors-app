@@ -18,6 +18,8 @@ class SelectionUpdateWinner
     end
   end
 
+  private
+
   def winning_combination?(choice1, choice2)
     combinations = [%w[rock scissor], %w[scissor paper], %w[paper rock]]
     combinations.include?([choice1, choice2])

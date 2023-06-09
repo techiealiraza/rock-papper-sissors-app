@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Tournament < ApplicationRecord
-  include ImageValidatable
+  # include ImageValidatable
   paginates_per 3
   has_many :tournaments_users
   has_many :users
