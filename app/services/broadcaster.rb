@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
-# broad_cast_message_service
+# broad_cast_service
 class Broadcaster
-  def self.call(channel, data)
-    ActionCable.server.broadcast(channel, data)
+  def initialize(channel, data)
+    @channel = channel
+    @data = data
+  end
+
+  def call
+    ActionCable.server.broadcast(@channel, @data)
   end
 end

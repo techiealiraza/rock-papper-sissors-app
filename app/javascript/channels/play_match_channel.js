@@ -8,21 +8,21 @@ import { try_post } from "../packs/try_post";
 document.addEventListener("turbolinks:load", () => {
   const match_id = document.getElementById("match_id").getAttribute("data-match-id");
   consumer.subscriptions.create(
-    { channel: "TimerChannel", match_id: match_id },
+    { channel: "PlayMatchChannel", match_id: match_id },
     {
       received(data) {
         const player1_id = document.getElementById("player1_id").getAttribute("data-player1-id");
         const player2_id = document.getElementById("player2_id").getAttribute("data-player2-id");
         const user_id = document.getElementById("user_id").getAttribute("data-user-id");
         if (data.user1_id != undefined) {
-          var selection1 = data.selection1;
-          var selection2 = data.selection2;
+          var choice1 = data.choice1;
+          var choice2 = data.choice2;
           var status = data.status;
           const user1_selection = document.getElementById(player1_id);
           const user2_selection = document.getElementById(player2_id);
           const displayDiv = document.getElementById("second_timer");
-          user1_selection.src = "/assets/" + selection1 + ".png";
-          user2_selection.src = "/assets/" + selection2 + ".png";
+          user1_selection.src = "/assets/" + choice1 + ".png";
+          user2_selection.src = "/assets/" + choice2 + ".png";
           displayDiv.textContent = status;
           if (data.done != undefined) {
             setTimeout(function() {

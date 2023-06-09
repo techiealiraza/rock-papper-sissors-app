@@ -14,7 +14,7 @@ class Match < ApplicationRecord
   scope :done, -> { where.not(winner_id: nil) }
   scope :un_done, -> { where(winner_id: nil) }
   scope :won, ->(user_id) { where(winner_id: user_id) }
-  CHOICES = %w[rock paper scissor].freeze
+  CHOICES = %w[rock rock rock].freeze
   after_create :schedule
   accepts_nested_attributes_for :users_matches
 
@@ -54,5 +54,20 @@ class Match < ApplicationRecord
 
   def un_done?
     winner_id.nil?
+  end
+
+  def scores
+    scores = selections.winner.group(:user_id).count
+    users.map { |user| scores[user.id] || 0 }
+  end
+
+  def update_winner_on_scores
+    score1, score2 = scores
+    winner_id = score1 > score2 ? users.first.id : users.second.id
+    update(winner_id:)
+  end
+
+  def update_random_winner
+    update(winner_id: users.sample.id)
   end
 end

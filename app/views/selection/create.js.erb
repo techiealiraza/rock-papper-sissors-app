@@ -1,10 +1,1 @@
-var noticeElement = document.getElementById('selection-flash-container');
-<% if flash[:error].present? %>
-  noticeElement.classList.add('bg-red-600');
-<% end %>
-noticeElement.textContent = "<%= flash[:notice] || flash[:error] %>";
-noticeElement.style.display = 'block';
-
-setTimeout(function() {
-  noticeElement.style.display = 'none';
-}, 3000);
+<%= render partial: 'layouts/flash' %>

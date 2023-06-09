@@ -1,5 +1,4 @@
-<div id="message-flash-container" class="bg-green-600 text-center"></div>
-<div id="selection-flash-container" class="bg-green-600 text-center"></div>
+<div id="flash-container" class="bg-green-600 text-center"></div>
 <div id="match_id" data-match-id="<%= @match.id %>"></div>
 <div class="bg-background-image flex flex-col h-screen">
   <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
@@ -20,7 +19,7 @@
           <div id="player2_id" data-player2-id="<%= player2_id %>"></div>
           <div id="user_id" data-user-id="<%= current_user.id %>"></div>
           <div id="<%= "tries_#{@match.id}" %>" class="my-3 bg-gold text-black text-xl py-3 px-3 rounded-lg mr-3">
-            Please Wait for the match to Start
+            Please Wait for the Match to Start
           </div>
           <div class="flex flex-row justify-center">
             <%= render "choice_image", player_name: @players_data[player1_id], player_id: player1_id %>
