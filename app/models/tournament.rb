@@ -47,8 +47,38 @@ class Tournament < ApplicationRecord
     end
   end
 
-  def create_matches(match)
-    TournamentMatchesCreator.new(self, current_round_winners(match.round),
-                                 match.round + 1).call
+  def create_matches(round)
+    TournamentMatchesCreator.new(self, current_round_winners(round),
+                                 round + 1).call
+  end
+
+  def done_matches_count_by_round(round)
+    matches.by_round(round).done.count
+  end
+
+  def matches_count_by_round(round)
+    matches.by_round(round).count
+  end
+
+  def create_next_round_matches?
+    pending_matches_count.zero?
+  end
+
+  def pending_matches_count
+    matches.un_done.count
+  end
+
+  def final_match_done?(round)
+    current_round_done_matches_count = done_matches_count_by_round(round)
+    current_round_matches_count = matches_count_by_round(round)
+    current_round_done_matches_count == 1 && current_round_matches_count == 1
+  end
+
+  def generate_matches_or_update_winner(match)
+    if final_match_done?(match.round)
+      update_column(:winner_id, match.winner_id)
+    elsif create_next_round_matches?
+      create_matches(match.round)
+    end
   end
 end

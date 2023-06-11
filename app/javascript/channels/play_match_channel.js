@@ -1,28 +1,28 @@
 import consumer from "./consumer";
 import {
-  event_listener_to_buttons,
-  disable_buttons,
+  eventListenerToButtons,
+  disableButtons,
 } from "../packs/buttons_activity";
-import { try_post } from "../packs/try_post";
+import { selectionPost } from "../packs/selection_post";
 
 document.addEventListener("turbolinks:load", () => {
-  const match_id = document.getElementById("match_id").getAttribute("data-match-id");
+  const matchId = document.getElementById("match_id").getAttribute("data-match-id");
   consumer.subscriptions.create(
-    { channel: "PlayMatchChannel", match_id: match_id },
+    { channel: "PlayMatchChannel", match_id: matchId },
     {
       received(data) {
-        const player1_id = document.getElementById("player1_id").getAttribute("data-player1-id");
-        const player2_id = document.getElementById("player2_id").getAttribute("data-player2-id");
-        const user_id = document.getElementById("user_id").getAttribute("data-user-id");
+        const player1Id = document.getElementById("player1_id").getAttribute("data-player1-id");
+        const player2Id = document.getElementById("player2_id").getAttribute("data-player2-id");
+        const userId = document.getElementById("user_id").getAttribute("data-user-id");
         if (data.user1_id != undefined) {
           var choice1 = data.choice1;
           var choice2 = data.choice2;
           var status = data.status;
-          const user1_selection = document.getElementById(player1_id);
-          const user2_selection = document.getElementById(player2_id);
+          const user1ChoiceElement = document.getElementById(data.user1_id);
+          const user2ChoiceElement = document.getElementById(data.user2_id);
           const displayDiv = document.getElementById("second_timer");
-          user1_selection.src = "/assets/" + choice1 + ".png";
-          user2_selection.src = "/assets/" + choice2 + ".png";
+          user1ChoiceElement.src = "/assets/" + choice1 + ".png";
+          user2ChoiceElement.src = "/assets/" + choice2 + ".png";
           displayDiv.textContent = status;
           if (data.done != undefined) {
             setTimeout(function() {
@@ -33,24 +33,24 @@ document.addEventListener("turbolinks:load", () => {
           
         } else {
           var seconds = data.seconds;
-          var try_num = data.try_num;
+          var tryNum = data.try_num;
           var tries = data.tries;
           const displayDiv = document.getElementById("second_timer");
-          const triesDiv = document.getElementById(`tries_${match_id}`);
+          const triesDiv = document.getElementById(`tries_${matchId}`);
           displayDiv.textContent = seconds;
           if (seconds != 0) {
-            triesDiv.textContent = `Try ${try_num} of ${tries}`;
+            triesDiv.textContent = `Try ${tryNum} of ${tries}`;
             if (seconds === 5) {
-              event_listener_to_buttons();
-              const user_selection = document.getElementById(player1_id);
-              const opponent_selection = document.getElementById(player2_id);
-              user_selection.src = "/assets/question.png";
-              opponent_selection.src = "/assets/question.png";
+              eventListenerToButtons();
+              const user1ChoiceElement = document.getElementById(player1Id);
+              const user2ChoiceElement = document.getElementById(player2Id);
+              user1ChoiceElement.src = "/assets/question.png";
+              user2ChoiceElement.src = "/assets/question.png";
             }
           } else {
-            disable_buttons();
-            if ([player1_id, player2_id].includes(user_id)) {
-              try_post();
+            disableButtons();
+            if ([player1Id, player2Id].includes(userId)) {
+              selectionPost();
             }
           }
         }
