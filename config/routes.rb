@@ -34,5 +34,5 @@ Rails.application.routes.draw do
     get '/verify_otp', to: 'users/sessions#verify_otp', as: :verify_otp
   end
   root 'tournaments#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  match '*path', to: 'application#handle_not_found', via: :all
 end
