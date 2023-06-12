@@ -2,6 +2,7 @@
 
 class Tournament < ApplicationRecord
   paginates_per 3
+  include ImageValidatable
   has_many :tournaments_users
   has_many :users
   has_many :users, through: :tournaments_users
@@ -10,6 +11,7 @@ class Tournament < ApplicationRecord
   has_one_attached :image
   validates :name, :description, :start_date, :end_date, :registration_deadline, presence: true
   validate :end_date_is_after_start_date
+  self.attachment_attribute = :image
   validate :start_date_validation
   validate :deadline_before_start_date
   scope :won, ->(user_id) { where(winner_id: user_id) }

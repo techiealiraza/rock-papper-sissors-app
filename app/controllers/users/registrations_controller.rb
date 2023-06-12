@@ -12,6 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create
     super do |resource|
+      resource.controller_context = self
       if resource.valid? && resource.persisted?
         resource.update(
           role: :member,

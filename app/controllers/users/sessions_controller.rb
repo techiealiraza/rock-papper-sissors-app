@@ -25,21 +25,14 @@ module Users
 
       return unless user
 
-      if check_valid_password(user)
+      if user.valid_password?(user_params[:password])
+
         session[:user_id] = user.id
-        send_otp_code(user)
+        TwoFactorAuth.new(user).call
         render 'user_otp/two_fa'
       else
         redirect_to new_user_session_path, notice: 'Invalid Password entered.'
       end
-    end
-
-    def check_valid_password(user)
-      user.valid_password?(user_params[:password])
-    end
-
-    def send_otp_code(user)
-      TwoFactorAuth.new(user).send_otp_code
     end
 
     def user_params
