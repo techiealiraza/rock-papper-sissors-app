@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PlayMatchJob < ApplicationJob
+class MatchExecutionJob < ApplicationJob
   queue_as :default
 
   def perform(match_id, try_num, tries)

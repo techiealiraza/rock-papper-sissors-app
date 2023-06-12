@@ -27,7 +27,7 @@ class Match < ApplicationRecord
   end
 
   def schedule(run_at = time + 10.seconds, try_num = 1)
-    PlayMatchJob.delay(run_at:).perform_later(id, try_num, tries)
+    MatchExecutionJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 
   def add_random_choices(user_id)
