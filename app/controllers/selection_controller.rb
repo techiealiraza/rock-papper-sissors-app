@@ -6,7 +6,6 @@ class SelectionController < ApplicationController
 
   def create
     @selection = Selection.new(selection_params)
-    @selection.add_try_num
     if @selection.save
       flash[:notice] = 'Choice Saved'
     else

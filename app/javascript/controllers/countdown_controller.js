@@ -8,20 +8,17 @@ export default class extends Controller {
     const minutesElement = document.getElementById("minutes");
     const secondsElement = document.getElementById("seconds");
     let countdown;
-    return startTimer(timeInSeconds);
-    function startTimer(seconds) {
+    return countdownRefreshTimer(timeInSeconds);
+    function countdownRefreshTimer(seconds) {
       const then = Date.now() + seconds * 1000;
       countdown = setInterval(() => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         if (secondsLeft <= 0) {
-          reload;
+          location.reload(true);
           return;
         }
         displayTimeLeft(secondsLeft);
       }, 1000);
-    }
-    function reload() {
-      location.reload(true);
     }
     function displayTimeLeft(seconds) {
       daysElement.textContent = Math.floor(seconds / 86400);
