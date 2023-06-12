@@ -8,7 +8,7 @@ class SelectionResultBroadcaster < Broadcaster
     @user1_id, @user2_id = selections.pluck(:user_id).first(2)
     @choice1, @choice2 = selections.pluck(:choice).first(2)
     @data = data_hash
-    super("play_match_channel_#{@match.id}", @match.done? ? @data.merge!(done: true) : @data)
+    super("match_channel_#{@match.id}", @match.done? ? @data.merge!(done: true) : @data)
   end
 
   private

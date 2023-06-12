@@ -8,7 +8,7 @@ import { selectionPost } from "../packs/selection_post";
 document.addEventListener("turbolinks:load", () => {
   const matchId = document.getElementById("match_id").getAttribute("data-match-id");
   consumer.subscriptions.create(
-    { channel: "PlayMatchChannel", match_id: matchId },
+    { channel: "MatchChannel", match_id: matchId },
     {
       received(data) {
         const player1Id = document.getElementById("player1_id").getAttribute("data-player1-id");
