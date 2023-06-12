@@ -8,8 +8,7 @@ class SelectionUpdateWinner
 
   def call
     selections = @match.selections.by_try_num(@try_num)
-    choice1 = selections.first.choice
-    choice2 = selections.last.choice
+    choice1, choice2 = selections.map(&:choice)
     return if choice1 == choice2
 
     if winning_combination?(choice1, choice2)

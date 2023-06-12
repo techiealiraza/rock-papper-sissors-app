@@ -14,7 +14,7 @@ class Match < ApplicationRecord
   scope :done, -> { where.not(winner_id: nil) }
   scope :un_done, -> { where(winner_id: nil) }
   scope :won, ->(user_id) { where(winner_id: user_id) }
-  CHOICES = %w[rock paper scissor].freeze
+  CHOICES = %w[rock].freeze
   after_create :schedule
   accepts_nested_attributes_for :users_matches
 
