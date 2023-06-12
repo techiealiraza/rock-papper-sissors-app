@@ -18,11 +18,6 @@ class Match < ApplicationRecord
   after_create :schedule
   accepts_nested_attributes_for :users_matches
 
-  # def remaining_tries
-  #   done_tries = selections.by_user(users.first.id).size
-  #   tries - done_tries
-  # end
-
   def result_message(current_user_id)
     if winner_id == current_user_id
       'You Won'
