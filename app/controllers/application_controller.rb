@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
     is_a?(Devise::SessionsController)
   end
 
+  def handle_not_found
+    # Handle the request and display an error message
+    render file: "#{Rails.root}/public/404.html", formats: [:html], status: 404, layout: false
+  end
+
   protected
 
   def after_resetting_password_path_for(user)
