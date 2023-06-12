@@ -50,10 +50,7 @@
         <div>
           <%= form.hidden_field :match_id, value: @match.id %>
           <%= form.text_field :content, autocomplete: :off, required: :"required", placeholder: "type message", class: "block shadow rounded-md border border-gray-200 outline-gold py-3 mb-4", id:"msg_field_#{current_user.id}" %>
-          <%= form.hidden_field :user_id, value: current_user.id %>
-          <div>
-            <%= form.submit %>
-          </div>
+          <%= form.submit %>
         </div>
       <% end %>
     </div>

@@ -6,9 +6,10 @@ class Selection < ApplicationRecord
   scope :winner, -> { where(winner: true) }
   scope :by_user, ->(user_id) { where(user_id:) }
   scope :by_try_num, ->(try_num) { where(try_num:) }
+  after_initialize :add_try_num
 
   def add_try_num
-    self.try_num = match.selections.by_user(user_id).size + 1
+    self.try_num ||= match.selections.by_user(user_id).size + 1
   end
 
   def status

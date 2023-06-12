@@ -18,10 +18,10 @@ class Match < ApplicationRecord
   after_create :schedule
   accepts_nested_attributes_for :users_matches
 
-  def remaining_tries
-    done_tries = selections.by_user(users.first.id).size
-    tries - done_tries
-  end
+  # def remaining_tries
+  #   done_tries = selections.by_user(users.first.id).size
+  #   tries - done_tries
+  # end
 
   def result_message(current_user_id)
     if winner_id == current_user_id
@@ -35,17 +35,17 @@ class Match < ApplicationRecord
     PlayMatchJob.delay(run_at:).perform_later(id, try_num, tries)
   end
 
-  def set_random_choices(user_id, try_num)
-    selections.create(user_id:, choice: CHOICES.sample, try_num:)
+  def add_random_choices(user_id)
+    selections.create(user_id:, choice: CHOICES.sample)
   end
 
   def handle_missing_selections(try_num)
     players_selections = selections.by_try_num(try_num)
     first_user_id, second_user_id = users.ids
-    set_random_choices(first_user_id, try_num) unless players_selections.exists?(user_id: first_user_id)
+    add_random_choices(first_user_id) unless players_selections.exists?(user_id: first_user_id)
     return if players_selections.exists?(user_id: second_user_id)
 
-    set_random_choices(second_user_id, try_num)
+    add_random_choices(second_user_id)
   end
 
   def done?
