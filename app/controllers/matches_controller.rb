@@ -23,7 +23,7 @@ class MatchesController < ApplicationController
   end
 
   def result
-    return if @match.un_done?
+    return if @match.undone?
 
     @players_data = @match.users.pluck(:id, :name).to_h
     @players_selections = @match.selections.includes(:user).order(:try_num).group_by(&:user_id)

@@ -66,7 +66,7 @@ class Tournament < ApplicationRecord
   end
 
   def pending_matches_count
-    matches.un_done.count
+    matches.undone.count
   end
 
   def final_match_done?(round)

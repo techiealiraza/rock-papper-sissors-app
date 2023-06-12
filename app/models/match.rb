@@ -12,9 +12,9 @@ class Match < ApplicationRecord
   scope :desc, -> { order(round: :desc) }
   scope :by_round, ->(round) { where(round:) }
   scope :done, -> { where.not(winner_id: nil) }
-  scope :un_done, -> { where(winner_id: nil) }
+  scope :undone, -> { where(winner_id: nil) }
   scope :won, ->(user_id) { where(winner_id: user_id) }
-  CHOICES = %w[rock].freeze
+  CHOICES = %w[rock paper scissor].freeze
   after_create :schedule
   accepts_nested_attributes_for :users_matches
 
@@ -52,7 +52,7 @@ class Match < ApplicationRecord
     winner_id.present?
   end
 
-  def un_done?
+  def undone?
     winner_id.nil?
   end
 
