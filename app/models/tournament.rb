@@ -2,6 +2,7 @@
 
 class Tournament < ApplicationRecord
   paginates_per 3
+  include ImageValidatable
   has_many :tournaments_users
   has_many :users
   has_many :users, through: :tournaments_users

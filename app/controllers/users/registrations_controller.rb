@@ -29,7 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[avatar name phone_number])
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[avatar name phone_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[image name phone_number])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[image name phone_number])
   end
 end

@@ -27,11 +27,11 @@ class TournamentsController < ApplicationController
 
   def create_matches
     TournamentMatchesCreator.new(@tournament, @tournament.users).call
-    redirect_to tournament_path(@tournament)
     flash[:notice] = 'Matches Generated.'
-  rescue StandardError => e
     redirect_to tournament_path(@tournament)
+  rescue StandardError => e
     flash[:alert] = "Error generating matches: #{e.message}"
+    redirect_to tournament_path(@tournament)
   end
 
   def create

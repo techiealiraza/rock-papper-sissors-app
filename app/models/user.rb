@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include ImageValidatable
   has_many :tournaments_users
   has_many :messages
   has_many :tournaments, through: :tournaments_users
   has_many :users_matches
   has_many :matches, through: :users_matches
-  has_one_attached :avatar
+  has_one_attached :image
   enum role: %w[member admin]
   validates :phone_number, presence: true,
                            numericality: true,
@@ -28,7 +29,7 @@ class User < ApplicationRecord
   def self.auth_with_2fa(otp_attempt, user)
     return unless user.validate_and_consume_otp!(otp_attempt)
 
-    user.save(validate: false)
+    user.save
   end
 
   def total_matches_played
