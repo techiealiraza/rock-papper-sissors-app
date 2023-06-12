@@ -9,8 +9,8 @@ class Ability
     can %i[create new], [User]
     if user.member?
       can %i[create new index], Message
-      can :register, Tournament
       can %i[playmatch index show result all], Match
+      can :create, TournamentsUser
       can :create, Selection, match: { users: { id: user.id } }
       can :authenticate_2fa, User
     elsif user.admin?

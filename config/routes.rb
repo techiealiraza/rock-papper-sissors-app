@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
-require 'delayed_job_web'
 Rails.application.routes.draw do
   get 'leaderboard/index'
   patch 'user_otp/enable'
   get 'user_otp/disable'
-  match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
-  resources :selection
+  match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post] if Rails.env.development?
+  resources :selection, only: [:create]
 
   get '/matches_all', to: 'matches#all'
 
   resources :tournaments do
     member do
-      post 'register'
+      post '/register', to: 'tournaments_users#create'
       post '/create_matches', to: 'tournaments#create_matches'
     end
     resources :matches do
@@ -31,8 +30,8 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
-    get '/verify_otp', to: 'users/sessions#verify_otp', as: :verify_otp
+    get '/verify_otp', to: 'users/sessions#verify_otp'
   end
   root 'tournaments#index'
-  match '*path', to: 'application#handle_not_found', via: :all
+  match '*path', to: 'application#not_found', via: :all
 end

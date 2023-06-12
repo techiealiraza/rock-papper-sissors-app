@@ -15,7 +15,7 @@
             </div>
           </div>
         <% else %>
-          <% player1_id, player2_id = players(@players_data) %>
+          <% player1_id, player2_id = @players_data.keys %>
           <div id="player1_id" data-player1-id="<%= player1_id %>"></div>
           <div id="player2_id" data-player2-id="<%= player2_id %>"></div>
           <div id="user_id" data-user-id="<%= current_user.id %>"></div>

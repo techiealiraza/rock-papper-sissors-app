@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from CanCan::AccessDenied, with: :access_denied
-  rescue_from ActionController::RoutingError, with: :not_found
+  # rescue_from ActionController::RoutingError, with: :not_found
 
   def access_denied
     render file: "#{Rails.root}/public/403.html", formats: [:html], status: 403, layout: false
@@ -17,11 +17,6 @@ class ApplicationController < ActionController::Base
 
   def devise_controller?
     is_a?(Devise::SessionsController)
-  end
-
-  def handle_not_found
-    # Handle the request and display an error message
-    render file: "#{Rails.root}/public/404.html", formats: [:html], status: 404, layout: false
   end
 
   protected

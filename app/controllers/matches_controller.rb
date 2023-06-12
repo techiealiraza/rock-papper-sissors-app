@@ -19,13 +19,13 @@ class MatchesController < ApplicationController
     @messages = @match.messages.includes([:user]).all.reverse
     return if @match.done?
 
-    @players_data = @match.users.pluck(:id, :name).to_h
+    @players_data = @match.players_data_by_current_user(current_user)
   end
 
   def result
     return if @match.undone?
 
-    @players_data = @match.users.pluck(:id, :name).to_h
+    @players_data = @match.players_data_by_current_user(current_user)
     @players_selections = @match.selections.includes(:user).order(:try_num).group_by(&:user_id)
     @players_scores = @match.selections.winner.group(:user_id).count
     @result_message = @match.result_message(current_user.id)

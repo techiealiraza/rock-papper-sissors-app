@@ -28,7 +28,7 @@ module Users
       if user.valid_password?(user_params[:password])
 
         session[:user_id] = user.id
-        TwoFactorAuth.new(user).call
+        TwoFactorAuthenticator.new(user).call
         render 'user_otp/two_fa'
       else
         redirect_to new_user_session_path, notice: 'Invalid Password entered.'

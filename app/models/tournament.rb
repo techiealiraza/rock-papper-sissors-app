@@ -14,6 +14,7 @@ class Tournament < ApplicationRecord
   validate :start_date_validation
   validate :deadline_before_start_date
   scope :won, ->(user_id) { where(winner_id: user_id) }
+  scope :desc, -> { order(registration_deadline: :desc) }
 
   def deadline_before_start_date
     return if registration_deadline.nil? || start_date.nil?
