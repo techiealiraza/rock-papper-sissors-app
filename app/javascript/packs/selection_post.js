@@ -23,12 +23,12 @@ function selectionPost() {
       choice: userSelectedChoice,
     };
     Rails.ajax({
-      url: '/selection',
-      type: 'post',
+      url: "/selection",
+      type: "post",
       beforeSend(xhr, options) {
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-        options.data = JSON.stringify(data)
-        return true
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        options.data = JSON.stringify(data);
+        return true;
       },
     });
   }

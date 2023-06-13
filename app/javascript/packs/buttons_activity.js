@@ -24,7 +24,7 @@ function eventListenerToButtons() {
       .addEventListener("click", function () {
         userImageElement.src = "/assets/scissor.png";
       });
-      enableButtons();
+    enableButtons();
   }
 }
 function disableButtons() {
