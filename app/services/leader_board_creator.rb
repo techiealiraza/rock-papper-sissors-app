@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# match_creator service
-class LeaderBoard
-  def result
+# leader_board_service
+class LeaderBoardCreator
+  def self.call
     players_ids = Tournament.having('winner_id IS NOT NULL')
                             .group(:winner_id)
                             .order(count: :desc)

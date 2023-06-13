@@ -10,7 +10,7 @@
       </div>
     </div>
   <% else %>
-    <% player1_id, player2_id = players(@players_data) %>
+    <% player1_id, player2_id = @players_data.keys %>
     <div class="mt-10 flex flex-row mini:justify-around justify-between w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-8 mini:px-4 sm:px-5 py-8">
       <div class="container-fluid mt-5 py-3 px-4 sm:px-4 lg:px-10 rounded-lg bg-gold">
         <%= @players_data[player1_id] %><br>

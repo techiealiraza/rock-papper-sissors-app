@@ -7,11 +7,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# TournamentsUser.create(tournament_id: 125, user_id: 25)
+
 TournamentsUser.create(tournament_id: 125, user_id: 10)
 TournamentsUser.create(tournament_id: 125, user_id: 11)
 TournamentsUser.create(tournament_id: 125, user_id: 13)
 TournamentsUser.create(tournament_id: 125, user_id: 14)
 TournamentsUser.create(tournament_id: 125, user_id: 15)
 TournamentsUser.create(tournament_id: 125, user_id: 16)
-# TournamentsUser.create(tournament_id: 125, user_id: 17)
-TournamentsUser.create(tournament_id: 125, user_id: 18)
+# TournamentsUser.create(tournament_id: 125, user_id: 23)
+TournamentsUser.create(tournament_id: 125, user_id: 24)

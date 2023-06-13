@@ -65,4 +65,10 @@ class Match < ApplicationRecord
   def update_random_winner
     update(winner_id: users.sample.id)
   end
+
+  def players_data_by_current_user(current_user)
+    current_user_data = { current_user.id => current_user.name }
+    players_data = users.where.not(id: current_user.id).pluck(:id, :name).to_h
+    players_data.length == 1 ? current_user_data.merge(players_data) : players_data # current_user is player then place its data at first place and other player_data at last.
+  end
 end

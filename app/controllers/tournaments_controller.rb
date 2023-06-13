@@ -5,8 +5,7 @@ class TournamentsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    @tournaments = Tournament.includes(%i[users winner]).all
-    @tournaments = @tournaments.order(:registration_deadline).page(params[:page])
+    @tournaments = @tournaments.includes(%i[users winner]).desc.page(params[:page])
   end
 
   def show; end
@@ -14,16 +13,6 @@ class TournamentsController < ApplicationController
   def new; end
 
   def edit; end
-
-  def register
-    @tournaments_user = TournamentsUser.new(user: current_user, tournament: @tournament)
-    if @tournaments_user.save
-      flash[:notice] = 'You have registered for the tournament!.'
-    else
-      flash[:errors] = @tournament.errors.full_messages.join(', ')
-    end
-    redirect_to tournament_url(@tournament)
-  end
 
   def create_matches
     begin
