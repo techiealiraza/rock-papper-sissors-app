@@ -11,7 +11,6 @@ module.exports = {
     extend: {
       screens: {
         'mini': '200px',
-        'sm': '400px',
         'md': '768px',
         'lg': '1024px',
       },
@@ -28,11 +27,6 @@ module.exports = {
         'defeat': "url('defeat.png')",
         '404': "url('404.png')",
 
-      },
-      spacing: {
-        '40': '40%',
-        '50': '50%',
-        '20': '20%',
       },
       colors: {
         "gold": "#d97706",
