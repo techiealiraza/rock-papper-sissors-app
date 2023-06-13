@@ -26,7 +26,7 @@ module Users
         TwoFactorAuthenticator.new(user).call
         render 'user_otp/two_fa'
       else
-        redirect_to new_user_session_path, alert: 'Invalid Password entered.'
+        redirect_to new_user_session_path, alert: 'Invalid Email or Password.'
       end
     end
 
