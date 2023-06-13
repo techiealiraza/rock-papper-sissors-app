@@ -1,4 +1,5 @@
 # frozen_literal_string: true
+
 # app/models/concerns/image_validatable.rb
 module ImageValidatable
   extend ActiveSupport::Concern

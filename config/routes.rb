@@ -33,5 +33,7 @@ Rails.application.routes.draw do
     get '/verify_otp', to: 'users/sessions#verify_otp'
   end
   root 'tournaments#index'
-  match '*path', to: 'application#not_found', via: :all
+  match '*path', to: 'application#not_found', via: :all, constraints: lambda { |req|
+    req.path.exclude?('/rails/active_storage/')
+  }
 end
