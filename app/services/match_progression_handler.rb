@@ -18,6 +18,7 @@ class MatchProgressionHandler
         handle_equal_scores
       else
         update_winner_and_broadcast_status
+        generate_matches
       end
     end
   end
