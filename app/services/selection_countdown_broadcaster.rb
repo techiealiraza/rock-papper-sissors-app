@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # selection_time_broadcast_service
-class SelectionCountdownBroadcaster < Broadcaster
+class SelectionCountdownBroadcaster < ActionCableBroadcaster
   def initialize(match_id, seconds, try_num, tries)
     super("match_channel_#{match_id}", {
       seconds:,

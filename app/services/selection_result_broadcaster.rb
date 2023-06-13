@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # selection_result_broadcast_service
-class SelectionResultBroadcaster < Broadcaster
+class SelectionResultBroadcaster < ActionCableBroadcaster
   def initialize(status, selections)
     @status = status
     @match = selections.first.match

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # message_broadcast_service
-class MessageBroadcaster < Broadcaster
+class MessageBroadcaster < ActionCableBroadcaster
   def initialize(message)
     super("room_channel_#{message.match_id}", {
       message: message.content,

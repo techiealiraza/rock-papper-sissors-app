@@ -18,16 +18,16 @@ class Tournament < ApplicationRecord
 
   def deadline_before_start_date
     return if registration_deadline.nil? || start_date.nil?
-    return unless registration_deadline > start_date || registration_deadline < Time.zone.now
+    return if registration_deadline < start_date && registration_deadline > Time.zone.now
 
-    errors.add(:registration_deadline, 'Registration Deadline is after Start Date')
+    errors.add(:registration_deadline, ':Please Check Registration Deadline')
   end
 
   def end_date_is_after_start_date
     return if end_date.nil? || start_date.nil?
     return unless end_date < start_date
 
-    errors.add(:end_date, 'End Date is before Start Date')
+    errors.add(:end_date, ':End Date is before Start Date')
   end
 
   def start_date_validation
