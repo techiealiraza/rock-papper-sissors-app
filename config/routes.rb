@@ -2,11 +2,8 @@
 
 Rails.application.routes.draw do
   get 'leaderboard/index'
-  patch 'user_otp/enable'
-  get 'user_otp/disable'
   match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
   resources :selection, only: [:create]
-
   get '/matches_all', to: 'matches#all'
 
   resources :tournaments do

@@ -26,7 +26,6 @@ module Users
       return unless user
 
       if user.valid_password?(user_params[:password])
-
         session[:user_id] = user.id
         TwoFactorAuthenticator.new(user).call
         render 'user_otp/two_fa'
