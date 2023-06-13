@@ -8,7 +8,9 @@ function selectionPost() {
   const player2Id = user2Element.getAttribute("data-player2-id");
   const currentUserId = currentUserElement.getAttribute("data-user-id");
   const matchElement = document.getElementById("match_id");
+  const tournamentElement = document.getElementById("tournament_id");
   const matchId = matchElement.getAttribute("data-match-id");
+  const tournamentId = tournamentElement.getAttribute("data-tournament-id");
   if ([player1Id, player2Id].includes(currentUserId)) {
     const imageElement = document.getElementById(currentUserId);
     var src = imageElement.src;
@@ -23,7 +25,7 @@ function selectionPost() {
       choice: userSelectedChoice,
     };
     Rails.ajax({
-      url: "/selection",
+      url: `/tournaments/${tournamentId}/matches/${matchId}/selection`,
       type: "post",
       beforeSend(xhr, options) {
         xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");

@@ -3,7 +3,6 @@
 Rails.application.routes.draw do
   get 'leaderboard/index'
   match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
-  resources :selection, only: [:create]
   get '/matches_all', to: 'matches#all'
 
   resources :tournaments do
@@ -16,6 +15,7 @@ Rails.application.routes.draw do
         get '/playmatch', to: 'matches#playmatch', as: 'playmatch'
         get '/result', to: 'matches#result', as: 'result'
       end
+      resources :selection, only: [:create]
       resources :messages, only: [:create]
     end
   end
