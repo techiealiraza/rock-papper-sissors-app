@@ -1,7 +1,7 @@
 <div class="bg-background-image min-h-screen flex flex-col">
   <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
     <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 text-black w-full">
-      <h1 class="mb-8 text-3xl text-center text-white">Sign in</h1>
+      <h1 class="mb-8 text-3xl text-center text-white">Log in</h1>
       <%= render "devise/shared/error_messages", resource: resource %>
       <%= form_for(resource, as: resource_name, url:session_path(resource_name)) do |f| %>
         <div class="field">
@@ -13,7 +13,7 @@
           <%= f.password_field :password, autocomplete: "current-password", class: "border border-gold w-full rounded mb-3 py-3" %>
         </div>
         <div class="flex flex-row items-center justify-center ">
-          <%= f.submit "Sign in", class: "actions mb-4 px-10 py-3 btn-brown" %>
+          <%= f.submit "Log in", class: "actions mb-4 px-10 py-3 btn-brown" %>
         </div>
       <% end %>
       <div class="text-white mt-3 px-3">
