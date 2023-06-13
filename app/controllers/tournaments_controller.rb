@@ -27,7 +27,7 @@ class TournamentsController < ApplicationController
   def create
     if @tournament.save
       flash[:notice] = 'Tournament was successfully created.'
-      redirect_to tournament_url(@tournament)
+      redirect_to tournament_path(@tournament)
     else
       flash[:errors] = @tournament.errors.full_messages.join(', ')
       render :new
@@ -37,7 +37,7 @@ class TournamentsController < ApplicationController
   def update
     if @tournament.update(tournament_params)
       flash[:notice] = 'Tournament was successfully updated.'
-      redirect_to tournament_url(@tournament)
+      redirect_to tournament_path(@tournament)
     else
       flash[:errors] = @tournament.errors.full_messages.join(', ')
       render :edit
@@ -47,11 +47,10 @@ class TournamentsController < ApplicationController
   def destroy
     if @tournament.destroy
       flash[:notice] = 'Tournament was successfully deleted.'
-      redirect_to tournaments_url
     else
       flash[:errors] = @tournament.errors.full_messages.join(', ')
-      render :index
     end
+    redirect_to tournaments_path
   end
 
   private
