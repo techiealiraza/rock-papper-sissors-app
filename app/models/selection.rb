@@ -7,6 +7,7 @@ class Selection < ApplicationRecord
   scope :by_user, ->(user_id) { where(user_id:) }
   scope :by_try_num, ->(try_num) { where(try_num:) }
   after_initialize :add_try_num
+  validates :try_num, uniqueness: { scope: %i[match_id user_id] }
 
   def add_try_num
     self.try_num ||= match.selections.by_user(user_id).size + 1
