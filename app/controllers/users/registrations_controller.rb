@@ -27,9 +27,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(_resource)
     root_path
   end
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[image name phone_number])
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[image name phone_number])
-  end
 end
