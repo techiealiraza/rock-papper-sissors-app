@@ -3,8 +3,6 @@
 require 'delayed_job_web'
 Rails.application.routes.draw do
   get 'leaderboard/index'
-  patch 'user_otp/enable'
-  get 'user_otp/disable'
   match '/delayed_job' => DelayedJobWeb, :anchor => false, :via => %i[get post]
   resources :selection
 
@@ -34,5 +32,7 @@ Rails.application.routes.draw do
     get '/verify_otp', to: 'users/sessions#verify_otp', as: :verify_otp
   end
   root 'tournaments#index'
-  match '*path', to: 'application#handle_not_found', via: :all
+  match '*path', to: 'application#not_found', via: :all, constraints: lambda { |req|
+    req.path.exclude?('/rails/active_storage')
+  }
 end
