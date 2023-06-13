@@ -12,13 +12,13 @@ document.addEventListener("turbolinks:load", () => {
 
       received(data) {
         const msgs = document.getElementById("message-list");
-        const user_id = document.getElementById("user_id").getAttribute("data-user-id");
-        const msg_element = document.getElementById(
-          `msg_field_${user_id}`
-        );
-        const current_user_name = document.getElementById("current_user").getAttribute(
-          "data-current-user-name"
-        );
+        const user_id = document
+          .getElementById("user_id")
+          .getAttribute("data-user-id");
+        const msg_element = document.getElementById(`msg_field_${user_id}`);
+        const current_user_name = document
+          .getElementById("current_user")
+          .getAttribute("data-current-user-name");
         let messageHTML;
         messageHTML = `<div class="my-1 flex flex-row">
                         <div class="rounded-full ${

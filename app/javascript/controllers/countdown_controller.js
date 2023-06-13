@@ -27,5 +27,5 @@ export default class extends Controller {
       secondsElement.textContent =
         seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
     }
-  };
+  }
 }
