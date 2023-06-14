@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# broad_cast_service
-class Broadcaster
+# broad_cast_to_a_channel_service
+class ActionCableBroadcaster
   def initialize(channel, data)
     @channel = channel
     @data = data
