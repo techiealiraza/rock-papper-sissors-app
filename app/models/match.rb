@@ -52,8 +52,8 @@ class Match < ApplicationRecord
   end
 
   def scores
-    scores = selections.winner.group(:user_id).count
-    users.map { |user| scores[user.id] || 0 }
+    users_score = selections.winner.group(:user_id).count
+    users.map { |user| users_score[user.id] || 0 }
   end
 
   def update_winner_on_scores
