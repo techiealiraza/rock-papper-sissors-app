@@ -4,13 +4,13 @@
     <%= tournament.name %>
   </div>
 </p>
-<div class="mt-5">
+<div class="flex flex-row justify-center mt-5">
   <% if tournament.image.attached? %>
-    <%= image_tag(tournament.image, class: "rounded-xl h-72 w-full") %>
+    <%= image_tag(tournament.image, width: "100%", height:"30", class: "rounded-xl") %>
   <% end %>
 </div>
 <% if action_name != "index" %>
-  <%= render 'description', tournament: tournament %>
+  <%= render "description", tournament: tournament %>
 <% end %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Registration deadline</strong>
@@ -18,18 +18,18 @@
     <%= tournament.registration_deadline.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
-<%= render 'registration_deadline', tournament: tournament %>
+<%= render "registration_deadline", tournament: tournament %>
 <p class="pt-5">
   <strong class="block font-medium text-white">Registered Users (should be 8)</strong>
   <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
     <%= @tournament.users.length %>
   </div>
 </p>
-<% if @tournament.tournament_winner_id %>
+<% if @tournament.winner_id %>
   <p class="pt-5">
     <strong class="block font-medium text-white">Tournament Winner</strong>
     <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
-      <%= User.find(@tournament.tournament_winner_id).name %>
+      <%= @tournament.winner.name %>
     </div>
   </p>
 <% end %>
@@ -45,12 +45,10 @@
     <%= tournament.end_date.strftime("%B %d, %Y %I:%M %p") %>
   </div>
 </p>
-<% if can? :register, Tournament %>
+<% if can? :create, TournamentsUser %>
   <% if Time.zone.now.before?(tournament.registration_deadline) %>
     <div class="flex flex-row items-center justify-center pt-4">
       <%= form_with url: register_tournament_path(tournament.id), method: :post do |form| %>
-        <%= form.hidden_field :user_id, value: current_user.id %>
-        <%= form.hidden_field :tournament_id, value: tournament.id %>
         <%= form.submit "Register", class: "actions my-4 px-10 py-3 btn-brown" %>
       <% end %>
     </div>

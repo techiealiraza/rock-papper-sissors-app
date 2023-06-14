@@ -5,21 +5,21 @@
     </div>
   </div>
 <% else %>
-  <div class="container-fluid mt-5 flex row justify-center" data-controller="countdown" data-countdown-id="<%= tournament.id %>" data-countdown-time="<%= (tournament.registration_deadline - Time.zone.now).to_json.html_safe %>">
+  <div class="container-fluid mt-5 flex row justify-center" data-controller="countdown" data-countdown-time="<%= (tournament.registration_deadline - Time.zone.now).to_json.html_safe %>">
     <div class="days-container text-black">
-      <div id="days" class="text-xl" data-countdown-id="<%= tournament.id %>"></div>
+      <div id="days" class="text-xl"></div>
       <div class="days-label">d</div>
     </div>
     <div class="hours-container ml-2 text-black">
-      <div id="hours" class="text-xl" data-countdown-id="<%= tournament.id %>"></div>
+      <div id="hours" class="text-xl"></div>
       <div class="hours-label">h</div>
     </div>
     <div class="minutes-container ml-2 text-black">
-      <div id="minutes" class="text-xl" data-countdown-id="<%= tournament.id %>"></div>
+      <div id="minutes" class="text-xl"></div>
       <div class="minutes-label">m</div>
     </div>
     <div class="seconds-container ml-2 text-black">
-      <div id="seconds" class="text-xl" data-countdown-id="<%= tournament.id %>"></div>
+      <div id="seconds" class="text-xl"></div>
       <div class="seconds-label">s</div>
     </div>
   </div>

@@ -6,10 +6,11 @@ class Selection < ApplicationRecord
   scope :winner, -> { where(winner: true) }
   scope :by_user, ->(user_id) { where(user_id:) }
   scope :by_try_num, ->(try_num) { where(try_num:) }
+  after_initialize :add_try_num
+  validates :try_num, uniqueness: { scope: %i[match_id user_id] }
 
   def add_try_num
-    done_tries_size = match.selections.by_user(user_id).size
-    self.try_num = match.tries - (match.tries - done_tries_size)
+    self.try_num ||= match.selections.by_user(user_id).size + 1
   end
 
   def status

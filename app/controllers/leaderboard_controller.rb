@@ -1,6 +1,6 @@
 # LeaderBoard Controller
 class LeaderboardController < ApplicationController
   def index
-    @players = LeaderBoard.new.result
+    @players = LeaderBoardCreator.call
   end
 end

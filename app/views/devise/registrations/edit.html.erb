@@ -1,6 +1,6 @@
 <div class="bg-background-image min-h-screen flex flex-col">
   <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-6">
-    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full ">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-6 py-8 w-full">
       <h1 class="mb-8 text-3xl text-center text-white">Edit <%= resource_name.to_s.humanize %></h1>
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
@@ -8,10 +8,14 @@
           <div class="personal-image">
             <label class="label">
               <figure class="personal-figure">
-                <%= f.file_field :avatar, accept:'image/*', onchange: "loadFile(event)" %>
-                <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png" class="personal-avatar" alt="avatar" id="output">
+                <%= f.file_field :image, accept:"image/*", data: { controller: "load", action: "load#connect" } %>
+                <% if current_user.image.attached? %>
+                  <%= image_tag(current_user.image, class: "personal-avatar", id: "output") %>
+                <% else %>
+                  <%= image_tag('default_avatar.png', class: "personal-avatar", id: "output") %>
+                <% end %>
                 <figcaption class="personal-figcaption">
-                  <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                  <%= image_tag('camera.png', width: "20", height: "20") %>
                 </figcaption>
               </figure>
             </label>
@@ -33,7 +37,7 @@
           <%= f.password_field :password, autocomplete: "new-password", class: "border border-gold w-full rounded" %>
           <% if @minimum_password_length %>
             <br>
-            <em class="text-gold"><%= @minimum_password_length %> characters minimum</em>
+            <em class="text-gold"><%= @minimum_password_length %>characters minimum</em>
           <% end %>
         </div>
         <div class="field">
@@ -48,7 +52,7 @@
           <%= f.submit "Update", class: "px-7 py-2 btn-brown" %>
         </div>
       <% end %>
-      <%= link_to 'Back', request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
+      <%= link_to "Back", request.referer || root_path, class: "text-gold font-black hover:text-gold_shade2" %>
     </div>
   </div>
 </div>

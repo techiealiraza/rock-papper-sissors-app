@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_30_120913) do
+ActiveRecord::Schema.define(version: 2023_06_13_063351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,9 +59,8 @@ ActiveRecord::Schema.define(version: 2023_05_30_120913) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "match_winner_id"
-    t.integer "winner_score"
-    t.datetime "match_time"
+    t.integer "winner_id"
+    t.datetime "time"
     t.bigint "tournament_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -71,7 +70,7 @@ ActiveRecord::Schema.define(version: 2023_05_30_120913) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "message"
+    t.string "content"
     t.bigint "user_id", null: false
     t.bigint "match_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -83,7 +82,7 @@ ActiveRecord::Schema.define(version: 2023_05_30_120913) do
   create_table "selections", force: :cascade do |t|
     t.bigint "match_id"
     t.integer "user_id"
-    t.string "selection"
+    t.string "choice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "winner", default: false
@@ -96,7 +95,7 @@ ActiveRecord::Schema.define(version: 2023_05_30_120913) do
     t.string "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "tournament_winner_id"
+    t.integer "winner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "registration_deadline"
@@ -120,7 +119,7 @@ ActiveRecord::Schema.define(version: 2023_05_30_120913) do
     t.string "name"
     t.string "phone_number"
     t.boolean "banned"
-    t.string "role"
+    t.integer "role"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"

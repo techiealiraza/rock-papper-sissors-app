@@ -7,6 +7,6 @@ class Message < ApplicationRecord
   after_save :broadcast
 
   def broadcast
-    BroadcastMessage.send(message, name, created_at.strftime('%H:%M:%S'), match_id)
+    MessageBroadcaster.new(self).call
   end
 end

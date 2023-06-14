@@ -1,0 +1,15 @@
+var noticeElement = document.getElementById('flash-response-container');
+var newContent = "<%= flash[:notice] || flash[:error] %>";
+<% if flash[:error].present? %>
+  noticeElement.classList.add('bg-red-600');
+<% end %>
+if (noticeElement.innerHTML.trim() !== '') {
+  newContent = "<br>" + newContent;
+}
+noticeElement.insertAdjacentHTML('beforeend',newContent);
+noticeElement.style.display = 'block';
+
+setTimeout(function() {
+  noticeElement.style.display = 'none';
+  noticeElement.innerHTML = '';
+}, 2000);

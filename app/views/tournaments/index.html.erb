@@ -6,7 +6,7 @@
   </div>
   <div class="container-fluid flex flex-wrap justify-center p-5 pb-5">
     <% @tournaments.each do |tournament| %>
-      <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-10 py-3 mr-10 mb-10">
+      <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg px-5 py-3 mr-10 mb-10">
         <p class="pt-5">
           <strong class="block font-medium text-white">Name</strong>
           <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
@@ -21,9 +21,9 @@
         </p>
         <p class="pt-5">
           <strong class="block font-medium text-white">Tournament Winner</strong>
-          <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2  bg-white text-black">
-            <% if tournament.tournament_winner_id %>
-              <%= User.find(tournament.tournament_winner_id).name %>
+          <div class="block shadow rounded-md border border-gold outline-none px-3 py-2 mt-2 bg-white text-black">
+            <% if tournament.winner_id %>
+              <%= tournament.winner.name %>
             <% else %>
               <%= 'Winner not decide yet' %>
             <% end %>
@@ -43,9 +43,7 @@
   </div>
   <div class="pb-20 flex flex-row items-center justify-center">
     <div class="bg-gold rounded py-3 px-5 mx-5 flex flex-row justify-between">
-      <div class="btn-group">
-        <%= paginate @tournaments, window: 1,outer_window: 2 %>
-      </div>
+      <%= paginate @tournaments, window: 1, outer_window: 2 %>
     </div>
   </div>
 </div>

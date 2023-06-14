@@ -9,9 +9,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-
+      screens: {
+        'mini': '200px',
+        'md': '768px',
+        'lg': '1024px',
+      },
       backgroundImage: {
-
         'background-image': "url('background1.jpeg')",
         'default_avatar': "url('default_avatar.png')",
         'default_image': "url('image_icon.png')",
@@ -24,11 +27,6 @@ module.exports = {
         'defeat': "url('defeat.png')",
         '404': "url('404.png')",
 
-      },
-      spacing: {
-        '40': '40%',
-        '50': '50%',
-        '20': '20%',
       },
       colors: {
         "gold": "#d97706",

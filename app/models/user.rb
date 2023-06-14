@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include ImageValidatable
   has_many :tournaments_users
   has_many :messages
   has_many :tournaments, through: :tournaments_users
   has_many :users_matches
   has_many :matches, through: :users_matches
-  has_one_attached :avatar
-  scope :members, -> { where(role: 'member') }
-  # enum role: %w[member admin]
-
+  has_one_attached :image
+  enum role: %w[member admin]
+  validates :phone_number, presence: true,
+                           numericality: true,
+                           length: { minimum: 10, maximum: 15 }
   devise :registerable, :two_factor_authenticatable,
          :recoverable, :rememberable, :validatable,
          :trackable, :confirmable,
@@ -35,22 +37,14 @@ class User < ApplicationRecord
   end
 
   def total_matches_won
-    matches.where(match_winner_id: id).size
+    matches.won(id).count
   end
 
   def total_tournaments_played
-    matches.distinct.count(:tournament_id)
+    tournaments.size
   end
 
   def total_tournaments_won
-    tournaments.distinct.where(tournament_winner_id: id).size
-  end
-
-  def member?
-    role == 'member'
-  end
-
-  def admin?
-    role == 'admin'
+    tournaments.won(id).count
   end
 end
